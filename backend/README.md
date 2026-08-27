@@ -1,19 +1,23 @@
-# PayPilot Backend Engine (Phase 1 Foundation)
+# PayPilot Backend Engine (Phase 1 & Phase 2 Foundation)
 
-PayPilot is an **Autonomous AI Revenue Operations Agent** designed for the modern business and Razorpay ecosystem. It continuously monitors receivables, automates recovery workflows via official Razorpay payment rails, requires Human-in-the-Loop (HITL) approval for financial actions, verifies incoming webhook events with HMAC-SHA256, and maintains an immutable audit trail.
+PayPilot is an **Autonomous AI Revenue Operations Agent** designed for the Razorpay payment ecosystem. It continuously monitors receivables, issues official Razorpay payment links, verifies incoming webhook events with HMAC-SHA256 signatures, prevents duplicate ledger mutations with database idempotency locks, reconciles customer balances in real-time, and records an immutable audit trail.
 
 ---
 
 ## 🏛️ Layered Architecture
 
-PayPilot follows a strict separation of concerns:
-
 ```
 FastAPI Router Layer (app/api/v1/)
+├── health.py        (Liveness & DB readiness checks)
+├── customers.py     (Client financial ledger queries & CRUD)
+├── payments.py      (Payment Link creation, sync, and cancellation)
+├── analytics.py     (Deterministic revenue & aging analytics)
+└── webhooks.py      (Raw byte webhook ingestion & simulation harness)
         │
         ▼
 Service Layer (app/services/)
 ├── RazorpayService      (Official Razorpay SDK Client & Sandbox Simulator)
+├── WebhookService       (HMAC-SHA256 verification, idempotency, atomic ledger reconciliation)
 ├── RevenueService       (Deterministic SQL-based financial metrics)
 ├── AuditService         (Immutable structured event logging)
 └── SeedService          (Realistic demo data generator)
@@ -43,14 +47,36 @@ To avoid floating-point binary precision inaccuracies, **all monetary amounts in
 
 ---
 
-## 🗄️ Database Models & Schema
+## ⚡ Webhook Architecture & Idempotency Guarantee
 
-1. **`Merchant`**: Business entity profile, currency, and multi-tenant scoping.
-2. **`Customer`**: Client ledger containing `outstanding_balance_paise`, `lifetime_value_paise`, `risk_category` (`LOW`, `MEDIUM`, `HIGH`), and `overdue_days`.
-3. **`PaymentRequest`**: Razorpay Payment Links tracking (`amount_paise`, `razorpay_payment_link_id`, `status`, `short_url`, `expires_at`, `paid_at`).
-4. **`Approval`**: Staged 2-phase commit records for Human-in-the-Loop financial mutations.
-5. **`AuditLog`**: Immutable activity trail recording actor (`AGENT`, `MERCHANT`, `RAZORPAY_WEBHOOK`, `SYSTEM`), action, and metadata.
-6. **`WebhookEvent`**: Razorpay webhook idempotency registry with unique `razorpay_event_id` constraint.
+### 1. Ingestion Pipeline
+```
+Razorpay Rails (or Test Harness)
+       │ (HTTP POST with raw payload & X-Razorpay-Signature)
+       ▼
+app/api/v1/webhooks.py
+       │
+       ▼
+HMAC-SHA256 Cryptographic Verification (app/core/security.py)
+       │ ── [Invalid Signature] ──► 400 Bad Request
+       ▼ [Valid Signature]
+Idempotency Registry Lookup (webhook_events table)
+       │ ── [Duplicate Event ID] ──► Return "duplicate" (Zero ledger mutation)
+       ▼ [New Event ID]
+Atomic Transaction:
+  1. Update PaymentRequest (status -> PAID / FAILED / EXPIRED / CANCELLED)
+  2. Reconcile Customer Ledger (outstanding_balance_paise, lifetime_value_paise, risk)
+  3. Append Structured Audit Log (actor_type = RAZORPAY_WEBHOOK)
+  4. Record WebhookEvent (status = PROCESSED)
+  5. Commit Transaction
+```
+
+### 2. Supported Official Razorpay Events
+* **`payment_link.paid`**: Payment Link settled. Payment marked `PAID`, customer balance reduced, LTV increased, risk reset to `LOW`.
+* **`payment.captured`**: Direct payment captured. Ledger reconciled and audited.
+* **`payment.failed`**: Payment attempt failed. Error code, description, and method recorded; customer failure count incremented; risk escalated to `HIGH` on repeated failures.
+* **`payment_link.expired`**: Payment link expired on Razorpay. Status updated to `EXPIRED`.
+* **`payment_link.cancelled`**: Payment link cancelled by merchant. Status updated to `CANCELLED`.
 
 ---
 
@@ -76,69 +102,42 @@ cp .env.example .env
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Running Locally
 
-### 1. Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 2. Database Migrations (Alembic)
-
-Alembic serves as the source of truth for schema evolution. To apply the initial migration:
+### 1. Database Migrations (Alembic)
 
 ```bash
 python -m alembic upgrade head
 ```
 
-### 3. Run FastAPI Backend
+### 2. Start FastAPI Server
 
 ```bash
 python -m uvicorn app.main:app --port 8000 --reload
 ```
 
-Interactive OpenAPI documentation is available at:
-* Swagger UI: `http://127.0.0.1:8000/docs`
-* ReDoc: `http://127.0.0.1:8000/redoc`
+Interactive OpenAPI documentation is available at `http://127.0.0.1:8000/docs`.
 
----
-
-## 🧪 Running Tests
-
-Execute the comprehensive Pytest suite:
+### 3. Run Test Suite
 
 ```bash
 python -m pytest -v
 ```
 
-Execute tests with code coverage analysis:
+---
+
+## 🧪 Testing Webhook Reconciliation
+
+### Development & Demo Webhook Simulator
+To simulate a cryptographically signed payment webhook for **ABC Enterprises Ltd (₹42,000.00)**:
 
 ```bash
-python -m pytest --cov=app
+curl -X POST http://127.0.0.1:8000/api/v1/webhooks/simulate \
+  -H "Content-Type: application/json" \
+  -d '{
+    "customer_id": "cust_abc_ltd_01",
+    "amount_rupees": "42000.00",
+    "event_type": "payment_link.paid"
+  }'
 ```
-
----
-
-## 🔌 API Endpoints Summary (v1)
-
-* `GET /api/v1/health`: Liveness probe.
-* `GET /api/v1/health/ready`: Database readiness check.
-* `GET /api/v1/customers`: List customers with filtering (`risk_category`, `overdue_only`, search).
-* `POST /api/v1/customers`: Create customer record.
-* `GET /api/v1/customers/{id}`: Detailed customer profile with payment history.
-* `GET /api/v1/payments/links`: List Razorpay payment requests.
-* `POST /api/v1/payments/links`: Create Razorpay payment link with automatic paise conversion.
-* `POST /api/v1/payments/links/{id}/sync`: Sync status with Razorpay API.
-* `GET /api/v1/analytics/overview`: Deterministic revenue summary metrics.
-* `GET /api/v1/analytics/overdue`: Overdue accounts aging breakdown (0-7d, 8-14d, 15+d).
-* `POST /api/v1/seed/scenario`: Reset and seed demo scenario with ₹75,500 overdue across ABC Ltd, Rahul Sharma, and Priya Mehta.
-
----
-
-## 🔒 Security Practices
-
-1. **No Secrets in Frontend / Git**: Secrets (`RAZORPAY_KEY_SECRET`, `DATABASE_URL`) are read exclusively from server environment variables.
-2. **HMAC-SHA256 Webhook Verification**: All incoming webhooks must match the cryptographic signature generated by Razorpay.
-3. **Idempotency**: Webhook events are deduplicated via unique Razorpay event IDs to prevent double ledger credits.
-4. **Deterministic Math**: Financial metrics are computed using SQL aggregate queries and integer paise arithmetic, never delegated to LLM mental math.
+This generates an official Razorpay webhook envelope, calculates the HMAC-SHA256 signature, and passes it through the exact real webhook verification and reconciliation pipeline!

@@ -4,6 +4,7 @@ from app.schemas.payment import PaymentLinkCreate, PaymentLinkResponse, PaymentS
 from app.schemas.revenue import RevenueOverviewResponse, AgingBreakdownResponse
 from app.schemas.approval import ApprovalResponse, ApprovalResolveRequest
 from app.schemas.audit import AuditLogResponse
+from app.schemas.webhook import WebhookResponse, WebhookSimulationRequest, WebhookSimulationResponse
 
 __all__ = [
     "HealthResponse",
@@ -20,5 +21,8 @@ __all__ = [
     "AgingBreakdownResponse",
     "ApprovalResponse",
     "ApprovalResolveRequest",
-    "AuditLogResponse"
+    "AuditLogResponse",
+    "WebhookResponse",
+    "WebhookSimulationRequest",
+    "WebhookSimulationResponse"
 ]
