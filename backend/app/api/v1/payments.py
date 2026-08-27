@@ -1,151 +1,186 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, and_
 from typing import List, Optional
-from pydantic import BaseModel
 from datetime import datetime, timezone, timedelta
-
 from app.core.database import get_db
+from app.core.money import rupees_to_paise, paise_to_rupees
 from app.models.payment_request import PaymentRequest
-from app.models.customer import Customer
+from app.repositories.payment_repository import PaymentRepository
+from app.repositories.customer_repository import CustomerRepository
+from app.repositories.merchant_repository import MerchantRepository
 from app.services.razorpay_service import razorpay_service
 from app.services.audit_service import AuditService
+from app.schemas.payment import PaymentLinkCreate, PaymentLinkResponse, PaymentSyncResponse
 
 router = APIRouter()
 
-class CreatePaymentLinkRequest(BaseModel):
-    customer_id: Optional[str] = None
-    customer_name: Optional[str] = None
-    customer_email: Optional[str] = None
-    customer_phone: Optional[str] = None
-    amount: float
-    description: str
-    expire_in_hours: int = 48
-    notify_sms: bool = True
-    notify_email: bool = True
+@router.get("/links", response_model=List[PaymentLinkResponse])
+async def list_payment_links(
+    status: Optional[str] = Query(None, description="Filter by status: CREATED, PENDING, PAID, FAILED, EXPIRED, CANCELLED"),
+    customer_id: Optional[str] = Query(None, description="Filter by customer ID"),
+    limit: int = Query(100, ge=1, le=500),
+    offset: int = Query(0, ge=0),
+    db: AsyncSession = Depends(get_db)
+):
+    merchant_repo = MerchantRepository(db)
+    merchant = await merchant_repo.get_or_create_default()
+    
+    pay_repo = PaymentRepository(db)
+    cust_repo = CustomerRepository(db)
+    
+    links = await pay_repo.list_by_merchant(
+        merchant_id=merchant.id,
+        status=status,
+        customer_id=customer_id,
+        limit=limit,
+        offset=offset
+    )
 
-@router.get("/links")
-async def list_payment_links(status: Optional[str] = None, db: AsyncSession = Depends(get_db)):
-    query = select(PaymentRequest).order_by(PaymentRequest.created_at.desc())
-    if status:
-        query = query.where(PaymentRequest.status == status.upper())
-    
-    result = await db.execute(query)
-    links = result.scalars().all()
-    
-    # Enrich with customer name
     output = []
     for l in links:
-        cust_name = "Unknown"
-        cust_email = ""
+        cust_name = None
+        cust_email = None
         if l.customer_id:
-            cust_stmt = select(Customer).where(Customer.id == l.customer_id)
-            c_res = await db.execute(cust_stmt)
-            cust = c_res.scalar_one_or_none()
+            cust = await cust_repo.get_by_id(l.customer_id)
             if cust:
                 cust_name = cust.name
                 cust_email = cust.email
 
-        output.append({
-            "id": l.id,
-            "rzp_payment_link_id": l.rzp_payment_link_id,
-            "rzp_payment_id": l.rzp_payment_id,
-            "customer_id": l.customer_id,
-            "customer_name": cust_name,
-            "customer_email": cust_email,
-            "amount": float(l.amount),
-            "currency": l.currency,
-            "status": l.status,
-            "description": l.description,
-            "short_url": l.short_url,
-            "notify_sms": l.notify_sms,
-            "notify_email": l.notify_email,
-            "expires_at": l.expires_at.isoformat() if l.expires_at else None,
-            "paid_at": l.paid_at.isoformat() if l.paid_at else None,
-            "failure_reason": l.failure_reason,
-            "created_at": l.created_at.isoformat() if l.created_at else None
-        })
+        output.append(
+            PaymentLinkResponse(
+                id=l.id,
+                merchant_id=l.merchant_id,
+                customer_id=l.customer_id,
+                customer_name=cust_name,
+                customer_email=cust_email,
+                razorpay_payment_link_id=l.razorpay_payment_link_id,
+                razorpay_payment_id=l.razorpay_payment_id,
+                amount_paise=l.amount_paise,
+                amount_rupees=l.amount_rupees,
+                currency=l.currency,
+                status=l.status,
+                description=l.description,
+                short_url=l.short_url,
+                notify_sms=l.notify_sms,
+                notify_email=l.notify_email,
+                expires_at=l.expires_at,
+                paid_at=l.paid_at,
+                failure_reason=l.failure_reason,
+                meta_data=l.meta_data or {},
+                created_at=l.created_at
+            )
+        )
     return output
 
-@router.post("/links")
-async def create_payment_link_direct(req: CreatePaymentLinkRequest, db: AsyncSession = Depends(get_db)):
-    merchant_id = "merchant_demo_apex_01"
-    cust_name = req.customer_name or "Valued Client"
-    cust_email = req.customer_email or "client@example.com"
-    cust_phone = req.customer_phone or "+919876543210"
+@router.post("/links", response_model=PaymentLinkResponse, status_code=status.HTTP_201_CREATED)
+async def create_payment_link(
+    payload: PaymentLinkCreate,
+    db: AsyncSession = Depends(get_db)
+):
+    merchant_repo = MerchantRepository(db)
+    merchant = await merchant_repo.get_or_create_default()
     
-    if req.customer_id:
-        c_stmt = select(Customer).where(Customer.id == req.customer_id)
-        c_res = await db.execute(c_stmt)
-        customer = c_res.scalar_one_or_none()
-        if customer:
-            cust_name = customer.name
-            cust_email = customer.email
-            cust_phone = customer.phone
+    cust_repo = CustomerRepository(db)
+    pay_repo = PaymentRepository(db)
 
+    # 1. Resolve customer contact details
+    customer = None
+    if payload.customer_id:
+        customer = await cust_repo.get_by_id(payload.customer_id)
+        if not customer:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Specified customer_id not found")
+
+    cust_name = customer.name if customer else (payload.customer_name or "Valued Client")
+    cust_email = customer.email if customer else (payload.customer_email or "client@example.com")
+    cust_phone = customer.phone if customer else (payload.customer_phone or "+919876543210")
+
+    # 2. Convert Rupees to Integer Paise deterministically
+    amount_paise = rupees_to_paise(payload.amount_rupees)
+
+    # 3. Call Razorpay Service
     rzp_res = razorpay_service.create_payment_link(
-        amount_rupees=req.amount,
+        amount_paise=amount_paise,
         customer_name=cust_name,
-        customer_email=cust_email,
+        customer_email=str(cust_email),
         customer_phone=cust_phone,
-        description=req.description,
-        expire_in_hours=req.expire_in_hours,
-        notify_sms=req.notify_sms,
-        notify_email=req.notify_email,
-        reminder_enable=True
+        description=payload.description,
+        expire_in_hours=payload.expire_in_hours,
+        notify_sms=payload.notify_sms,
+        notify_email=payload.notify_email,
+        reminder_enable=payload.reminder_enable
     )
 
-    expires_at_dt = datetime.now(timezone.utc) + timedelta(hours=req.expire_in_hours)
+    expires_at_dt = None
+    if rzp_res.get("expires_at"):
+        try:
+            expires_at_dt = datetime.fromisoformat(rzp_res["expires_at"].replace("Z", "+00:00"))
+        except Exception:
+            expires_at_dt = datetime.now(timezone.utc) + timedelta(hours=payload.expire_in_hours)
 
-    payment_req = PaymentRequest(
-        merchant_id=merchant_id,
-        customer_id=req.customer_id,
-        rzp_payment_link_id=rzp_res.get("id"),
-        amount=req.amount,
-        status="CREATED",
-        description=req.description,
+    # 4. Save PaymentRequest in DB
+    new_payment = PaymentRequest(
+        merchant_id=merchant.id,
+        customer_id=customer.id if customer else None,
+        razorpay_payment_link_id=rzp_res.get("id"),
+        amount_paise=amount_paise,
+        currency="INR",
+        status=rzp_res.get("status", "CREATED"),
+        description=payload.description,
         short_url=rzp_res.get("short_url"),
-        notify_sms=req.notify_sms,
-        notify_email=req.notify_email,
+        notify_sms=payload.notify_sms,
+        notify_email=payload.notify_email,
         expires_at=expires_at_dt,
-        meta_data={"source": "direct_api", "razorpay_response": rzp_res.get("raw_response")}
+        meta_data={"source": "api_v1", "razorpay_response": rzp_res.get("raw_response")}
     )
-    db.add(payment_req)
-    await db.commit()
-    await db.refresh(payment_req)
 
+    saved = await pay_repo.create(new_payment)
+
+    # 5. Log immutable audit trail
     await AuditService.log_event(
         db=db,
-        merchant_id=merchant_id,
+        merchant_id=merchant.id,
         actor_type="MERCHANT",
         action="PAYMENT_LINK_CREATED",
-        title=f"Created Razorpay Payment Link for ₹{req.amount:,.2f} ({cust_name})",
+        title=f"Created Razorpay Payment Link for ₹{payload.amount_rupees:,.2f} ({cust_name})",
         details=f"Payment Link ID: {rzp_res.get('id')} | Short URL: {rzp_res.get('short_url')}",
-        metadata={"link_id": rzp_res.get("id"), "amount": req.amount}
+        metadata={"link_id": rzp_res.get("id"), "amount_paise": amount_paise}
     )
 
-    return {
-        "success": True,
-        "payment_request_id": payment_req.id,
-        "rzp_payment_link_id": rzp_res.get("id"),
-        "short_url": rzp_res.get("short_url"),
-        "amount": req.amount,
-        "status": "CREATED"
-    }
+    return PaymentLinkResponse(
+        id=saved.id,
+        merchant_id=saved.merchant_id,
+        customer_id=saved.customer_id,
+        customer_name=cust_name,
+        customer_email=str(cust_email),
+        razorpay_payment_link_id=saved.razorpay_payment_link_id,
+        razorpay_payment_id=saved.razorpay_payment_id,
+        amount_paise=saved.amount_paise,
+        amount_rupees=saved.amount_rupees,
+        currency=saved.currency,
+        status=saved.status,
+        description=saved.description,
+        short_url=saved.short_url,
+        notify_sms=saved.notify_sms,
+        notify_email=saved.notify_email,
+        expires_at=saved.expires_at,
+        paid_at=saved.paid_at,
+        failure_reason=saved.failure_reason,
+        meta_data=saved.meta_data or {},
+        created_at=saved.created_at
+    )
 
-@router.post("/links/{link_id}/sync")
-async def sync_payment_link_status(link_id: str, db: AsyncSession = Depends(get_db)):
-    """
-    Manually query Razorpay API to check latest status of a link.
-    """
-    stmt = select(PaymentRequest).where(PaymentRequest.id == link_id)
-    res = await db.execute(stmt)
-    payment_req = res.scalar_one_or_none()
+@router.post("/links/{link_id}/sync", response_model=PaymentSyncResponse)
+async def sync_payment_link(
+    link_id: str,
+    db: AsyncSession = Depends(get_db)
+):
+    pay_repo = PaymentRepository(db)
+    payment_req = await pay_repo.get_by_id(link_id)
     if not payment_req:
-        raise HTTPException(status_code=404, detail="Payment link record not found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Payment link not found")
 
-    if payment_req.rzp_payment_link_id:
-        rzp_data = razorpay_service.fetch_payment_link(payment_req.rzp_payment_link_id)
+    if payment_req.razorpay_payment_link_id:
+        rzp_data = razorpay_service.fetch_payment_link(payment_req.razorpay_payment_link_id)
         if rzp_data.get("status"):
             payment_req.status = rzp_data.get("status").upper()
             if payment_req.status == "PAID" and not payment_req.paid_at:
@@ -153,10 +188,11 @@ async def sync_payment_link_status(link_id: str, db: AsyncSession = Depends(get_
             await db.commit()
             await db.refresh(payment_req)
 
-    return {
-        "success": True,
-        "id": payment_req.id,
-        "rzp_payment_link_id": payment_req.rzp_payment_link_id,
-        "status": payment_req.status,
-        "amount": float(payment_req.amount)
-    }
+    return PaymentSyncResponse(
+        success=True,
+        id=payment_req.id,
+        razorpay_payment_link_id=payment_req.razorpay_payment_link_id,
+        status=payment_req.status,
+        amount_rupees=payment_req.amount_rupees,
+        amount_paise=payment_req.amount_paise
+    )

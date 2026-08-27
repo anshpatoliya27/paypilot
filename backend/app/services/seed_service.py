@@ -15,10 +15,10 @@ class SeedService:
     @staticmethod
     async def reset_and_seed_demo_data(db: AsyncSession) -> dict:
         """
-        Wipe existing data and seed a rich, realistic business environment
-        tailored for the Razorpay Buildathon 2026 demo.
+        Wipe existing data and seed a deterministic, realistic business scenario
+        using integer paise values.
         """
-        # Clean tables
+        # Clean tables in reverse dependency order
         await db.execute(delete(PaymentRequest))
         await db.execute(delete(Approval))
         await db.execute(delete(AuditLog))
@@ -40,7 +40,11 @@ class SeedService:
 
         now = datetime.now(timezone.utc)
 
-        # 2. Seed Customers
+        # 2. Seed Customers (Amounts in Paise: 1 INR = 100 Paise)
+        # ABC Ltd: ₹42,000 overdue = 4,200,000 paise
+        # Rahul Sharma: ₹25,000 overdue = 2,500,000 paise
+        # Priya Mehta: ₹8,500 overdue = 850,000 paise
+        # Total Outstanding: ₹75,500 = 7,550,000 paise
         customers_data = [
             {
                 "id": "cust_abc_ltd_01",
@@ -49,8 +53,8 @@ class SeedService:
                 "email": "accounts@abcltd.in",
                 "phone": "+919876543210",
                 "company_name": "ABC Enterprises Ltd",
-                "outstanding_balance": 42000.00,
-                "lifetime_value": 185000.00,
+                "outstanding_balance_paise": 4200000,
+                "lifetime_value_paise": 18500000,
                 "risk_category": "HIGH",
                 "failed_payment_count": 2,
                 "overdue_days": 9,
@@ -63,8 +67,8 @@ class SeedService:
                 "email": "rahul.sharma@techcorp.in",
                 "phone": "+919876543211",
                 "company_name": "TechCorp Solutions",
-                "outstanding_balance": 25000.00,
-                "lifetime_value": 95000.00,
+                "outstanding_balance_paise": 2500000,
+                "lifetime_value_paise": 9500000,
                 "risk_category": "MEDIUM",
                 "failed_payment_count": 1,
                 "overdue_days": 11,
@@ -77,8 +81,8 @@ class SeedService:
                 "email": "priya@designhub.co",
                 "phone": "+919876543212",
                 "company_name": "DesignHub Studio",
-                "outstanding_balance": 8500.00,
-                "lifetime_value": 45000.00,
+                "outstanding_balance_paise": 850000,
+                "lifetime_value_paise": 4500000,
                 "risk_category": "LOW",
                 "failed_payment_count": 0,
                 "overdue_days": 8,
@@ -91,8 +95,8 @@ class SeedService:
                 "email": "finance@zenithcorp.com",
                 "phone": "+919876543213",
                 "company_name": "Zenith Global Corp",
-                "outstanding_balance": 0.00,
-                "lifetime_value": 350000.00,
+                "outstanding_balance_paise": 0,
+                "lifetime_value_paise": 35000000,
                 "risk_category": "LOW",
                 "failed_payment_count": 0,
                 "overdue_days": 0,
@@ -105,8 +109,8 @@ class SeedService:
                 "email": "kavita@devflow.io",
                 "phone": "+919876543214",
                 "company_name": "DevFlow Systems",
-                "outstanding_balance": 0.00,
-                "lifetime_value": 78000.00,
+                "outstanding_balance_paise": 0,
+                "lifetime_value_paise": 7800000,
                 "risk_category": "LOW",
                 "failed_payment_count": 0,
                 "overdue_days": 0,
@@ -120,13 +124,14 @@ class SeedService:
         await db.flush()
 
         # 3. Seed Realized & Historical Payment Requests
+        # Realized revenue: ₹3,50,000 (35,000,000 paise) + ₹78,000 (7,800,000 paise) = ₹4,28,000 (42,800,000 paise)
         payments_data = [
             {
                 "merchant_id": merchant.id,
                 "customer_id": "cust_zenith_corp_04",
-                "rzp_payment_link_id": "plink_zenith_350k",
-                "rzp_payment_id": "pay_zenith_99812",
-                "amount": 350000.00,
+                "razorpay_payment_link_id": "plink_zenith_350k",
+                "razorpay_payment_id": "pay_zenith_99812",
+                "amount_paise": 35000000,
                 "status": "PAID",
                 "description": "Enterprise Cloud Architecture Retainer Q3",
                 "short_url": "https://rzp.io/i/zenith350",
@@ -135,9 +140,9 @@ class SeedService:
             {
                 "merchant_id": merchant.id,
                 "customer_id": "cust_devflow_05",
-                "rzp_payment_link_id": "plink_devflow_78k",
-                "rzp_payment_id": "pay_devflow_55410",
-                "amount": 78000.00,
+                "razorpay_payment_link_id": "plink_devflow_78k",
+                "razorpay_payment_id": "pay_devflow_55410",
+                "amount_paise": 7800000,
                 "status": "PAID",
                 "description": "Frontend Modernization Milestone 2",
                 "short_url": "https://rzp.io/i/devflow78",
@@ -146,8 +151,8 @@ class SeedService:
             {
                 "merchant_id": merchant.id,
                 "customer_id": "cust_abc_ltd_01",
-                "rzp_payment_link_id": "plink_abc_failed_01",
-                "amount": 42000.00,
+                "razorpay_payment_link_id": "plink_abc_failed_01",
+                "amount_paise": 4200000,
                 "status": "FAILED",
                 "description": "Custom API Integrations & Webhooks Module",
                 "short_url": "https://rzp.io/i/abcfail01",
@@ -194,8 +199,8 @@ class SeedService:
         return {
             "status": "success",
             "merchant_id": merchant.id,
-            "total_outstanding": 75500.00,
-            "realized_revenue": 428000.00,
+            "total_outstanding_paise": 7550000,
+            "realized_revenue_paise": 42800000,
             "overdue_clients": 3,
             "message": "Demo fixture initialized with ₹75,500 overdue across ABC Ltd, Rahul Sharma, and Priya Mehta."
         }

@@ -1,21 +1,15 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+from fastapi.exceptions import RequestValidationError
 from contextlib import asynccontextmanager
 import logging
 
 from app.core.config import settings
 from app.core.database import engine, Base, AsyncSessionLocal
 from app.services.seed_service import SeedService
-
-# Import API routers
-from app.api.v1.agent import router as agent_router
-from app.api.v1.customers import router as customers_router
-from app.api.v1.payments import router as payments_router
-from app.api.v1.analytics import router as analytics_router
-from app.api.v1.approvals import router as approvals_router
-from app.api.v1.webhooks import router as webhooks_router
-from app.api.v1.audit import router as audit_router
-from app.api.v1.seed import router as seed_router
+from app.api.v1.router import api_v1_router
+from app.schemas.common import ErrorResponse, ErrorDetail
 
 logging.basicConfig(
     level=logging.INFO,
@@ -25,52 +19,74 @@ logger = logging.getLogger("paypilot")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup: Create tables and auto-seed if empty
-    logger.info("Initializing PayPilot database tables...")
+    logger.info("Initializing PayPilot backend services...")
+    # Initialize database tables on startup
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
     
-    # Auto seed initial scenario
+    # Auto-seed initial demo fixture if empty
     async with AsyncSessionLocal() as session:
         logger.info("Seeding default demo business data...")
         await SeedService.reset_and_seed_demo_data(session)
     
     yield
     
-    # Shutdown
+    # Clean shutdown
     await engine.dispose()
     logger.info("PayPilot backend shut down cleanly.")
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
-    description="Autonomous AI Revenue Agent for Razorpay Ecosystem - Razorpay Buildathon 2026",
+    description="Autonomous AI Revenue Agent for Razorpay Ecosystem - Phase 1 Foundation",
     version="1.0.0",
     lifespan=lifespan
 )
 
-# CORS Middleware
+# CORS Configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=settings.CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Mount API Routers
-app.include_router(agent_router, prefix="/api/v1/agent", tags=["Agent"])
-app.include_router(customers_router, prefix="/api/v1/customers", tags=["Customers"])
-app.include_router(payments_router, prefix="/api/v1/payments", tags=["Payments"])
-app.include_router(analytics_router, prefix="/api/v1/analytics", tags=["Analytics"])
-app.include_router(approvals_router, prefix="/api/v1/approvals", tags=["Approvals"])
-app.include_router(webhooks_router, prefix="/api/v1/webhooks", tags=["Webhooks"])
-app.include_router(audit_router, prefix="/api/v1/audit", tags=["Audit"])
-app.include_router(seed_router, prefix="/api/v1/seed", tags=["Seed"])
+# Global Exception Handlers
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    logger.warning(f"Request validation error on {request.url}: {exc.errors()}")
+    return JSONResponse(
+        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        content=ErrorResponse(
+            error=ErrorDetail(
+                code="VALIDATION_ERROR",
+                message="Invalid request parameters",
+                details={"errors": exc.errors()}
+            )
+        ).model_dump()
+    )
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    logger.error(f"Unhandled server error on {request.url}: {exc}", exc_info=True)
+    return JSONResponse(
+        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        content=ErrorResponse(
+            error=ErrorDetail(
+                code="INTERNAL_SERVER_ERROR",
+                message="An unexpected server error occurred."
+            )
+        ).model_dump()
+    )
+
+# Mount API v1 Router
+app.include_router(api_v1_router, prefix=settings.API_V1_STR)
 
 @app.get("/")
 async def root():
     return {
-        "app": "PayPilot AI Revenue Agent",
+        "app": "PayPilot AI Revenue Operations",
+        "phase": "Phase 1 Foundation",
         "status": "online",
         "version": "1.0.0",
         "docs_url": "/docs"

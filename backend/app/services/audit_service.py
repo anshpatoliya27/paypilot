@@ -17,7 +17,7 @@ class AuditService:
         metadata: Optional[Dict[str, Any]] = None
     ) -> AuditLog:
         """
-        Record an immutable structured audit log entry.
+        Record an immutable structured audit log entry in the database.
         """
         entry = AuditLog(
             merchant_id=merchant_id,
