@@ -7,8 +7,9 @@ import {
   RefreshCw, 
   Plus, 
   X, 
-  Send, 
-  Clock 
+  Clock,
+  CheckCircle2,
+  AlertCircle
 } from "lucide-react";
 import { createPaymentLink, syncPaymentLink } from "../../services/api";
 
@@ -99,7 +100,7 @@ export default function PaymentLinksTable({
               <th>Payment Link ID</th>
               <th>Customer</th>
               <th>Amount</th>
-              <th>Description</th>
+              <th>Description / Purpose</th>
               <th>Status</th>
               <th>Short URL / Checkout</th>
               <th style={{ textAlign: "right" }}>Actions</th>
@@ -109,22 +110,22 @@ export default function PaymentLinksTable({
             {(paymentLinks || []).map(l => (
               <tr key={l.id}>
                 <td>
-                  <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.8rem", color: "#818cf8" }}>
+                  <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.8rem", color: "var(--primary-brand)", fontWeight: "600" }}>
                     {l.rzp_payment_link_id || l.id.slice(0, 12)}
                   </span>
                   {l.rzp_payment_id && (
-                    <div style={{ fontSize: "0.7rem", color: "var(--success)" }}>
+                    <div style={{ fontSize: "0.72rem", color: "var(--success-text)", fontWeight: "600", marginTop: "2px" }}>
                       Pay ID: {l.rzp_payment_id}
                     </div>
                   )}
                 </td>
 
                 <td>
-                  <div style={{ fontWeight: "600", color: "#fff" }}>{l.customer_name}</div>
+                  <div style={{ fontWeight: "600", color: "var(--text-main)" }}>{l.customer_name}</div>
                   <div style={{ fontSize: "0.74rem", color: "var(--text-muted)" }}>{l.customer_email}</div>
                 </td>
 
-                <td style={{ fontFamily: "var(--font-mono)", fontWeight: "700", fontSize: "0.92rem" }}>
+                <td style={{ fontFamily: "var(--font-mono)", fontWeight: "700", fontSize: "0.92rem", color: "var(--text-main)" }}>
                   {formatINR(l.amount)}
                 </td>
 
@@ -133,7 +134,7 @@ export default function PaymentLinksTable({
                     {l.description || "Payment Link"}
                   </div>
                   {l.failure_reason && (
-                    <div style={{ fontSize: "0.72rem", color: "var(--danger)", marginTop: "0.2rem" }}>
+                    <div style={{ fontSize: "0.72rem", color: "var(--danger-text)", fontWeight: "600", marginTop: "0.2rem" }}>
                       ⚠️ {l.failure_reason}
                     </div>
                   )}
@@ -160,7 +161,7 @@ export default function PaymentLinksTable({
                         href={l.short_url} 
                         target="_blank" 
                         rel="noreferrer"
-                        className="btn btn-rzp btn-sm"
+                        className="btn btn-primary btn-sm"
                         title="Open Razorpay checkout preview"
                       >
                         <ExternalLink size={12} />
@@ -202,26 +203,26 @@ export default function PaymentLinksTable({
 
             <form onSubmit={handleCreateSubmit} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
               <div>
-                <label style={{ fontSize: "0.8rem", color: "var(--text-secondary)", display: "block", marginBottom: "0.35rem" }}>
+                <label style={{ fontSize: "0.8rem", color: "var(--text-secondary)", fontWeight: "600", display: "block", marginBottom: "0.35rem" }}>
                   Select Customer (Optional)
                 </label>
                 <select 
                   className="chat-input"
-                  style={{ width: "100%" }}
+                  style={{ width: "100%", background: "#ffffff" }}
                   value={formData.customer_id}
                   onChange={(e) => setFormData({ ...formData, customer_id: e.target.value })}
                 >
-                  <option value="">Custom / New Recipient</option>
+                  <option value="">Custom / Direct Recipient</option>
                   {(customers || []).map(c => (
                     <option key={c.id} value={c.id}>
-                      {c.name} ({c.company_name}) - Dues: {formatINR(c.outstanding_balance)}
+                      {c.name} ({c.company_name}) - Outstanding: {formatINR(c.outstanding_balance)}
                     </option>
                   ))}
                 </select>
               </div>
 
               <div>
-                <label style={{ fontSize: "0.8rem", color: "var(--text-secondary)", display: "block", marginBottom: "0.35rem" }}>
+                <label style={{ fontSize: "0.8rem", color: "var(--text-secondary)", fontWeight: "600", display: "block", marginBottom: "0.35rem" }}>
                   Amount (INR) *
                 </label>
                 <input 
@@ -236,7 +237,7 @@ export default function PaymentLinksTable({
               </div>
 
               <div>
-                <label style={{ fontSize: "0.8rem", color: "var(--text-secondary)", display: "block", marginBottom: "0.35rem" }}>
+                <label style={{ fontSize: "0.8rem", color: "var(--text-secondary)", fontWeight: "600", display: "block", marginBottom: "0.35rem" }}>
                   Invoice Description *
                 </label>
                 <input 
@@ -251,7 +252,7 @@ export default function PaymentLinksTable({
               </div>
 
               <div>
-                <label style={{ fontSize: "0.8rem", color: "var(--text-secondary)", display: "block", marginBottom: "0.35rem" }}>
+                <label style={{ fontSize: "0.8rem", color: "var(--text-secondary)", fontWeight: "600", display: "block", marginBottom: "0.35rem" }}>
                   Link Expiry (Hours)
                 </label>
                 <input 
@@ -264,7 +265,7 @@ export default function PaymentLinksTable({
                 />
               </div>
 
-              <div style={{ display: "flex", justifyContent: "flex-end", gap: "0.5rem", marginTop: "0.5rem" }}>
+              <div style={{ display: "flex", justifyContent: "flex-end", gap: "0.65rem", marginTop: "0.5rem" }}>
                 <button 
                   type="button" 
                   className="btn btn-outline"
