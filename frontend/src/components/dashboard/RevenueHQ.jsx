@@ -8,7 +8,8 @@ import {
   CheckCircle2, 
   ShieldAlert, 
   Zap, 
-  ChevronRight 
+  ChevronRight,
+  Activity
 } from "lucide-react";
 
 export default function RevenueHQ({ 
@@ -29,33 +30,36 @@ export default function RevenueHQ({
     <div>
       {/* Top Banner with Quick Context */}
       <div style={{
-        background: "linear-gradient(135deg, rgba(79, 70, 229, 0.15), rgba(12, 35, 64, 0.4))",
-        border: "1px solid var(--border-strong)",
+        background: "linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)",
+        border: "1px solid var(--border-default)",
         borderRadius: "var(--radius-lg)",
-        padding: "1.25rem 1.5rem",
-        marginBottom: "1.5rem",
+        padding: "1.25rem 1.75rem",
+        marginBottom: "1.75rem",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
         flexWrap: "wrap",
-        gap: "1rem"
+        gap: "1rem",
+        boxShadow: "var(--shadow-xs)"
       }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "0.85rem" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
           <div style={{
             background: "var(--primary)",
-            color: "#fff",
+            color: "#ffffff",
             borderRadius: "var(--radius-md)",
-            padding: "0.6rem",
-            display: "flex"
+            padding: "0.65rem",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
           }}>
             <Zap size={22} />
           </div>
           <div>
-            <h3 style={{ fontSize: "1.1rem", fontWeight: "700" }}>
-              PayPilot Autonomous Revenue Operations Active
+            <h3 style={{ fontSize: "1.05rem", fontWeight: "700", color: "var(--text-main)" }}>
+              Autonomous Revenue Operations Active
             </h3>
-            <p style={{ fontSize: "0.82rem", color: "var(--text-secondary)" }}>
-              Monitoring 5 customer accounts on official Razorpay rails. Identified ₹75,500 overdue balance requiring attention.
+            <p style={{ fontSize: "0.82rem", color: "var(--text-secondary)", marginTop: "2px" }}>
+              Continuous ledger monitoring on Razorpay rails. Identified <strong style={{ color: "var(--danger-text)" }}>₹75,500 overdue balance</strong> across 3 delinquent accounts.
             </p>
           </div>
         </div>
@@ -64,7 +68,7 @@ export default function RevenueHQ({
           className="btn btn-primary btn-sm"
           onClick={() => onPromptAgent("Who owes me money and what is pending?")}
         >
-          Run Full Receivables Audit <ArrowRight size={14} />
+          Run Full Receivables Audit <ArrowRight size={13} />
         </button>
       </div>
 
@@ -120,7 +124,7 @@ export default function RevenueHQ({
         <div className="kpi-card">
           <div className="kpi-header">
             <span className="kpi-label">Collection Velocity</span>
-            <div className="kpi-icon" style={{ background: "var(--primary-light)", color: "var(--primary)" }}>
+            <div className="kpi-icon" style={{ background: "var(--info-bg)", color: "var(--info)" }}>
               <TrendingUp size={18} />
             </div>
           </div>
@@ -137,12 +141,12 @@ export default function RevenueHQ({
       <div style={{ display: "grid", gridTemplateColumns: "1.2fr 0.8fr", gap: "1.5rem" }}>
         
         {/* Aging Buckets Card */}
-        <div className="table-card" style={{ padding: "1.25rem" }}>
+        <div className="table-card" style={{ padding: "1.5rem" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.25rem" }}>
             <div>
-              <h4 style={{ fontSize: "1rem", fontWeight: "700" }}>Receivables Aging Analysis</h4>
-              <p style={{ fontSize: "0.8rem", color: "var(--text-muted)" }}>
-                Breakdown of outstanding dues categorized by aging days
+              <h4 style={{ fontSize: "0.98rem", fontWeight: "700", color: "var(--text-main)" }}>Receivables Aging Analysis</h4>
+              <p style={{ fontSize: "0.8rem", color: "var(--text-secondary)", marginTop: "2px" }}>
+                Breakdown of outstanding dues categorized by delinquency aging buckets
               </p>
             </div>
             <button 
@@ -160,24 +164,24 @@ export default function RevenueHQ({
               
               return (
                 <div key={b.label} style={{
-                  background: "var(--bg-surface-raised)",
+                  background: "var(--bg-surface-subtle)",
                   borderRadius: "var(--radius-md)",
-                  padding: "0.85rem 1rem",
+                  padding: "0.95rem 1.15rem",
                   border: "1px solid var(--border-subtle)"
                 }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.45rem" }}>
-                    <span style={{ fontSize: "0.85rem", fontWeight: "600" }}>{b.label}</span>
-                    <span style={{ fontSize: "0.85rem", fontFamily: "var(--font-mono)", fontWeight: "700" }}>
-                      {formatINR(b.amount)} ({b.count} client{b.count !== 1 ? "s" : ""})
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
+                    <span style={{ fontSize: "0.85rem", fontWeight: "600", color: "var(--text-main)" }}>{b.label}</span>
+                    <span style={{ fontSize: "0.85rem", fontFamily: "var(--font-mono)", fontWeight: "700", color: "var(--text-main)" }}>
+                      {formatINR(b.amount)} <span style={{ color: "var(--text-muted)", fontWeight: "500" }}>({b.count} client{b.count !== 1 ? "s" : ""})</span>
                     </span>
                   </div>
 
-                  <div style={{ height: "6px", background: "var(--bg-main)", borderRadius: "9999px", overflow: "hidden", marginBottom: "0.65rem" }}>
+                  <div style={{ height: "6px", background: "#e2e8f0", borderRadius: "9999px", overflow: "hidden", marginBottom: "0.75rem" }}>
                     <div style={{ width: `${pct}%`, height: "100%", background: barColor, borderRadius: "9999px" }} />
                   </div>
 
                   {b.clients && b.clients.length > 0 && (
-                    <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem", marginTop: "0.5rem" }}>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem", marginTop: "0.5rem" }}>
                       {b.clients.map(c => (
                         <div key={c.id} style={{
                           display: "flex",
@@ -185,11 +189,11 @@ export default function RevenueHQ({
                           justifyContent: "space-between",
                           fontSize: "0.78rem",
                           color: "var(--text-secondary)",
-                          padding: "0.25rem 0",
-                          borderTop: "1px solid rgba(255,255,255,0.04)"
+                          padding: "0.35rem 0",
+                          borderTop: "1px solid var(--border-subtle)"
                         }}>
-                          <span>{c.name} ({c.company_name}) • {c.overdue_days}d overdue</span>
-                          <span style={{ fontWeight: "600", color: "#fff" }}>{formatINR(c.amount)}</span>
+                          <span><strong>{c.name}</strong> ({c.company_name}) • <span style={{ color: "var(--danger-text)", fontWeight: "600" }}>{c.overdue_days}d overdue</span></span>
+                          <span style={{ fontWeight: "700", fontFamily: "var(--font-mono)", color: "var(--text-main)" }}>{formatINR(c.amount)}</span>
                         </div>
                       ))}
                     </div>
@@ -201,43 +205,45 @@ export default function RevenueHQ({
         </div>
 
         {/* Autonomous Recommendations & Quick Actions */}
-        <div className="table-card" style={{ padding: "1.25rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
-          <h4 style={{ fontSize: "1rem", fontWeight: "700", display: "flex", alignItems: "center", gap: "0.4rem" }}>
-            <Zap size={16} color="var(--primary)" />
+        <div className="table-card" style={{ padding: "1.5rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
+          <h4 style={{ fontSize: "0.98rem", fontWeight: "700", display: "flex", alignItems: "center", gap: "0.45rem", color: "var(--text-main)" }}>
+            <Activity size={16} color="var(--primary-brand)" />
             Agent Recommendations
           </h4>
 
+          {/* Alert 1 */}
           <div style={{
-            background: "rgba(239, 68, 68, 0.08)",
-            border: "1px solid rgba(239, 68, 68, 0.2)",
+            background: "var(--danger-bg)",
+            border: "1px solid var(--danger-border)",
             borderRadius: "var(--radius-md)",
-            padding: "0.85rem 1rem"
+            padding: "0.95rem 1.15rem"
           }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", color: "#f87171", fontWeight: "700", fontSize: "0.82rem", marginBottom: "0.25rem" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", color: "var(--danger-text)", fontWeight: "700", fontSize: "0.82rem", marginBottom: "0.3rem" }}>
               <ShieldAlert size={14} /> High Risk Delinquency Alert
             </div>
-            <p style={{ fontSize: "0.78rem", color: "var(--text-secondary)", marginBottom: "0.65rem" }}>
-              <strong>ABC Enterprises Ltd</strong> has ₹42,000 overdue by 9 days with 2 failed payment attempts.
+            <p style={{ fontSize: "0.8rem", color: "var(--text-secondary)", marginBottom: "0.75rem", lineHeight: "1.45" }}>
+              <strong style={{ color: "var(--text-main)" }}>ABC Enterprises Ltd</strong> has ₹42,000 overdue by 9 days with 2 previous failed payment attempts.
             </p>
             <button 
               className="btn btn-primary btn-sm"
               style={{ width: "100%" }}
               onClick={() => onPromptAgent("Prepare reminders for ABC Ltd")}
             >
-              Draft Recovery for ABC Ltd <ChevronRight size={14} />
+              Draft Recovery for ABC Ltd <ChevronRight size={13} />
             </button>
           </div>
 
+          {/* Recommendation 2 */}
           <div style={{
-            background: "var(--bg-surface-raised)",
+            background: "var(--bg-surface-subtle)",
             border: "1px solid var(--border-subtle)",
             borderRadius: "var(--radius-md)",
-            padding: "0.85rem 1rem"
+            padding: "0.95rem 1.15rem"
           }}>
-            <div style={{ fontWeight: "700", fontSize: "0.82rem", marginBottom: "0.25rem" }}>
+            <div style={{ fontWeight: "700", fontSize: "0.82rem", color: "var(--text-main)", marginBottom: "0.3rem" }}>
               ⚡ 1-Click Multi-Client Campaign
             </div>
-            <p style={{ fontSize: "0.78rem", color: "var(--text-secondary)", marginBottom: "0.65rem" }}>
+            <p style={{ fontSize: "0.78rem", color: "var(--text-secondary)", marginBottom: "0.75rem", lineHeight: "1.45" }}>
               Stage dynamic Razorpay payment links for all 3 overdue clients (₹75,500 total).
             </p>
             <button 
@@ -249,16 +255,17 @@ export default function RevenueHQ({
             </button>
           </div>
 
+          {/* Recommendation 3 */}
           <div style={{
-            background: "var(--bg-surface-raised)",
+            background: "var(--bg-surface-subtle)",
             border: "1px solid var(--border-subtle)",
             borderRadius: "var(--radius-md)",
-            padding: "0.85rem 1rem"
+            padding: "0.95rem 1.15rem"
           }}>
-            <div style={{ fontWeight: "700", fontSize: "0.82rem", marginBottom: "0.25rem" }}>
+            <div style={{ fontWeight: "700", fontSize: "0.82rem", color: "var(--text-main)", marginBottom: "0.3rem" }}>
               🔍 Failed Payment Diagnostics
             </div>
-            <p style={{ fontSize: "0.78rem", color: "var(--text-secondary)", marginBottom: "0.65rem" }}>
+            <p style={{ fontSize: "0.78rem", color: "var(--text-secondary)", marginBottom: "0.75rem", lineHeight: "1.45" }}>
               Inspect bank timeout error codes and prepare re-engagement links.
             </p>
             <button 
