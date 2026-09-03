@@ -7,8 +7,7 @@ import {
   ShieldCheck, 
   History, 
   RotateCcw, 
-  Zap, 
-  ExternalLink 
+  Zap
 } from "lucide-react";
 
 export default function Navbar({ 
@@ -16,10 +15,17 @@ export default function Navbar({
   setActiveTab, 
   pendingApprovalsCount = 0, 
   onResetDemo, 
+  onOpenModal,
   onOpenWebhookSimulator 
 }) {
+  const handleOpenWebhook = () => {
+    if (onOpenModal) onOpenModal();
+    else if (onOpenWebhookSimulator) onOpenWebhookSimulator();
+  };
+
   return (
     <header className="navbar">
+      {/* Brand & Workspace Status */}
       <div className="brand-section">
         <div className="logo-badge">
           <Zap size={20} />
@@ -27,20 +33,21 @@ export default function Navbar({
         <div>
           <div className="brand-title">
             PayPilot
-            <span className="brand-tag">Razorpay AI</span>
+            <span className="brand-tag">Razorpay Rails</span>
           </div>
           <div style={{ fontSize: "0.72rem", color: "var(--text-muted)", marginTop: "-2px" }}>
-            Autonomous Revenue Operations • Apex Studios
+            Apex Studios • Production Autonomous Revenue
           </div>
         </div>
       </div>
 
+      {/* Main Tab Switcher */}
       <nav className="nav-links">
         <button 
           className={`nav-tab ${activeTab === "agent" ? "active" : ""}`}
           onClick={() => setActiveTab("agent")}
         >
-          <Bot size={16} />
+          <Bot size={15} />
           Agent Command
         </button>
 
@@ -48,7 +55,7 @@ export default function Navbar({
           className={`nav-tab ${activeTab === "revenue" ? "active" : ""}`}
           onClick={() => setActiveTab("revenue")}
         >
-          <LayoutDashboard size={16} />
+          <LayoutDashboard size={15} />
           Revenue HQ
         </button>
 
@@ -56,7 +63,7 @@ export default function Navbar({
           className={`nav-tab ${activeTab === "customers" ? "active" : ""}`}
           onClick={() => setActiveTab("customers")}
         >
-          <Users size={16} />
+          <Users size={15} />
           Receivables
         </button>
 
@@ -64,7 +71,7 @@ export default function Navbar({
           className={`nav-tab ${activeTab === "links" ? "active" : ""}`}
           onClick={() => setActiveTab("links")}
         >
-          <LinkIcon size={16} />
+          <LinkIcon size={15} />
           Payment Links
         </button>
 
@@ -72,10 +79,10 @@ export default function Navbar({
           className={`nav-tab ${activeTab === "approvals" ? "active" : ""}`}
           onClick={() => setActiveTab("approvals")}
         >
-          <ShieldCheck size={16} />
+          <ShieldCheck size={15} />
           Approvals
           {pendingApprovalsCount > 0 && (
-            <span className="nav-badge" style={{ background: "var(--warning)", color: "#000" }}>
+            <span className="nav-badge">
               {pendingApprovalsCount}
             </span>
           )}
@@ -85,27 +92,28 @@ export default function Navbar({
           className={`nav-tab ${activeTab === "audit" ? "active" : ""}`}
           onClick={() => setActiveTab("audit")}
         >
-          <History size={16} />
+          <History size={15} />
           Audit Trail
         </button>
       </nav>
 
+      {/* Top Header Actions */}
       <div className="nav-actions">
         <button 
           className="btn btn-outline btn-sm"
           onClick={onResetDemo}
-          title="Reset business state to ₹75.5k overdue demo scenario"
+          title="Reset business state to default overdue scenario"
         >
-          <RotateCcw size={14} />
+          <RotateCcw size={13} />
           Reset Demo
         </button>
 
         <button 
-          className="btn btn-rzp btn-sm"
-          onClick={onOpenWebhookSimulator}
+          className="btn btn-primary btn-sm"
+          onClick={handleOpenWebhook}
           title="Simulate incoming Razorpay payment webhook capture"
         >
-          <Zap size={14} color="#3395ff" />
+          <Zap size={13} />
           Simulate Webhook
         </button>
       </div>

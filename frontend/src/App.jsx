@@ -33,7 +33,7 @@ export default function App() {
 
   const showToast = (msg) => {
     setToastMessage(msg);
-    setTimeout(() => setToastMessage(null), 4000);
+    setTimeout(() => setToastMessage(null), 4500);
   };
 
   const loadAllData = async () => {
@@ -89,20 +89,22 @@ export default function App() {
           position: "fixed",
           bottom: "24px",
           right: "24px",
-          background: "var(--bg-surface)",
-          border: "1px solid var(--primary)",
-          borderRadius: "var(--radius-md)",
+          background: "#0f172a",
+          border: "1px solid #334155",
+          borderRadius: "var(--radius-lg)",
           padding: "0.85rem 1.25rem",
-          color: "#fff",
-          fontSize: "0.85rem",
+          color: "#ffffff",
+          fontSize: "0.84rem",
           fontWeight: "600",
-          boxShadow: "var(--shadow-lg)",
+          boxShadow: "var(--shadow-xl)",
           zIndex: 1000,
           display: "flex",
           alignItems: "center",
-          gap: "0.5rem"
+          gap: "0.6rem",
+          maxWidth: "420px",
+          lineHeight: "1.4"
         }}>
-          <span>⚡</span>
+          <span style={{ fontSize: "1rem" }}>⚡</span>
           <span>{toastMessage}</span>
         </div>
       )}
@@ -113,7 +115,8 @@ export default function App() {
         setActiveTab={setActiveTab} 
         pendingApprovalsCount={pendingApprovalsCount}
         onResetDemo={handleResetDemo}
-        onOpenWebhookSimulator={() => setShowWebhookSimulator(true)}
+        onOpenWebhookSimulator={() => setShowWebhookSimulator(false)}
+        onOpenModal={() => setShowWebhookSimulator(true)}
       />
 
       {/* Main Content Area */}
