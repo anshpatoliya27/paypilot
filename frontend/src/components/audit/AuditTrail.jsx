@@ -4,9 +4,7 @@ import {
   Bot, 
   User, 
   Zap, 
-  Server, 
-  Clock, 
-  ShieldCheck 
+  Server
 } from "lucide-react";
 
 export default function AuditTrail({ auditLogs }) {
@@ -63,7 +61,7 @@ export default function AuditTrail({ auditLogs }) {
             <th>Timestamp</th>
             <th>Actor</th>
             <th>Action Type</th>
-            <th>Event Details & Rationale</th>
+            <th>Event Summary & Context</th>
           </tr>
         </thead>
         <tbody>
@@ -78,7 +76,7 @@ export default function AuditTrail({ auditLogs }) {
               </td>
 
               <td>
-                <span style={{ fontWeight: "700", fontSize: "0.82rem", color: "#fff" }}>
+                <span style={{ fontWeight: "700", fontSize: "0.82rem", color: "var(--text-main)" }}>
                   {l.action}
                 </span>
               </td>
@@ -88,7 +86,7 @@ export default function AuditTrail({ auditLogs }) {
                   {l.title}
                 </div>
                 {l.details && (
-                  <div style={{ fontSize: "0.75rem", color: "var(--text-secondary)", marginTop: "0.2rem" }}>
+                  <div style={{ fontSize: "0.76rem", color: "var(--text-secondary)", marginTop: "2px" }}>
                     {l.details}
                   </div>
                 )}
