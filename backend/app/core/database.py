@@ -2,6 +2,7 @@ from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, Asyn
 from sqlalchemy.orm import declarative_base
 from sqlalchemy import text
 from typing import AsyncGenerator, Tuple, Dict, Any
+from urllib.parse import urlparse, urlunparse
 import logging
 from app.core.config import settings
 
@@ -12,7 +13,8 @@ def resolve_db_url_and_args(raw_url: str) -> Tuple[str, Dict[str, Any]]:
     Normalize database URL and connect_args to seamlessly support:
     - Local SQLite (sqlite+aiosqlite)
     - Cloud Serverless PostgreSQL like Neon (postgresql+asyncpg)
-    - Standard connection strings pasted directly from cloud dashboards.
+    - Automatically strips unsupported query parameters (e.g. channel_binding, sslmode)
+      that cause asyncpg.connect() to fail.
     """
     url = raw_url.strip()
     connect_args: Dict[str, Any] = {}
@@ -27,15 +29,21 @@ def resolve_db_url_and_args(raw_url: str) -> Tuple[str, Dict[str, Any]]:
     elif url.startswith("postgresql://") and not url.startswith("postgresql+asyncpg://"):
         url = url.replace("postgresql://", "postgresql+asyncpg://", 1)
 
-    # asyncpg expects ssl=require or ssl in connect_args, not sslmode query param
-    if "sslmode=require" in url:
-        url = url.replace("sslmode=require", "")
-        url = url.rstrip("?").rstrip("&")
+    parsed = urlparse(url)
+    # Check if SSL is required
+    query_lower = parsed.query.lower()
+    if "ssl" in query_lower or "sslmode" in query_lower or "neon.tech" in parsed.netloc:
         connect_args["ssl"] = "require"
-    elif "ssl=require" in url:
-        url = url.replace("ssl=require", "")
-        url = url.rstrip("?").rstrip("&")
-        connect_args["ssl"] = "require"
+
+    # Strip query parameters (like sslmode, channel_binding) which asyncpg rejects
+    url = urlunparse((
+        parsed.scheme,
+        parsed.netloc,
+        parsed.path,
+        "",
+        "",
+        ""
+    ))
 
     return url, connect_args
 
