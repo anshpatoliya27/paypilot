@@ -26,8 +26,14 @@ async def lifespan(app: FastAPI):
     
     # Auto-seed initial demo fixture if empty
     async with AsyncSessionLocal() as session:
-        logger.info("Seeding default demo business data...")
-        await SeedService.reset_and_seed_demo_data(session)
+        from sqlalchemy import select
+        from app.models.merchant import Merchant
+        res = await session.execute(select(Merchant).filter_by(id="merchant_demo_apex_01"))
+        if not res.scalar_one_or_none():
+            logger.info("Seeding default demo business data...")
+            await SeedService.reset_and_seed_demo_data(session)
+        else:
+            logger.info("Demo business data already present in database.")
     
     yield
     
