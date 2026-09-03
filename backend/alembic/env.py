@@ -13,7 +13,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from app.core.config import settings
-from app.core.database import Base
+from app.core.database import Base, resolve_db_url_and_args
 from app.models import Merchant, Customer, PaymentRequest, Approval, AuditLog, WebhookEvent
 
 # this is the Alembic Config object, which provides
@@ -30,7 +30,8 @@ target_metadata = Base.metadata
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode."""
-    url = settings.DATABASE_URL.replace("+aiosqlite", "").replace("+asyncpg", "")
+    normalized_url, _ = resolve_db_url_and_args(settings.DATABASE_URL)
+    url = normalized_url.replace("+aiosqlite", "").replace("+asyncpg", "")
     context.configure(
         url=url,
         target_metadata=target_metadata,
@@ -54,7 +55,8 @@ async def run_async_migrations() -> None:
     and associate a connection with the context.
     """
     configuration = config.get_section(config.config_ini_section, {})
-    configuration["sqlalchemy.url"] = settings.DATABASE_URL
+    normalized_url, _ = resolve_db_url_and_args(settings.DATABASE_URL)
+    configuration["sqlalchemy.url"] = normalized_url
 
     connectable = async_engine_from_config(
         configuration,

@@ -1,0 +1,13 @@
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache
+.coverage
+htmlcov
+.env
+paypilot.db
+.git
+.gitignore
+tests
+README.md
