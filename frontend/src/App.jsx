@@ -125,6 +125,9 @@ export default function App() {
           <AgentChat 
             onRefreshData={loadAllData}
             initialPrompt={agentInitialPrompt}
+            metrics={metrics}
+            customers={customers}
+            onNavigateTab={(tab) => setActiveTab(tab)}
           />
         )}
 

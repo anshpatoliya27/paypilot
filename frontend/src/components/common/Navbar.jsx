@@ -7,7 +7,8 @@ import {
   ShieldCheck, 
   History, 
   RotateCcw, 
-  Zap
+  Zap,
+  CheckCircle2
 } from "lucide-react";
 
 export default function Navbar({ 
@@ -35,8 +36,10 @@ export default function Navbar({
             PayPilot
             <span className="brand-tag">Razorpay Rails</span>
           </div>
-          <div style={{ fontSize: "0.72rem", color: "var(--text-muted)", marginTop: "-2px" }}>
-            Apex Studios • Production Autonomous Revenue
+          <div style={{ fontSize: "0.72rem", color: "var(--text-muted)", marginTop: "-2px", display: "flex", alignItems: "center", gap: "6px" }}>
+            <span style={{ fontWeight: "600", color: "#334155" }}>Apex Studios</span>
+            <span style={{ width: "4px", height: "4px", borderRadius: "50%", background: "#059669" }}></span>
+            <span style={{ color: "#059669", fontWeight: "600" }}>Neon PostgreSQL</span>
           </div>
         </div>
       </div>
@@ -48,7 +51,7 @@ export default function Navbar({
           onClick={() => setActiveTab("agent")}
         >
           <Bot size={15} />
-          Agent Command
+          Agent Copilot
         </button>
 
         <button 
@@ -116,6 +119,13 @@ export default function Navbar({
           <Zap size={13} />
           Simulate Webhook
         </button>
+
+        {/* Merchant Avatar Pill */}
+        <div style={{ display: "flex", alignItems: "center", gap: "0.45rem", paddingLeft: "0.5rem", borderLeft: "1px solid var(--border-subtle)" }}>
+          <div style={{ width: "30px", height: "30px", borderRadius: "50%", background: "#0f172a", color: "#ffffff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.75rem", fontWeight: "700" }}>
+            RP
+          </div>
+        </div>
       </div>
     </header>
   );
