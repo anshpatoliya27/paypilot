@@ -40,15 +40,16 @@ async def list_payment_links(
         offset=offset
     )
 
+    # Pre-fetch all merchant customers in one fast indexed query to avoid N+1 queries
+    from sqlalchemy import select
+    cust_res = await db.execute(select(Customer).where(Customer.merchant_id == merchant.id))
+    cust_map = {c.id: c for c in cust_res.scalars().all()}
+
     output = []
     for l in links:
-        cust_name = None
-        cust_email = None
-        if l.customer_id:
-            cust = await cust_repo.get_by_id(l.customer_id)
-            if cust:
-                cust_name = cust.name
-                cust_email = cust.email
+        cust = cust_map.get(l.customer_id) if l.customer_id else None
+        cust_name = cust.name if cust else None
+        cust_email = cust.email if cust else None
 
         output.append(
             PaymentLinkResponse(
