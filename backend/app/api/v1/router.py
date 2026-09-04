@@ -8,6 +8,7 @@ from app.api.v1.webhooks import router as webhooks_router
 from app.api.v1.audit import router as audit_router
 from app.api.v1.seed import router as seed_router
 from app.api.v1.agent import router as agent_router
+from app.api.v1.integrations import router as integrations_router
 
 api_v1_router = APIRouter()
 
@@ -20,3 +21,4 @@ api_v1_router.include_router(approvals_router, prefix="/approvals", tags=["Appro
 api_v1_router.include_router(webhooks_router, prefix="/webhooks", tags=["Webhooks"])
 api_v1_router.include_router(audit_router, prefix="/audit", tags=["Audit"])
 api_v1_router.include_router(seed_router, prefix="/seed", tags=["Seed"])
+api_v1_router.include_router(integrations_router, prefix="/integrations", tags=["Integrations"])
