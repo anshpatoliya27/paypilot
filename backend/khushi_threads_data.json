@@ -1,0 +1,2181 @@
+{
+  "customers": [
+    {
+      "id": 2,
+      "custom_id": "002",
+      "name": "anshu patel",
+      "phone": "8780979739",
+      "address": "",
+      "balance": "35921.00",
+      "last_purchase": "2026-09-02T07:45:33.460215+05:30",
+      "created_at": "2026-08-16T13:03:51.405786+05:30",
+      "updated_at": "2026-09-02T07:45:33.461743+05:30",
+      "business": 1
+    },
+    {
+      "id": 3,
+      "custom_id": "312",
+      "name": "mukeshbhai",
+      "phone": "9016929244",
+      "address": "",
+      "balance": "400.00",
+      "last_purchase": "2026-08-16T20:38:21.718079+05:30",
+      "created_at": "2026-08-16T20:28:11.906031+05:30",
+      "updated_at": "2026-08-16T20:45:44.505462+05:30",
+      "business": 1
+    }
+  ],
+  "invoices": [
+    {
+      "id": 6,
+      "invoice_no": "INV-0001",
+      "customer": 2,
+      "sub_total": "3664.00",
+      "payment_rcvd": "0.00",
+      "udhar_added": "3664.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": null,
+          "challan_no": "GST-CH-0000001",
+          "challan_date": "2026-08-16",
+          "product_name": "ketonik (HSN: 5402, GST: 18%)",
+          "ref_name": "GST 18%",
+          "qty": 207,
+          "rate": "15.00",
+          "total": "3663.90"
+        }
+      ],
+      "created_at": "2026-08-16T14:57:14.454104+05:30",
+      "public_id": "b78ba7c2-ed1c-4d5a-8e53-2e803833925d",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0001_b78ba7c2.pdf"
+    },
+    {
+      "id": 7,
+      "invoice_no": "INV-0002",
+      "customer": 2,
+      "sub_total": "885.00",
+      "payment_rcvd": "0.00",
+      "udhar_added": "885.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": null,
+          "challan_no": "GST-CH-0000002",
+          "challan_date": "2026-08-16",
+          "product_name": "ketonik (HSN: 5402, GST: 18%)",
+          "ref_name": "-",
+          "qty": 50,
+          "rate": "15.00",
+          "total": "885.00"
+        }
+      ],
+      "created_at": "2026-08-16T15:18:03.180228+05:30",
+      "public_id": "028333a2-1784-4637-a5ae-39f3469eabcc",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0002_028333a2.pdf"
+    },
+    {
+      "id": 8,
+      "invoice_no": "INV-0003",
+      "customer": 2,
+      "sub_total": "177.00",
+      "payment_rcvd": "0.00",
+      "udhar_added": "177.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": null,
+          "challan_no": "GST-CH-0000003",
+          "challan_date": "2026-08-16",
+          "product_name": "ketonik (HSN: 5402, GST: 18%)",
+          "ref_name": "-",
+          "qty": 10,
+          "rate": "15.00",
+          "total": "177.00"
+        }
+      ],
+      "created_at": "2026-08-16T15:38:26.898893+05:30",
+      "public_id": "46011539-fd09-4b98-a9d4-1522611216f7",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0003_46011539.pdf"
+    },
+    {
+      "id": 9,
+      "invoice_no": "INV-0004",
+      "customer": 2,
+      "sub_total": "150.00",
+      "payment_rcvd": "0.00",
+      "udhar_added": "150.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "GST-CH-0000004",
+          "challan_date": "2026-08-16",
+          "product_name": "ketonik",
+          "ref_name": "",
+          "qty": 10,
+          "rate": "15.00",
+          "total": "150.00"
+        }
+      ],
+      "created_at": "2026-08-16T15:47:06.945402+05:30",
+      "public_id": "3445097b-7c28-4447-882b-f87744fe0f2e",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0004_3445097b.pdf"
+    },
+    {
+      "id": 10,
+      "invoice_no": "INV-0005",
+      "customer": 2,
+      "sub_total": "18.00",
+      "payment_rcvd": "0.00",
+      "udhar_added": "18.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": null,
+          "challan_no": "GST-CH-0000004",
+          "challan_date": "2026-08-16",
+          "product_name": "ketonik (HSN: 5402, GST: 18%)",
+          "ref_name": "-",
+          "qty": 1,
+          "rate": "15.00",
+          "total": "17.70"
+        }
+      ],
+      "created_at": "2026-08-16T15:51:52.472378+05:30",
+      "public_id": "1d60d764-30c2-4a0e-8126-6cb1a953f4c8",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0005_1d60d764.pdf"
+    },
+    {
+      "id": 11,
+      "invoice_no": "INV-0006",
+      "customer": 2,
+      "sub_total": "1500.00",
+      "payment_rcvd": "0.00",
+      "udhar_added": "1500.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "GST-CH-0000005",
+          "challan_date": "2026-08-16",
+          "product_name": "ketonik",
+          "ref_name": "patal",
+          "qty": 100,
+          "rate": "15.00",
+          "total": "1500.00"
+        }
+      ],
+      "created_at": "2026-08-16T20:07:22.554573+05:30",
+      "public_id": "db6a6b30-47fa-49bd-a85e-9c1064091eca",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0006_db6a6b30.pdf"
+    },
+    {
+      "id": 12,
+      "invoice_no": "INV-0007",
+      "customer": 3,
+      "sub_total": "1200.00",
+      "payment_rcvd": "0.00",
+      "udhar_added": "1200.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 3,
+          "challan_no": "GST-CH-0000006",
+          "challan_date": "2026-08-16",
+          "product_name": "gold jari",
+          "ref_name": "",
+          "qty": 100,
+          "rate": "12.00",
+          "total": "1200.00"
+        }
+      ],
+      "created_at": "2026-08-16T20:31:17.453376+05:30",
+      "public_id": "39d64176-9674-4ce6-86fb-2b1ca28b7704",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0007_39d64176.pdf"
+    },
+    {
+      "id": 13,
+      "invoice_no": "INV-0008",
+      "customer": 3,
+      "sub_total": "1500.00",
+      "payment_rcvd": "700.00",
+      "udhar_added": "800.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "GST-CH-0000007",
+          "challan_date": "2026-08-16",
+          "product_name": "ketonik",
+          "ref_name": "",
+          "qty": 100,
+          "rate": "15.00",
+          "total": "1500.00"
+        }
+      ],
+      "created_at": "2026-08-16T20:38:21.718079+05:30",
+      "public_id": "cbc6ef68-551f-44f5-9409-072f8e67f044",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0008_cbc6ef68.pdf"
+    },
+    {
+      "id": 14,
+      "invoice_no": "INV-0009",
+      "customer": 2,
+      "sub_total": "1500.00",
+      "payment_rcvd": "1200.00",
+      "udhar_added": "300.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "GST-CH-0000008",
+          "challan_date": "2026-08-16",
+          "product_name": "ketonik",
+          "ref_name": "",
+          "qty": 100,
+          "rate": "15.00",
+          "total": "1500.00"
+        }
+      ],
+      "created_at": "2026-08-16T22:05:38.586948+05:30",
+      "public_id": "84c58671-f574-4242-84f1-78d1b0460149",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0009_84c58671.pdf"
+    },
+    {
+      "id": 15,
+      "invoice_no": "INV-0010",
+      "customer": 2,
+      "sub_total": "1200.00",
+      "payment_rcvd": "0.00",
+      "udhar_added": "1200.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 3,
+          "challan_no": "GST-CH-0000009",
+          "challan_date": "2026-08-16",
+          "product_name": "gold jari",
+          "ref_name": "",
+          "qty": 100,
+          "rate": "12.00",
+          "total": "1200.00"
+        }
+      ],
+      "created_at": "2026-08-16T22:07:27.835024+05:30",
+      "public_id": "2d91691e-5911-4e13-8ff5-8570f243f108",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0010_2d91691e.pdf"
+    },
+    {
+      "id": 16,
+      "invoice_no": "INV-0011",
+      "customer": 2,
+      "sub_total": "1500.00",
+      "payment_rcvd": "1200.00",
+      "udhar_added": "300.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "GST-CH-0000010",
+          "challan_date": "2026-08-17",
+          "product_name": "ketonik",
+          "ref_name": "",
+          "qty": 100,
+          "rate": "15.00",
+          "total": "1500.00"
+        }
+      ],
+      "created_at": "2026-08-17T00:43:54.000074+05:30",
+      "public_id": "070d4676-31e3-4d63-94a6-7de85810ec10",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0011_070d4676.pdf"
+    },
+    {
+      "id": 17,
+      "invoice_no": "INV-0012",
+      "customer": 2,
+      "sub_total": "1500.00",
+      "payment_rcvd": "1100.00",
+      "udhar_added": "400.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "GST-CH-0000011",
+          "challan_date": "2026-08-17",
+          "product_name": "ketonik",
+          "ref_name": "",
+          "qty": 100,
+          "rate": "15.00",
+          "total": "1500.00"
+        }
+      ],
+      "created_at": "2026-08-17T00:49:59.719864+05:30",
+      "public_id": "31c4ac22-e9c4-4996-b12d-33d065f93f9b",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0012_31c4ac22.pdf"
+    },
+    {
+      "id": 18,
+      "invoice_no": "INV-0013",
+      "customer": 2,
+      "sub_total": "1500.00",
+      "payment_rcvd": "1000.00",
+      "udhar_added": "500.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "GST-CH-0000012",
+          "challan_date": "2026-08-17",
+          "product_name": "ketonik",
+          "ref_name": "patal",
+          "qty": 100,
+          "rate": "15.00",
+          "total": "1500.00"
+        }
+      ],
+      "created_at": "2026-08-17T00:55:29.703707+05:30",
+      "public_id": "ed86826c-d093-4277-97ae-6681f35dd14e",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0013_ed86826c_Giht6fx.pdf"
+    },
+    {
+      "id": 19,
+      "invoice_no": "INV-0014",
+      "customer": 2,
+      "sub_total": "1200.00",
+      "payment_rcvd": "1200.00",
+      "udhar_added": "0.00",
+      "status": "Paid",
+      "items": [
+        {
+          "variant": 3,
+          "challan_no": "GST-CH-0000013",
+          "challan_date": "2026-08-17",
+          "product_name": "gold jari",
+          "ref_name": "",
+          "qty": 100,
+          "rate": "12.00",
+          "total": "1200.00"
+        }
+      ],
+      "created_at": "2026-08-17T01:00:10.107065+05:30",
+      "public_id": "f22b6d90-f20c-4034-b258-c0ba3b61719c",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0014_f22b6d90_Z92F0ow.pdf"
+    },
+    {
+      "id": 20,
+      "invoice_no": "INV-0015",
+      "customer": 2,
+      "sub_total": "150.00",
+      "payment_rcvd": "0.00",
+      "udhar_added": "150.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "GST-CH-0000014",
+          "challan_date": "2026-08-17",
+          "product_name": "ketonik",
+          "ref_name": "",
+          "qty": 10,
+          "rate": "15.00",
+          "total": "150.00"
+        }
+      ],
+      "created_at": "2026-08-17T01:03:51.617004+05:30",
+      "public_id": "1bbc7b32-f959-4aae-ab15-8d9404c8276c",
+      "pdf_file": null
+    },
+    {
+      "id": 21,
+      "invoice_no": "INV-0016",
+      "customer": 2,
+      "sub_total": "150.00",
+      "payment_rcvd": "0.00",
+      "udhar_added": "150.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "GST-CH-0000015",
+          "challan_date": "2026-08-17",
+          "product_name": "ketonik",
+          "ref_name": "patal",
+          "qty": 10,
+          "rate": "15.00",
+          "total": "150.00"
+        }
+      ],
+      "created_at": "2026-08-17T01:11:28.735601+05:30",
+      "public_id": "141c7687-76b7-47ac-bec1-12b9c27ed63e",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0016_141c7687_kLEhUQm.pdf"
+    },
+    {
+      "id": 22,
+      "invoice_no": "INV-0017",
+      "customer": 2,
+      "sub_total": "150.00",
+      "payment_rcvd": "150.00",
+      "udhar_added": "0.00",
+      "status": "Paid",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "GST-CH-0000016",
+          "challan_date": "2026-08-17",
+          "product_name": "ketonik",
+          "ref_name": "",
+          "qty": 10,
+          "rate": "15.00",
+          "total": "150.00"
+        }
+      ],
+      "created_at": "2026-08-17T20:45:18.368004+05:30",
+      "public_id": "3de834f5-2acd-4df9-bb0f-c0a69d8f14e7",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0017_3de834f5_99HUXdJ.pdf"
+    },
+    {
+      "id": 23,
+      "invoice_no": "INV-0018",
+      "customer": 2,
+      "sub_total": "1500.00",
+      "payment_rcvd": "0.00",
+      "udhar_added": "1500.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "GST-CH-0000017",
+          "challan_date": "2026-08-18",
+          "product_name": "ketonik",
+          "ref_name": "",
+          "qty": 100,
+          "rate": "15.00",
+          "total": "1500.00"
+        }
+      ],
+      "created_at": "2026-08-18T09:57:15.543843+05:30",
+      "public_id": "781cbc32-7a9c-4f66-86a3-02fa2e97da2e",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0018_781cbc32_B0TgExV.pdf"
+    },
+    {
+      "id": 24,
+      "invoice_no": "INV-0019",
+      "customer": 2,
+      "sub_total": "150.00",
+      "payment_rcvd": "150.00",
+      "udhar_added": "0.00",
+      "status": "Paid",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "GST-CH-0000018",
+          "challan_date": "2026-08-18",
+          "product_name": "ketonik",
+          "ref_name": "",
+          "qty": 10,
+          "rate": "15.00",
+          "total": "150.00"
+        }
+      ],
+      "created_at": "2026-08-18T10:10:15.671813+05:30",
+      "public_id": "fd35a821-6fd4-4446-84e8-dfb2af2e41bf",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0019_fd35a821_FdgHfsH.pdf"
+    },
+    {
+      "id": 25,
+      "invoice_no": "INV-0020",
+      "customer": 2,
+      "sub_total": "60.00",
+      "payment_rcvd": "100.00",
+      "udhar_added": "-40.00",
+      "status": "Paid",
+      "items": [
+        {
+          "variant": 3,
+          "challan_no": "GST-CH-0000019",
+          "challan_date": "2026-08-18",
+          "product_name": "gold jari",
+          "ref_name": "",
+          "qty": 5,
+          "rate": "12.00",
+          "total": "60.00"
+        }
+      ],
+      "created_at": "2026-08-18T14:37:09.725376+05:30",
+      "public_id": "605c8b3a-ca54-4285-82fa-9672f1c5124f",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0020_605c8b3a_XJ5UnO4.pdf"
+    },
+    {
+      "id": 26,
+      "invoice_no": "INV-0021",
+      "customer": 2,
+      "sub_total": "75.00",
+      "payment_rcvd": "100.00",
+      "udhar_added": "-25.00",
+      "status": "Paid",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "CH-0000020",
+          "challan_date": "2026-08-18",
+          "product_name": "ketonik",
+          "ref_name": "",
+          "qty": 5,
+          "rate": "15.00",
+          "total": "75.00"
+        }
+      ],
+      "created_at": "2026-08-18T14:52:34.714189+05:30",
+      "public_id": "080e82e8-59c6-4e21-8719-65ed1b426134",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0021_080e82e8_gh5Zacu.pdf"
+    },
+    {
+      "id": 27,
+      "invoice_no": "INV-0022",
+      "customer": 2,
+      "sub_total": "15015.00",
+      "payment_rcvd": "0.00",
+      "udhar_added": "15015.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "CH-0000021",
+          "challan_date": "2026-08-18",
+          "product_name": "ketonik",
+          "ref_name": "",
+          "qty": 1001,
+          "rate": "15.00",
+          "total": "15015.00"
+        }
+      ],
+      "created_at": "2026-08-18T18:17:41.333757+05:30",
+      "public_id": "39651296-2f74-4190-9534-bcd20530c0a7",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0022_39651296_5roHEbC.pdf"
+    },
+    {
+      "id": 28,
+      "invoice_no": "INV-0023",
+      "customer": 2,
+      "sub_total": "195.00",
+      "payment_rcvd": "100.00",
+      "udhar_added": "95.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "CH-0000022",
+          "challan_date": "2026-08-19",
+          "product_name": "ketonik",
+          "ref_name": "",
+          "qty": 5,
+          "rate": "15.00",
+          "total": "75.00"
+        },
+        {
+          "variant": 3,
+          "challan_no": "CH-0000022",
+          "challan_date": "2026-08-19",
+          "product_name": "gold jari",
+          "ref_name": "",
+          "qty": 10,
+          "rate": "12.00",
+          "total": "120.00"
+        }
+      ],
+      "created_at": "2026-08-19T10:02:09.601703+05:30",
+      "public_id": "998b1333-4335-4555-b3ef-1fe5bc5f1e41",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0023_998b1333_mUC1fse.pdf"
+    },
+    {
+      "id": 29,
+      "invoice_no": "INV-0024",
+      "customer": 2,
+      "sub_total": "195.00",
+      "payment_rcvd": "100.00",
+      "udhar_added": "95.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "CH-0000023",
+          "challan_date": "2026-08-19",
+          "product_name": "ketonik",
+          "ref_name": "",
+          "qty": 5,
+          "rate": "15.00",
+          "total": "75.00"
+        },
+        {
+          "variant": 3,
+          "challan_no": "CH-0000023",
+          "challan_date": "2026-08-19",
+          "product_name": "gold jari",
+          "ref_name": "",
+          "qty": 10,
+          "rate": "12.00",
+          "total": "120.00"
+        }
+      ],
+      "created_at": "2026-08-19T12:28:41.508679+05:30",
+      "public_id": "405f32a2-066f-49a8-abc2-deeed5767a13",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0024_405f32a2.pdf"
+    },
+    {
+      "id": 30,
+      "invoice_no": "INV-0025",
+      "customer": 2,
+      "sub_total": "195.00",
+      "payment_rcvd": "100.00",
+      "udhar_added": "95.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "CH-0000023",
+          "challan_date": "2026-08-19",
+          "product_name": "ketonik",
+          "ref_name": "",
+          "qty": 5,
+          "rate": "15.00",
+          "total": "75.00"
+        },
+        {
+          "variant": 3,
+          "challan_no": "CH-0000023",
+          "challan_date": "2026-08-19",
+          "product_name": "gold jari",
+          "ref_name": "",
+          "qty": 10,
+          "rate": "12.00",
+          "total": "120.00"
+        }
+      ],
+      "created_at": "2026-08-19T12:28:47.532128+05:30",
+      "public_id": "5c573fbe-9871-4769-b1a7-cee207502dd7",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0025_5c573fbe_tcJdETa.pdf"
+    },
+    {
+      "id": 31,
+      "invoice_no": "INV-0026",
+      "customer": 2,
+      "sub_total": "1500.00",
+      "payment_rcvd": "0.00",
+      "udhar_added": "1500.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "CH-0000024",
+          "challan_date": "2026-08-19",
+          "product_name": "ketonik",
+          "ref_name": "",
+          "qty": 100,
+          "rate": "15.00",
+          "total": "1500.00"
+        }
+      ],
+      "created_at": "2026-08-19T12:46:50.723712+05:30",
+      "public_id": "ec8657f0-a550-471f-9a36-ba19223cb65d",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0026_ec8657f0.pdf"
+    },
+    {
+      "id": 32,
+      "invoice_no": "INV-0027",
+      "customer": 2,
+      "sub_total": "195.00",
+      "payment_rcvd": "100.00",
+      "udhar_added": "95.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "CH-0000025",
+          "challan_date": "2026-08-19",
+          "product_name": "ketonik",
+          "ref_name": "",
+          "qty": 5,
+          "rate": "15.00",
+          "total": "75.00"
+        },
+        {
+          "variant": 3,
+          "challan_no": "CH-0000025",
+          "challan_date": "2026-08-19",
+          "product_name": "gold jari",
+          "ref_name": "",
+          "qty": 10,
+          "rate": "12.00",
+          "total": "120.00"
+        }
+      ],
+      "created_at": "2026-08-19T22:33:54.765499+05:30",
+      "public_id": "c2317bba-d696-4a89-9f43-dd53008e0172",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0027_c2317bba_wO0eDTS.pdf"
+    },
+    {
+      "id": 33,
+      "invoice_no": "INV-0028",
+      "customer": 2,
+      "sub_total": "195.00",
+      "payment_rcvd": "100.00",
+      "udhar_added": "95.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "CH-0000026",
+          "challan_date": "2026-08-19",
+          "product_name": "ketonik",
+          "ref_name": "",
+          "qty": 5,
+          "rate": "15.00",
+          "total": "75.00"
+        },
+        {
+          "variant": 3,
+          "challan_no": "CH-0000026",
+          "challan_date": "2026-08-19",
+          "product_name": "gold jari",
+          "ref_name": "",
+          "qty": 10,
+          "rate": "12.00",
+          "total": "120.00"
+        }
+      ],
+      "created_at": "2026-08-19T22:44:47.748213+05:30",
+      "public_id": "ae3f2b3e-95dd-4cde-baa7-28e110d04cec",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0028_ae3f2b3e_4zNfKMN.pdf"
+    },
+    {
+      "id": 34,
+      "invoice_no": "INV-0029",
+      "customer": 2,
+      "sub_total": "120.00",
+      "payment_rcvd": "100.00",
+      "udhar_added": "20.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 3,
+          "challan_no": "CH-0000027",
+          "challan_date": "2026-08-21",
+          "product_name": "gold jari",
+          "ref_name": "",
+          "qty": 10,
+          "rate": "12.00",
+          "total": "120.00"
+        }
+      ],
+      "created_at": "2026-08-21T12:29:46.566107+05:30",
+      "public_id": "664df87f-b6f6-40bd-8375-274aa3ae85bf",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0029_664df87f_LxfJeY8.pdf"
+    },
+    {
+      "id": 35,
+      "invoice_no": "INV-0030",
+      "customer": 2,
+      "sub_total": "120.00",
+      "payment_rcvd": "100.00",
+      "udhar_added": "20.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 3,
+          "challan_no": "CH-0000028",
+          "challan_date": "2026-08-21",
+          "product_name": "gold jari",
+          "ref_name": "",
+          "qty": 10,
+          "rate": "12.00",
+          "total": "120.00"
+        }
+      ],
+      "created_at": "2026-08-21T12:32:44.366271+05:30",
+      "public_id": "0b519d8f-dd8d-4548-871b-31a4a8271584",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0030_0b519d8f_MuzaoSZ.pdf"
+    },
+    {
+      "id": 36,
+      "invoice_no": "INV-0031",
+      "customer": 2,
+      "sub_total": "225.00",
+      "payment_rcvd": "0.00",
+      "udhar_added": "225.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "CH-0000029",
+          "challan_date": "2026-08-21",
+          "product_name": "ketonik",
+          "ref_name": "",
+          "qty": 15,
+          "rate": "15.00",
+          "total": "225.00"
+        }
+      ],
+      "created_at": "2026-08-21T12:33:06.461173+05:30",
+      "public_id": "73dcf930-14a4-4afa-9527-4751ac92e6b6",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0031_73dcf930_gAdI8C7.pdf"
+    },
+    {
+      "id": 37,
+      "invoice_no": "INV-0032",
+      "customer": 2,
+      "sub_total": "270.00",
+      "payment_rcvd": "0.00",
+      "udhar_added": "270.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "CH-0000030",
+          "challan_date": "2026-08-21",
+          "product_name": "ketonik",
+          "ref_name": "",
+          "qty": 10,
+          "rate": "15.00",
+          "total": "150.00"
+        },
+        {
+          "variant": 3,
+          "challan_no": "CH-0000030",
+          "challan_date": "2026-08-21",
+          "product_name": "gold jari",
+          "ref_name": "",
+          "qty": 10,
+          "rate": "12.00",
+          "total": "120.00"
+        }
+      ],
+      "created_at": "2026-08-21T12:59:33.693230+05:30",
+      "public_id": "22ea7e5a-88e6-4411-8276-c4eaf83c12ab",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0032_22ea7e5a_QpOTg5j.pdf"
+    },
+    {
+      "id": 38,
+      "invoice_no": "INV-0033",
+      "customer": 2,
+      "sub_total": "195.00",
+      "payment_rcvd": "0.00",
+      "udhar_added": "195.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "CH-0000031",
+          "challan_date": "2026-08-21",
+          "product_name": "ketonik",
+          "ref_name": "",
+          "qty": 5,
+          "rate": "15.00",
+          "total": "75.00"
+        },
+        {
+          "variant": 3,
+          "challan_no": "CH-0000031",
+          "challan_date": "2026-08-21",
+          "product_name": "gold jari",
+          "ref_name": "",
+          "qty": 10,
+          "rate": "12.00",
+          "total": "120.00"
+        }
+      ],
+      "created_at": "2026-08-21T17:27:19.308418+05:30",
+      "public_id": "456664cb-2897-4bc5-b39a-2b0508b224ee",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0033_456664cb_fW0WFm3.pdf"
+    },
+    {
+      "id": 39,
+      "invoice_no": "INV-0034",
+      "customer": 2,
+      "sub_total": "525.00",
+      "payment_rcvd": "200.00",
+      "udhar_added": "325.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "CH-0000032",
+          "challan_date": "2026-08-21",
+          "product_name": "ketonik",
+          "ref_name": "",
+          "qty": 15,
+          "rate": "15.00",
+          "total": "225.00"
+        },
+        {
+          "variant": 3,
+          "challan_no": "CH-0000032",
+          "challan_date": "2026-08-21",
+          "product_name": "gold jari",
+          "ref_name": "",
+          "qty": 25,
+          "rate": "12.00",
+          "total": "300.00"
+        }
+      ],
+      "created_at": "2026-08-21T17:28:36.871004+05:30",
+      "public_id": "1868a0ae-8c46-4f2f-88c0-2e09d02c02a5",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0034_1868a0ae_4gxWQqS.pdf"
+    },
+    {
+      "id": 40,
+      "invoice_no": "INV-0035",
+      "customer": 2,
+      "sub_total": "450.00",
+      "payment_rcvd": "100.00",
+      "udhar_added": "350.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "CH-0000033",
+          "challan_date": "2026-08-21",
+          "product_name": "ketonik",
+          "ref_name": "",
+          "qty": 10,
+          "rate": "15.00",
+          "total": "150.00"
+        },
+        {
+          "variant": 3,
+          "challan_no": "CH-0000033",
+          "challan_date": "2026-08-21",
+          "product_name": "gold jari",
+          "ref_name": "",
+          "qty": 25,
+          "rate": "12.00",
+          "total": "300.00"
+        }
+      ],
+      "created_at": "2026-08-21T19:14:11.442018+05:30",
+      "public_id": "5b850fa8-dcaa-48fd-92df-d28526b97bfe",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0035_5b850fa8_JkUW0jt.pdf"
+    },
+    {
+      "id": 41,
+      "invoice_no": "INV-0036",
+      "customer": 2,
+      "sub_total": "495.00",
+      "payment_rcvd": "200.00",
+      "udhar_added": "295.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "CH-0000034",
+          "challan_date": "2026-08-21",
+          "product_name": "ketonik",
+          "ref_name": "",
+          "qty": 25,
+          "rate": "15.00",
+          "total": "375.00"
+        },
+        {
+          "variant": 3,
+          "challan_no": "CH-0000034",
+          "challan_date": "2026-08-21",
+          "product_name": "gold jari",
+          "ref_name": "",
+          "qty": 10,
+          "rate": "12.00",
+          "total": "120.00"
+        }
+      ],
+      "created_at": "2026-08-21T19:17:24.815820+05:30",
+      "public_id": "b75c9c8d-c93d-4d26-bbfe-27feb6143d14",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0036_b75c9c8d_aB9LEcy.pdf"
+    },
+    {
+      "id": 42,
+      "invoice_no": "INV-0037",
+      "customer": 2,
+      "sub_total": "375.00",
+      "payment_rcvd": "0.00",
+      "udhar_added": "375.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "CH-0000035",
+          "challan_date": "2026-08-21",
+          "product_name": "ketonik",
+          "ref_name": "Patel",
+          "qty": 5,
+          "rate": "15.00",
+          "total": "75.00"
+        },
+        {
+          "variant": 3,
+          "challan_no": "CH-0000035",
+          "challan_date": "2026-08-21",
+          "product_name": "gold jari",
+          "ref_name": "Patel",
+          "qty": 25,
+          "rate": "12.00",
+          "total": "300.00"
+        }
+      ],
+      "created_at": "2026-08-21T23:58:43.596023+05:30",
+      "public_id": "97ad058f-6c09-4813-bf5a-56cd098deea4",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0037_97ad058f.pdf"
+    },
+    {
+      "id": 43,
+      "invoice_no": "INV-0038",
+      "customer": 2,
+      "sub_total": "495.00",
+      "payment_rcvd": "100.00",
+      "udhar_added": "395.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 3,
+          "challan_no": "CH-0000036",
+          "challan_date": "2026-08-21",
+          "product_name": "gold jari",
+          "ref_name": "",
+          "qty": 10,
+          "rate": "12.00",
+          "total": "120.00"
+        },
+        {
+          "variant": 2,
+          "challan_no": "CH-0000036",
+          "challan_date": "2026-08-21",
+          "product_name": "ketonik",
+          "ref_name": "",
+          "qty": 5,
+          "rate": "15.00",
+          "total": "75.00"
+        },
+        {
+          "variant": 3,
+          "challan_no": "CH-0000036",
+          "challan_date": "2026-08-21",
+          "product_name": "gold jari",
+          "ref_name": "",
+          "qty": 25,
+          "rate": "12.00",
+          "total": "300.00"
+        }
+      ],
+      "created_at": "2026-08-21T23:59:30.492653+05:30",
+      "public_id": "f6055ef5-f9b4-420f-b6c7-357f696c2e26",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0038_f6055ef5.pdf"
+    },
+    {
+      "id": 44,
+      "invoice_no": "INV-0039",
+      "customer": 2,
+      "sub_total": "210.00",
+      "payment_rcvd": "100.00",
+      "udhar_added": "110.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "CH-0000037",
+          "challan_date": "2026-08-22",
+          "product_name": "ketonik",
+          "ref_name": "",
+          "qty": 10,
+          "rate": "15.00",
+          "total": "150.00"
+        },
+        {
+          "variant": 3,
+          "challan_no": "CH-0000037",
+          "challan_date": "2026-08-22",
+          "product_name": "gold jari",
+          "ref_name": "",
+          "qty": 5,
+          "rate": "12.00",
+          "total": "60.00"
+        }
+      ],
+      "created_at": "2026-08-22T21:50:22.403500+05:30",
+      "public_id": "e386d382-7536-4ca3-8525-869d9c4d72cd",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0039_e386d382.pdf"
+    },
+    {
+      "id": 45,
+      "invoice_no": "INV-0040",
+      "customer": 2,
+      "sub_total": "150.00",
+      "payment_rcvd": "0.00",
+      "udhar_added": "150.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "CH-0000038",
+          "challan_date": "2026-08-22",
+          "product_name": "ketonik",
+          "ref_name": "",
+          "qty": 10,
+          "rate": "15.00",
+          "total": "150.00"
+        }
+      ],
+      "created_at": "2026-08-22T21:55:15.716698+05:30",
+      "public_id": "0de38331-2a3c-45c4-9661-9ff66d00e129",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0040_0de38331_7C793Y0.pdf"
+    },
+    {
+      "id": 46,
+      "invoice_no": "INV-0041",
+      "customer": 2,
+      "sub_total": "270.00",
+      "payment_rcvd": "200.00",
+      "udhar_added": "70.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "CH-0000039",
+          "challan_date": "2026-08-22",
+          "product_name": "ketonik",
+          "ref_name": "",
+          "qty": 10,
+          "rate": "15.00",
+          "total": "150.00"
+        },
+        {
+          "variant": 3,
+          "challan_no": "CH-0000039",
+          "challan_date": "2026-08-22",
+          "product_name": "gold jari",
+          "ref_name": "",
+          "qty": 10,
+          "rate": "12.00",
+          "total": "120.00"
+        }
+      ],
+      "created_at": "2026-08-22T23:42:36.566552+05:30",
+      "public_id": "105b3021-e931-4e0d-8788-0251cc52d01e",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0041_105b3021_9KMnq48.pdf"
+    },
+    {
+      "id": 47,
+      "invoice_no": "INV-0042",
+      "customer": 2,
+      "sub_total": "387.00",
+      "payment_rcvd": "200.00",
+      "udhar_added": "187.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "CH-0000040",
+          "challan_date": "2026-08-22",
+          "product_name": "ketonik",
+          "ref_name": "Patel",
+          "qty": 25,
+          "rate": "15.00",
+          "total": "375.00"
+        },
+        {
+          "variant": 3,
+          "challan_no": "CH-0000040",
+          "challan_date": "2026-08-22",
+          "product_name": "gold jari",
+          "ref_name": "Patel",
+          "qty": 1,
+          "rate": "12.00",
+          "total": "12.00"
+        }
+      ],
+      "created_at": "2026-08-22T23:43:27.016000+05:30",
+      "public_id": "b8298d68-5dca-4b47-a405-966cb7a62848",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0042_b8298d68_qfn0wEM.pdf"
+    },
+    {
+      "id": 48,
+      "invoice_no": "INV-0043",
+      "customer": 2,
+      "sub_total": "525.00",
+      "payment_rcvd": "200.00",
+      "udhar_added": "325.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "CH-0000041",
+          "challan_date": "2026-08-22",
+          "product_name": "ketonik",
+          "ref_name": "Patel",
+          "qty": 15,
+          "rate": "15.00",
+          "total": "225.00"
+        },
+        {
+          "variant": 3,
+          "challan_no": "CH-0000041",
+          "challan_date": "2026-08-22",
+          "product_name": "gold jari",
+          "ref_name": "Patel",
+          "qty": 25,
+          "rate": "12.00",
+          "total": "300.00"
+        }
+      ],
+      "created_at": "2026-08-22T23:56:02.181327+05:30",
+      "public_id": "47157f6c-250f-4695-9a5f-bde1a330b2f6",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0043_47157f6c_RtJTKFB.pdf"
+    },
+    {
+      "id": 49,
+      "invoice_no": "INV-0044",
+      "customer": 2,
+      "sub_total": "525.00",
+      "payment_rcvd": "200.00",
+      "udhar_added": "325.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "CH-0000041",
+          "challan_date": "2026-08-22",
+          "product_name": "ketonik",
+          "ref_name": "Patel",
+          "qty": 15,
+          "rate": "15.00",
+          "total": "225.00"
+        },
+        {
+          "variant": 3,
+          "challan_no": "CH-0000041",
+          "challan_date": "2026-08-22",
+          "product_name": "gold jari",
+          "ref_name": "Patel",
+          "qty": 25,
+          "rate": "12.00",
+          "total": "300.00"
+        }
+      ],
+      "created_at": "2026-08-22T23:56:02.577898+05:30",
+      "public_id": "b7eb6f5a-0a1c-4df4-a077-19560ac6b608",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0044_b7eb6f5a_cAfrqp5.pdf"
+    },
+    {
+      "id": 50,
+      "invoice_no": "INV-0045",
+      "customer": 2,
+      "sub_total": "525.00",
+      "payment_rcvd": "200.00",
+      "udhar_added": "325.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "CH-0000042",
+          "challan_date": "2026-08-23",
+          "product_name": "ketonik",
+          "ref_name": "",
+          "qty": 15,
+          "rate": "15.00",
+          "total": "225.00"
+        },
+        {
+          "variant": 3,
+          "challan_no": "CH-0000042",
+          "challan_date": "2026-08-23",
+          "product_name": "gold jari",
+          "ref_name": "",
+          "qty": 25,
+          "rate": "12.00",
+          "total": "300.00"
+        }
+      ],
+      "created_at": "2026-08-23T14:48:19.292047+05:30",
+      "public_id": "1c7b799f-b420-4ab9-9de7-885009a49797",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0045_1c7b799f.pdf"
+    },
+    {
+      "id": 51,
+      "invoice_no": "INV-0046",
+      "customer": 2,
+      "sub_total": "525.00",
+      "payment_rcvd": "200.00",
+      "udhar_added": "325.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "CH-0000042",
+          "challan_date": "2026-08-23",
+          "product_name": "ketonik",
+          "ref_name": "",
+          "qty": 15,
+          "rate": "15.00",
+          "total": "225.00"
+        },
+        {
+          "variant": 3,
+          "challan_no": "CH-0000042",
+          "challan_date": "2026-08-23",
+          "product_name": "gold jari",
+          "ref_name": "",
+          "qty": 25,
+          "rate": "12.00",
+          "total": "300.00"
+        }
+      ],
+      "created_at": "2026-08-23T14:48:19.735046+05:30",
+      "public_id": "2e1c48c3-6348-4d65-9e42-61f640bd36b3",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0046_2e1c48c3.pdf"
+    },
+    {
+      "id": 52,
+      "invoice_no": "INV-0047",
+      "customer": 2,
+      "sub_total": "405.00",
+      "payment_rcvd": "200.00",
+      "udhar_added": "205.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 3,
+          "challan_no": "CH-0000043",
+          "challan_date": "2026-08-23",
+          "product_name": "gold jari",
+          "ref_name": "Patel",
+          "qty": 15,
+          "rate": "12.00",
+          "total": "180.00"
+        },
+        {
+          "variant": 2,
+          "challan_no": "CH-0000043",
+          "challan_date": "2026-08-23",
+          "product_name": "ketonik",
+          "ref_name": "Patel",
+          "qty": 15,
+          "rate": "15.00",
+          "total": "225.00"
+        }
+      ],
+      "created_at": "2026-08-23T15:36:06.384656+05:30",
+      "public_id": "4e661f6f-526f-49e0-a51c-a0a664147bc3",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0047_4e661f6f_dRQHWvJ.pdf"
+    },
+    {
+      "id": 53,
+      "invoice_no": "INV-0048",
+      "customer": 2,
+      "sub_total": "450.00",
+      "payment_rcvd": "200.00",
+      "udhar_added": "250.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "CH-0000044",
+          "challan_date": "2026-08-29",
+          "product_name": "ketonik",
+          "ref_name": "Patel",
+          "qty": 10,
+          "rate": "15.00",
+          "total": "150.00"
+        },
+        {
+          "variant": 3,
+          "challan_no": "CH-0000044",
+          "challan_date": "2026-08-29",
+          "product_name": "gold jari",
+          "ref_name": "Patel",
+          "qty": 25,
+          "rate": "12.00",
+          "total": "300.00"
+        }
+      ],
+      "created_at": "2026-08-29T11:29:33.024858+05:30",
+      "public_id": "f9a3fc11-32dd-473a-8ba2-826dd5df5521",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0048_f9a3fc11_IyteXh2.pdf"
+    },
+    {
+      "id": 54,
+      "invoice_no": "INV-0049",
+      "customer": 2,
+      "sub_total": "525.00",
+      "payment_rcvd": "0.00",
+      "udhar_added": "525.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "CH-0000045",
+          "challan_date": "2026-08-30",
+          "product_name": "ketonik",
+          "ref_name": "",
+          "qty": 15,
+          "rate": "15.00",
+          "total": "225.00"
+        },
+        {
+          "variant": 3,
+          "challan_no": "CH-0000045",
+          "challan_date": "2026-08-30",
+          "product_name": "gold jari",
+          "ref_name": "",
+          "qty": 25,
+          "rate": "12.00",
+          "total": "300.00"
+        }
+      ],
+      "created_at": "2026-08-30T11:53:08.852743+05:30",
+      "public_id": "0b753064-f78f-4c8e-b2e9-edd936f8978b",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0049_0b753064_vBEx6yH.pdf"
+    },
+    {
+      "id": 55,
+      "invoice_no": "INV-0050",
+      "customer": 2,
+      "sub_total": "540.00",
+      "payment_rcvd": "200.00",
+      "udhar_added": "340.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "CH-0000046",
+          "challan_date": "2026-08-30",
+          "product_name": "ketonik",
+          "ref_name": "Patel",
+          "qty": 16,
+          "rate": "15.00",
+          "total": "240.00"
+        },
+        {
+          "variant": 3,
+          "challan_no": "CH-0000046",
+          "challan_date": "2026-08-30",
+          "product_name": "gold jari",
+          "ref_name": "Patel",
+          "qty": 25,
+          "rate": "12.00",
+          "total": "300.00"
+        }
+      ],
+      "created_at": "2026-08-30T12:11:51.342241+05:30",
+      "public_id": "7cbe25b5-9165-4a0b-a115-e55cabfbf011",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0050_7cbe25b5_mSzblRi.pdf"
+    },
+    {
+      "id": 56,
+      "invoice_no": "INV-0051",
+      "customer": 2,
+      "sub_total": "525.00",
+      "payment_rcvd": "280.00",
+      "udhar_added": "245.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 3,
+          "challan_no": "CH-0000047",
+          "challan_date": "2026-08-30",
+          "product_name": "gold jari",
+          "ref_name": "Patel",
+          "qty": 25,
+          "rate": "12.00",
+          "total": "300.00"
+        },
+        {
+          "variant": 2,
+          "challan_no": "CH-0000047",
+          "challan_date": "2026-08-30",
+          "product_name": "ketonik",
+          "ref_name": "Patel",
+          "qty": 15,
+          "rate": "15.00",
+          "total": "225.00"
+        }
+      ],
+      "created_at": "2026-08-30T20:39:12.372205+05:30",
+      "public_id": "7cecf1d3-d455-4c3b-92a5-c90f45c1fc7a",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0051_7cecf1d3_prRZn6o.pdf"
+    },
+    {
+      "id": 57,
+      "invoice_no": "INV-0052",
+      "customer": 2,
+      "sub_total": "555.00",
+      "payment_rcvd": "200.00",
+      "udhar_added": "355.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "CH-0000048",
+          "challan_date": "2026-08-30",
+          "product_name": "ketonik",
+          "ref_name": "Patel",
+          "qty": 25,
+          "rate": "15.00",
+          "total": "375.00"
+        },
+        {
+          "variant": 3,
+          "challan_no": "CH-0000048",
+          "challan_date": "2026-08-30",
+          "product_name": "gold jari",
+          "ref_name": "Patel",
+          "qty": 15,
+          "rate": "12.00",
+          "total": "180.00"
+        }
+      ],
+      "created_at": "2026-08-30T21:15:12.329427+05:30",
+      "public_id": "b6308de9-8638-481a-9035-7a2ad196ee4e",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0052_b6308de9_hTpnh2m.pdf"
+    },
+    {
+      "id": 58,
+      "invoice_no": "INV-0053",
+      "customer": 2,
+      "sub_total": "150.00",
+      "payment_rcvd": "0.00",
+      "udhar_added": "150.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "CH-0000049",
+          "challan_date": "2026-08-31",
+          "product_name": "ketonik",
+          "ref_name": "patel",
+          "qty": 10,
+          "rate": "15.00",
+          "total": "150.00"
+        }
+      ],
+      "created_at": "2026-08-31T20:53:58.081391+05:30",
+      "public_id": "f099c292-f7f7-4c30-a142-04585ae3dd57",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0053_f099c292_Wjpyce6.pdf"
+    },
+    {
+      "id": 59,
+      "invoice_no": "INV-0054",
+      "customer": 2,
+      "sub_total": "1680.00",
+      "payment_rcvd": "0.00",
+      "udhar_added": "1680.00",
+      "status": "Pending",
+      "items": [
+        {
+          "variant": 2,
+          "challan_no": "CH-0000050",
+          "challan_date": "2026-09-02",
+          "product_name": "ketonik",
+          "ref_name": "",
+          "qty": 100,
+          "rate": "15.00",
+          "total": "1500.00"
+        },
+        {
+          "variant": 3,
+          "challan_no": "CH-0000050",
+          "challan_date": "2026-09-02",
+          "product_name": "gold jari",
+          "ref_name": "",
+          "qty": 15,
+          "rate": "12.00",
+          "total": "180.00"
+        }
+      ],
+      "created_at": "2026-09-02T07:45:33.460215+05:30",
+      "public_id": "599d7bda-5685-4615-a9c1-9b564eed716d",
+      "pdf_file": "https://3.111.179.127.sslip.io/media/invoices/INV-0054_599d7bda_sMR7IdI.pdf"
+    }
+  ],
+  "dashboard_stats": {
+    "total_revenue": 1635.0,
+    "total_outstanding": 36321.0,
+    "pending_invoices": 49,
+    "total_orders": 54,
+    "active_customers": 2
+  },
+  "ledgers": {
+    "2": {
+      "customer_id": 2,
+      "customer_name": "anshu patel",
+      "current_balance": 35921.0,
+      "ledger": [
+        {
+          "id": 56,
+          "txn_type": "invoice_credit",
+          "amount": "1680.00",
+          "running_balance": "35921.00",
+          "ref_table": "invoice",
+          "ref_id": 59,
+          "note": "Udhar added via Invoice INV-0054",
+          "created_by_name": "9016929244",
+          "created_at": "2026-09-02T07:45:33.462663+05:30"
+        },
+        {
+          "id": 55,
+          "txn_type": "invoice_credit",
+          "amount": "150.00",
+          "running_balance": "34241.00",
+          "ref_table": "invoice",
+          "ref_id": 58,
+          "note": "Udhar added via Invoice INV-0053",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-31T20:53:58.191503+05:30"
+        },
+        {
+          "id": 54,
+          "txn_type": "invoice_credit",
+          "amount": "355.00",
+          "running_balance": "34091.00",
+          "ref_table": "invoice",
+          "ref_id": 57,
+          "note": "Udhar added via Invoice INV-0052",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-30T21:15:12.334410+05:30"
+        },
+        {
+          "id": 53,
+          "txn_type": "invoice_credit",
+          "amount": "245.00",
+          "running_balance": "33736.00",
+          "ref_table": "invoice",
+          "ref_id": 56,
+          "note": "Udhar added via Invoice INV-0051",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-30T20:39:12.412818+05:30"
+        },
+        {
+          "id": 52,
+          "txn_type": "invoice_credit",
+          "amount": "340.00",
+          "running_balance": "33491.00",
+          "ref_table": "invoice",
+          "ref_id": 55,
+          "note": "Udhar added via Invoice INV-0050",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-30T12:11:51.377001+05:30"
+        },
+        {
+          "id": 51,
+          "txn_type": "invoice_credit",
+          "amount": "525.00",
+          "running_balance": "33151.00",
+          "ref_table": "invoice",
+          "ref_id": 54,
+          "note": "Udhar added via Invoice INV-0049",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-30T11:53:08.887708+05:30"
+        },
+        {
+          "id": 50,
+          "txn_type": "invoice_credit",
+          "amount": "250.00",
+          "running_balance": "32626.00",
+          "ref_table": "invoice",
+          "ref_id": 53,
+          "note": "Udhar added via Invoice INV-0048",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-29T11:29:33.061025+05:30"
+        },
+        {
+          "id": 49,
+          "txn_type": "invoice_credit",
+          "amount": "205.00",
+          "running_balance": "32376.00",
+          "ref_table": "invoice",
+          "ref_id": 52,
+          "note": "Udhar added via Invoice INV-0047",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-23T15:36:06.486338+05:30"
+        },
+        {
+          "id": 48,
+          "txn_type": "invoice_credit",
+          "amount": "325.00",
+          "running_balance": "32171.00",
+          "ref_table": "invoice",
+          "ref_id": 51,
+          "note": "Udhar added via Invoice INV-0046",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-23T14:48:19.737717+05:30"
+        },
+        {
+          "id": 47,
+          "txn_type": "invoice_credit",
+          "amount": "325.00",
+          "running_balance": "31846.00",
+          "ref_table": "invoice",
+          "ref_id": 50,
+          "note": "Udhar added via Invoice INV-0045",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-23T14:48:19.297684+05:30"
+        },
+        {
+          "id": 46,
+          "txn_type": "invoice_credit",
+          "amount": "325.00",
+          "running_balance": "31521.00",
+          "ref_table": "invoice",
+          "ref_id": 49,
+          "note": "Udhar added via Invoice INV-0044",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-22T23:56:02.580001+05:30"
+        },
+        {
+          "id": 45,
+          "txn_type": "invoice_credit",
+          "amount": "325.00",
+          "running_balance": "31196.00",
+          "ref_table": "invoice",
+          "ref_id": 48,
+          "note": "Udhar added via Invoice INV-0043",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-22T23:56:02.189192+05:30"
+        },
+        {
+          "id": 44,
+          "txn_type": "invoice_credit",
+          "amount": "187.00",
+          "running_balance": "30871.00",
+          "ref_table": "invoice",
+          "ref_id": 47,
+          "note": "Udhar added via Invoice INV-0042",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-22T23:43:27.035599+05:30"
+        },
+        {
+          "id": 43,
+          "txn_type": "invoice_credit",
+          "amount": "70.00",
+          "running_balance": "30684.00",
+          "ref_table": "invoice",
+          "ref_id": 46,
+          "note": "Udhar added via Invoice INV-0041",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-22T23:42:36.578287+05:30"
+        },
+        {
+          "id": 42,
+          "txn_type": "invoice_credit",
+          "amount": "150.00",
+          "running_balance": "30614.00",
+          "ref_table": "invoice",
+          "ref_id": 45,
+          "note": "Udhar added via Invoice INV-0040",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-22T21:55:15.720315+05:30"
+        },
+        {
+          "id": 41,
+          "txn_type": "invoice_credit",
+          "amount": "110.00",
+          "running_balance": "30464.00",
+          "ref_table": "invoice",
+          "ref_id": 44,
+          "note": "Udhar added via Invoice INV-0039",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-22T21:50:22.461385+05:30"
+        },
+        {
+          "id": 40,
+          "txn_type": "invoice_credit",
+          "amount": "395.00",
+          "running_balance": "30354.00",
+          "ref_table": "invoice",
+          "ref_id": 43,
+          "note": "Udhar added via Invoice INV-0038",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-21T23:59:30.496206+05:30"
+        },
+        {
+          "id": 39,
+          "txn_type": "invoice_credit",
+          "amount": "375.00",
+          "running_balance": "29959.00",
+          "ref_table": "invoice",
+          "ref_id": 42,
+          "note": "Udhar added via Invoice INV-0037",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-21T23:58:43.615200+05:30"
+        },
+        {
+          "id": 38,
+          "txn_type": "invoice_credit",
+          "amount": "295.00",
+          "running_balance": "29584.00",
+          "ref_table": "invoice",
+          "ref_id": 41,
+          "note": "Udhar added via Invoice INV-0036",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-21T19:17:24.821040+05:30"
+        },
+        {
+          "id": 37,
+          "txn_type": "invoice_credit",
+          "amount": "350.00",
+          "running_balance": "29289.00",
+          "ref_table": "invoice",
+          "ref_id": 40,
+          "note": "Udhar added via Invoice INV-0035",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-21T19:14:11.489203+05:30"
+        },
+        {
+          "id": 36,
+          "txn_type": "invoice_credit",
+          "amount": "325.00",
+          "running_balance": "28939.00",
+          "ref_table": "invoice",
+          "ref_id": 39,
+          "note": "Udhar added via Invoice INV-0034",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-21T17:28:36.940312+05:30"
+        },
+        {
+          "id": 35,
+          "txn_type": "invoice_credit",
+          "amount": "195.00",
+          "running_balance": "28614.00",
+          "ref_table": "invoice",
+          "ref_id": 38,
+          "note": "Udhar added via Invoice INV-0033",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-21T17:27:19.363072+05:30"
+        },
+        {
+          "id": 34,
+          "txn_type": "invoice_credit",
+          "amount": "270.00",
+          "running_balance": "28419.00",
+          "ref_table": "invoice",
+          "ref_id": 37,
+          "note": "Udhar added via Invoice INV-0032",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-21T12:59:33.705463+05:30"
+        },
+        {
+          "id": 33,
+          "txn_type": "invoice_credit",
+          "amount": "225.00",
+          "running_balance": "28149.00",
+          "ref_table": "invoice",
+          "ref_id": 36,
+          "note": "Udhar added via Invoice INV-0031",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-21T12:33:06.484427+05:30"
+        },
+        {
+          "id": 32,
+          "txn_type": "invoice_credit",
+          "amount": "20.00",
+          "running_balance": "27924.00",
+          "ref_table": "invoice",
+          "ref_id": 35,
+          "note": "Udhar added via Invoice INV-0030",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-21T12:32:44.380229+05:30"
+        },
+        {
+          "id": 31,
+          "txn_type": "invoice_credit",
+          "amount": "20.00",
+          "running_balance": "27904.00",
+          "ref_table": "invoice",
+          "ref_id": 34,
+          "note": "Udhar added via Invoice INV-0029",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-21T12:29:46.569418+05:30"
+        },
+        {
+          "id": 30,
+          "txn_type": "invoice_credit",
+          "amount": "95.00",
+          "running_balance": "27884.00",
+          "ref_table": "invoice",
+          "ref_id": 33,
+          "note": "Udhar added via Invoice INV-0028",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-19T22:44:47.754435+05:30"
+        },
+        {
+          "id": 29,
+          "txn_type": "invoice_credit",
+          "amount": "95.00",
+          "running_balance": "27789.00",
+          "ref_table": "invoice",
+          "ref_id": 32,
+          "note": "Udhar added via Invoice INV-0027",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-19T22:33:54.805319+05:30"
+        },
+        {
+          "id": 28,
+          "txn_type": "invoice_credit",
+          "amount": "1500.00",
+          "running_balance": "27694.00",
+          "ref_table": "invoice",
+          "ref_id": 31,
+          "note": "Udhar added via Invoice INV-0026",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-19T12:46:50.763282+05:30"
+        },
+        {
+          "id": 27,
+          "txn_type": "invoice_credit",
+          "amount": "95.00",
+          "running_balance": "26194.00",
+          "ref_table": "invoice",
+          "ref_id": 30,
+          "note": "Udhar added via Invoice INV-0025",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-19T12:28:47.534692+05:30"
+        },
+        {
+          "id": 26,
+          "txn_type": "invoice_credit",
+          "amount": "95.00",
+          "running_balance": "26099.00",
+          "ref_table": "invoice",
+          "ref_id": 29,
+          "note": "Udhar added via Invoice INV-0024",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-19T12:28:41.556113+05:30"
+        },
+        {
+          "id": 25,
+          "txn_type": "invoice_credit",
+          "amount": "95.00",
+          "running_balance": "26004.00",
+          "ref_table": "invoice",
+          "ref_id": 28,
+          "note": "Udhar added via Invoice INV-0023",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-19T10:02:09.640419+05:30"
+        },
+        {
+          "id": 24,
+          "txn_type": "invoice_credit",
+          "amount": "15015.00",
+          "running_balance": "25909.00",
+          "ref_table": "invoice",
+          "ref_id": 27,
+          "note": "Udhar added via Invoice INV-0022",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-18T18:17:41.368228+05:30"
+        },
+        {
+          "id": 23,
+          "txn_type": "invoice_credit",
+          "amount": "1500.00",
+          "running_balance": "10894.00",
+          "ref_table": "invoice",
+          "ref_id": 23,
+          "note": "Udhar added via Invoice INV-0018",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-18T09:57:15.572296+05:30"
+        },
+        {
+          "id": 22,
+          "txn_type": "invoice_credit",
+          "amount": "150.00",
+          "running_balance": "9394.00",
+          "ref_table": "invoice",
+          "ref_id": 21,
+          "note": "Udhar added via Invoice INV-0016",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-17T01:11:28.738648+05:30"
+        },
+        {
+          "id": 21,
+          "txn_type": "invoice_credit",
+          "amount": "150.00",
+          "running_balance": "9244.00",
+          "ref_table": "invoice",
+          "ref_id": 20,
+          "note": "Udhar added via Invoice INV-0015",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-17T01:03:51.620337+05:30"
+        },
+        {
+          "id": 20,
+          "txn_type": "invoice_credit",
+          "amount": "500.00",
+          "running_balance": "9094.00",
+          "ref_table": "invoice",
+          "ref_id": 18,
+          "note": "Udhar added via Invoice INV-0013",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-17T00:55:29.707558+05:30"
+        },
+        {
+          "id": 19,
+          "txn_type": "invoice_credit",
+          "amount": "400.00",
+          "running_balance": "8594.00",
+          "ref_table": "invoice",
+          "ref_id": 17,
+          "note": "Udhar added via Invoice INV-0012",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-17T00:49:59.738681+05:30"
+        },
+        {
+          "id": 18,
+          "txn_type": "invoice_credit",
+          "amount": "300.00",
+          "running_balance": "8194.00",
+          "ref_table": "invoice",
+          "ref_id": 16,
+          "note": "Udhar added via Invoice INV-0011",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-17T00:43:54.005583+05:30"
+        },
+        {
+          "id": 17,
+          "txn_type": "invoice_credit",
+          "amount": "1200.00",
+          "running_balance": "7894.00",
+          "ref_table": "invoice",
+          "ref_id": 15,
+          "note": "Udhar added via Invoice INV-0010",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-16T22:07:27.844417+05:30"
+        },
+        {
+          "id": 16,
+          "txn_type": "invoice_credit",
+          "amount": "300.00",
+          "running_balance": "6694.00",
+          "ref_table": "invoice",
+          "ref_id": 14,
+          "note": "Udhar added via Invoice INV-0009",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-16T22:05:38.598083+05:30"
+        },
+        {
+          "id": 11,
+          "txn_type": "invoice_credit",
+          "amount": "1500.00",
+          "running_balance": "6394.00",
+          "ref_table": "invoice",
+          "ref_id": 11,
+          "note": "Udhar added via Invoice INV-0006",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-16T20:07:22.587463+05:30"
+        },
+        {
+          "id": 10,
+          "txn_type": "invoice_credit",
+          "amount": "18.00",
+          "running_balance": "4894.00",
+          "ref_table": "invoice",
+          "ref_id": 10,
+          "note": "Udhar added via Invoice INV-0005",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-16T15:51:52.475883+05:30"
+        },
+        {
+          "id": 9,
+          "txn_type": "invoice_credit",
+          "amount": "150.00",
+          "running_balance": "4876.00",
+          "ref_table": "invoice",
+          "ref_id": 9,
+          "note": "Udhar added via Invoice INV-0004",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-16T15:47:06.950218+05:30"
+        },
+        {
+          "id": 8,
+          "txn_type": "invoice_credit",
+          "amount": "177.00",
+          "running_balance": "4726.00",
+          "ref_table": "invoice",
+          "ref_id": 8,
+          "note": "Udhar added via Invoice INV-0003",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-16T15:38:26.907348+05:30"
+        },
+        {
+          "id": 7,
+          "txn_type": "invoice_credit",
+          "amount": "885.00",
+          "running_balance": "4549.00",
+          "ref_table": "invoice",
+          "ref_id": 7,
+          "note": "Udhar added via Invoice INV-0002",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-16T15:18:03.186426+05:30"
+        },
+        {
+          "id": 6,
+          "txn_type": "invoice_credit",
+          "amount": "3664.00",
+          "running_balance": "3664.00",
+          "ref_table": "invoice",
+          "ref_id": 6,
+          "note": "Udhar added via Invoice INV-0001",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-16T14:57:14.470777+05:30"
+        }
+      ]
+    },
+    "3": {
+      "customer_id": 3,
+      "customer_name": "mukeshbhai",
+      "current_balance": 400.0,
+      "ledger": [
+        {
+          "id": 15,
+          "txn_type": "payment_received",
+          "amount": "-1000.00",
+          "running_balance": "400.00",
+          "ref_table": "payment",
+          "ref_id": null,
+          "note": "Repayment (Cash)",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-16T20:45:44.527282+05:30"
+        },
+        {
+          "id": 14,
+          "txn_type": "invoice_credit",
+          "amount": "800.00",
+          "running_balance": "1400.00",
+          "ref_table": "invoice",
+          "ref_id": 13,
+          "note": "Udhar added via Invoice INV-0008",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-16T20:38:21.725806+05:30"
+        },
+        {
+          "id": 13,
+          "txn_type": "sales_return",
+          "amount": "-600.00",
+          "running_balance": "600.00",
+          "ref_table": "credit_note",
+          "ref_id": 1,
+          "note": "Udhar reduced via Credit Note CN-0001 for Inv INV-0007",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-16T20:37:16.274186+05:30"
+        },
+        {
+          "id": 12,
+          "txn_type": "invoice_credit",
+          "amount": "1200.00",
+          "running_balance": "1200.00",
+          "ref_table": "invoice",
+          "ref_id": 12,
+          "note": "Udhar added via Invoice INV-0007",
+          "created_by_name": "9016929244",
+          "created_at": "2026-08-16T20:31:17.457378+05:30"
+        }
+      ]
+    }
+  },
+  "synced_at": "2026-09-04T07:55:33.802387+00:00"
+}
