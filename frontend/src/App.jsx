@@ -6,6 +6,7 @@ import CustomerLedger from "./components/customers/CustomerLedger";
 import PaymentLinksTable from "./components/payments/PaymentLinksTable";
 import ApprovalsQueue from "./components/approvals/ApprovalsQueue";
 import AuditTrail from "./components/audit/AuditTrail";
+import IntegrationsHub from "./components/integrations/IntegrationsHub";
 import WebhookSimulatorModal from "./components/common/WebhookSimulatorModal";
 
 import { 
@@ -51,10 +52,10 @@ export default function App() {
 
       if (m) setMetrics(m);
       if (ag) setAgingData(ag);
-      if (c) setCustomers(c);
-      if (pl) setPaymentLinks(pl);
-      if (app) setApprovals(app);
-      if (aud) setAuditLogs(aud);
+      if (c) setCustomers(Array.isArray(c) ? c : (c?.items || []));
+      if (pl) setPaymentLinks(Array.isArray(pl) ? pl : (pl?.items || []));
+      if (app) setApprovals(Array.isArray(app) ? app : (app?.items || []));
+      if (aud) setAuditLogs(Array.isArray(aud) ? aud : (aud?.items || []));
     } catch (err) {
       console.error("Failed to load PayPilot business data:", err);
     }
@@ -165,6 +166,7 @@ export default function App() {
           <CustomerLedger 
             customers={customers}
             onPromptAgent={handlePromptAgent}
+            onRefreshData={loadAllData}
           />
         )}
 
@@ -180,6 +182,13 @@ export default function App() {
           <ApprovalsQueue 
             approvals={approvals}
             onRefreshData={loadAllData}
+          />
+        )}
+
+        {activeTab === "integrations" && (
+          <IntegrationsHub 
+            onRefreshData={loadAllData}
+            customers={customers}
           />
         )}
 

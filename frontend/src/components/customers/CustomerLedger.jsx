@@ -8,19 +8,23 @@ import {
   Phone, 
   Mail, 
   Building,
-  CreditCard
+  CreditCard,
+  MessageCircle
 } from "lucide-react";
 import { fetchCustomerDetail } from "../../services/api";
+import WhatsAppModal from "../common/WhatsAppModal";
 
 export default function CustomerLedger({ 
   customers, 
-  onPromptAgent 
+  onPromptAgent,
+  onRefreshData
 }) {
   const [search, setSearch] = useState("");
   const [riskFilter, setRiskFilter] = useState("ALL");
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [customerDetail, setCustomerDetail] = useState(null);
   const [loadingDetail, setLoadingDetail] = useState(false);
+  const [whatsAppCustomer, setWhatsAppCustomer] = useState(null);
 
   const formatINR = (val) => {
     return "₹" + Number(val || 0).toLocaleString("en-IN", { minimumFractionDigits: 2 });
@@ -187,13 +191,33 @@ export default function CustomerLedger({
                       History
                     </button>
                     {c.outstanding_balance > 0 && (
-                      <button 
-                        className="btn btn-primary btn-sm"
-                        onClick={() => onPromptAgent(`Prepare reminders for ${c.name}`)}
-                      >
-                        <Bot size={13} />
-                        Recover
-                      </button>
+                      <>
+                        <button 
+                          className="btn btn-sm"
+                          style={{
+                            background: "#25D366",
+                            color: "#ffffff",
+                            border: "none",
+                            fontWeight: "600",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "0.25rem",
+                            padding: "0.35rem 0.65rem"
+                          }}
+                          onClick={() => setWhatsAppCustomer(c)}
+                          title="Dispatch instant WhatsApp UPI payment link"
+                        >
+                          <MessageCircle size={13} />
+                          WhatsApp
+                        </button>
+                        <button 
+                          className="btn btn-primary btn-sm"
+                          onClick={() => onPromptAgent(`Prepare reminders for ${c.name}`)}
+                        >
+                          <Bot size={13} />
+                          Recover
+                        </button>
+                      </>
                     )}
                   </div>
                 </td>
@@ -292,6 +316,19 @@ export default function CustomerLedger({
             </div>
           </div>
         </div>
+      )}
+
+      {/* WhatsApp UPI Payment Modal */}
+      {whatsAppCustomer && (
+        <WhatsAppModal 
+          customer={whatsAppCustomer}
+          billNo={`INV-KT-${Math.floor(1000 + Math.random() * 9000)}`}
+          amountRupees={whatsAppCustomer.outstanding_balance}
+          onClose={() => setWhatsAppCustomer(null)}
+          onPaymentSuccess={() => {
+            if (onRefreshData) onRefreshData();
+          }}
+        />
       )}
     </div>
   );

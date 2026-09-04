@@ -94,3 +94,57 @@ export async function syncKhushiData() {
   });
   return res.json();
 }
+
+export async function uploadBillingFile(file) {
+  const formData = new FormData();
+  formData.append("file", file);
+  const res = await fetch(`${API_BASE}/connect/upload`, {
+    method: "POST",
+    body: formData
+  });
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    throw new Error(errorData.detail || `Upload failed with status ${res.status}`);
+  }
+  return res.json();
+}
+
+export async function fetchApiKeys() {
+  const res = await fetch(`${API_BASE}/connect/api-keys`);
+  return res.json();
+}
+
+export async function syncExternalInvoice(payload) {
+  const res = await fetch(`${API_BASE}/connect/invoices`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail || "Failed to sync invoice");
+  }
+  return res.json();
+}
+
+export async function generateWhatsAppLink(payload) {
+  const res = await fetch(`${API_BASE}/connect/whatsapp-link`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
+  return res.json();
+}
+
+export async function simulateInstantPayment(payload) {
+  const res = await fetch(`${API_BASE}/connect/simulate-payment`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail || "Payment simulation failed");
+  }
+  return res.json();
+}

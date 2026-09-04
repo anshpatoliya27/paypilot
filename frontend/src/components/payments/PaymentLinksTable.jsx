@@ -10,9 +10,11 @@ import {
   Clock,
   CheckCircle2,
   AlertCircle,
-  FileText
+  FileText,
+  MessageCircle
 } from "lucide-react";
 import { createPaymentLink, syncPaymentLink } from "../../services/api";
+import WhatsAppModal from "../common/WhatsAppModal";
 
 export default function PaymentLinksTable({ 
   paymentLinks, 
@@ -22,6 +24,7 @@ export default function PaymentLinksTable({
   const [copiedId, setCopiedId] = useState(null);
   const [syncingId, setSyncingId] = useState(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [whatsAppPayload, setWhatsAppPayload] = useState(null);
   
   // Create Modal Form state
   const [formData, setFormData] = useState({
@@ -169,6 +172,36 @@ export default function PaymentLinksTable({
                         {l.short_url.includes(".pdf") ? <FileText size={12} /> : <ExternalLink size={12} />}
                         {l.short_url.includes(".pdf") ? "Bill PDF" : "Checkout"}
                       </a>
+                      <button
+                        className="btn btn-sm"
+                        style={{
+                          background: "#25D366",
+                          color: "#ffffff",
+                          border: "none",
+                          fontSize: "0.74rem",
+                          fontWeight: "600",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "0.25rem",
+                          padding: "0.3rem 0.55rem"
+                        }}
+                        onClick={() => {
+                          const cust = (customers || []).find(c => c.id === l.customer_id) || {
+                            name: l.description?.includes("for ") ? l.description.split("for ")[1]?.split(":")[0] : "Client",
+                            phone: "+919876543210"
+                          };
+                          setWhatsAppPayload({
+                            customer: cust,
+                            billNo: l.meta_data?.invoice_no || "INV-BILL",
+                            amount: l.amount,
+                            paymentUrl: l.short_url
+                          });
+                        }}
+                        title="Send via WhatsApp"
+                      >
+                        <MessageCircle size={12} />
+                        WhatsApp
+                      </button>
                     </div>
                   ) : (
                     <span style={{ fontSize: "0.78rem", color: "var(--text-muted)" }}>N/A</span>
@@ -286,6 +319,20 @@ export default function PaymentLinksTable({
             </form>
           </div>
         </div>
+      )}
+
+      {/* WhatsApp Modal */}
+      {whatsAppPayload && (
+        <WhatsAppModal
+          customer={whatsAppPayload.customer}
+          billNo={whatsAppPayload.billNo}
+          amountRupees={whatsAppPayload.amount}
+          paymentUrl={whatsAppPayload.paymentUrl}
+          onClose={() => setWhatsAppPayload(null)}
+          onPaymentSuccess={() => {
+            if (onRefreshData) onRefreshData();
+          }}
+        />
       )}
     </div>
   );

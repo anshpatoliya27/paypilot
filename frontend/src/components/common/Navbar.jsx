@@ -10,7 +10,8 @@ import {
   Zap,
   RefreshCw,
   CheckCircle2,
-  ExternalLink
+  ExternalLink,
+  FileSpreadsheet
 } from "lucide-react";
 import { fetchKhushiStatus } from "../../services/api";
 
@@ -118,6 +119,14 @@ export default function Navbar({
               {pendingApprovalsCount}
             </span>
           )}
+        </button>
+
+        <button 
+          className={`nav-tab ${activeTab === "integrations" ? "active" : ""}`}
+          onClick={() => setActiveTab("integrations")}
+        >
+          <FileSpreadsheet size={15} />
+          Integrations & Ingestion
         </button>
 
         <button 
