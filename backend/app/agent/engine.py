@@ -67,8 +67,10 @@ class AgentEngine:
                 failed_note = f" (⚠️ {c['failed_payment_count']} failed payment attempts)" if c['failed_payment_count'] > 0 else ""
                 response_text += f"* **{c['name']}** ({c['company_name'] or 'Client'}): **₹{c['outstanding_balance']:,.2f}** — {c['overdue_days']} days overdue | {risk_badge}{failed_note}\n"
 
-            response_text += f"\n**Key Insight & Recommendation:**\n"
-            response_text += f"**ABC Enterprises Ltd** is your highest risk contributor (**₹42,000**, 9 days overdue with 2 previous failed payment attempts). I recommend initiating an immediate recovery campaign with a 48-hour payment link."
+            if overdue_list:
+                highest = max(overdue_list, key=lambda x: x.get('outstanding_balance', 0))
+                response_text += f"\n**Key Insight & Recommendation:**\n"
+                response_text += f"**{highest['name']}** is your highest balance debtor (**₹{highest['outstanding_balance']:,.2f}**, {highest.get('overdue_days', 0)} days overdue). I recommend initiating an automated payment recovery reminder with an instant Razorpay link."
 
             # Stream tokens
             for chunk in self._chunk_text(response_text):
@@ -82,17 +84,16 @@ class AgentEngine:
             yield self._sse_event("thought", "Identifying delinquent clients for automated recovery...")
             await asyncio.sleep(0.3)
 
-            # Check if specific client mentioned (e.g. ABC Ltd)
             overdue_list = await self.tools.list_overdue_receivables(min_days_overdue=0)
             target_ids = []
 
-            if "abc" in msg_lower:
-                target_ids = [c["id"] for c in overdue_list if "abc" in c["name"].lower() or "abc" in (c["company_name"] or "").lower()]
-            elif "rahul" in msg_lower:
-                target_ids = [c["id"] for c in overdue_list if "rahul" in c["name"].lower()]
-            else:
-                target_ids = [c["id"] for c in overdue_list]
+            # Dynamically check if any specific customer was mentioned in user query
+            for c in overdue_list:
+                c_first = c["name"].lower().split()[0] if c.get("name") else ""
+                if (c_first and c_first in msg_lower) or (c.get("company_name") and c["company_name"].lower() in msg_lower):
+                    target_ids.append(c["id"])
 
+            # If no specific customer was mentioned, target all delinquent accounts
             if not target_ids and overdue_list:
                 target_ids = [c["id"] for c in overdue_list]
 
@@ -138,18 +139,20 @@ class AgentEngine:
                 except ValueError:
                     amount = 15000.0
 
-            # Find customer
-            cust_name = "Rahul Sharma"
-            for name in ["rahul", "abc", "priya", "zenith", "devflow", "vikram", "amit", "kavita"]:
-                if name in msg_lower:
-                    cust_name = name.title()
+            # Find customer dynamically
+            overdue_list = await self.tools.list_overdue_receivables(min_days_overdue=0)
+            cust_name = overdue_list[0]["name"] if overdue_list else "Anshu Patel"
+            for c in overdue_list:
+                c_first = c["name"].lower().split()[0] if c.get("name") else ""
+                if c_first and c_first in msg_lower:
+                    cust_name = c["name"]
                     break
 
             profile = await self.tools.get_customer_profile(cust_name)
             cust_id = profile["id"] if profile else None
             resolved_name = profile["name"] if profile else cust_name
 
-            desc = "Project milestone retainer"
+            desc = "Embroidery order invoice payment"
             if "for" in msg_lower:
                 parts = msg.split("for")
                 if len(parts) > 1:
