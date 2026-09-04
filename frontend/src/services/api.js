@@ -82,3 +82,15 @@ export async function simulateWebhookCapture(customerId, amount) {
   });
   return res.json();
 }
+
+export async function fetchKhushiStatus() {
+  const res = await fetch(`${API_BASE}/integrations/khushi/status`);
+  return res.json();
+}
+
+export async function syncKhushiData() {
+  const res = await fetch(`${API_BASE}/integrations/khushi/sync`, {
+    method: "POST"
+  });
+  return res.json();
+}

@@ -16,7 +16,7 @@ export default function WebhookSimulatorModal({
     customers?.find(c => c.outstanding_balance > 0)?.id || ""
   );
   const [amount, setAmount] = useState(
-    customers?.find(c => c.outstanding_balance > 0)?.outstanding_balance || 42000
+    customers?.find(c => c.outstanding_balance > 0)?.outstanding_balance || 35921
   );
   const [simulating, setSimulating] = useState(false);
   const [result, setResult] = useState(null);

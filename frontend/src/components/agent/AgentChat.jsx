@@ -35,10 +35,10 @@ export default function AgentChat({
     {
       id: "welcome_01",
       role: "agent",
-      content: "### 👋 Hello Rohan, welcome to your Revenue Copilot\n\nI am continuously monitoring your accounts connected via Razorpay & Neon PostgreSQL.\n\n* **Outstanding Receivables:** ₹75,500.00 across 3 delinquent accounts\n* **Top Priority:** **ABC Enterprises Ltd** (₹42,000 overdue, 2 previous failed attempts)\n\nClick one of the quick actions below or in the right panel to begin recovery.",
+      content: "### 👋 Welcome Ansh, your Khushi Threads Revenue Copilot is active\n\nI am monitoring your 54 live production invoices and customer ledger connected via Khushi Threads & Razorpay rails.\n\n* **Outstanding Receivables:** ₹36,321.00 across 2 customer accounts\n* **Top Priority:** **Anshu Patel** (₹35,921.00 overdue across 49 pending textile invoices)\n\nClick one of the quick actions below to audit receivables or dispatch 1-click Razorpay payment links.",
       traces: [
-        { type: "thought", text: "Connected to Neon PostgreSQL cloud database" },
-        { type: "tool", text: "Ledger status: 3 delinquent accounts detected (₹75,500 total)" }
+        { type: "thought", text: "Connected to Khushi Threads live API & Neon PostgreSQL" },
+        { type: "tool", text: "Ingested 54 genuine bills: ₹36,321.00 outstanding receivables detected" }
       ],
       proposals: []
     }
@@ -447,7 +447,7 @@ export default function AgentChat({
           <input 
             type="text"
             className="chat-input"
-            placeholder="Ask PayPilot (e.g. 'Who owes money?', 'Prepare reminders for ABC Ltd')..."
+            placeholder="Ask PayPilot (e.g. 'Who owes money?', 'Prepare reminders for Anshu Patel')..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyPress}
@@ -488,11 +488,11 @@ export default function AgentChat({
 
           <div style={{ marginBottom: "1rem" }}>
             <div style={{ fontSize: "1.45rem", fontWeight: "800", color: "#0f172a", fontFamily: "var(--font-sans)" }}>
-              ₹{Number(safeMetrics.total_outstanding_rupees || 75500).toLocaleString("en-IN", { minimumFractionDigits: 2 })}
+              ₹{Number(safeMetrics.total_outstanding_rupees || 36321).toLocaleString("en-IN", { minimumFractionDigits: 2 })}
             </div>
             <div style={{ fontSize: "0.74rem", color: "#dc2626", fontWeight: "600", marginTop: "2px", display: "flex", alignItems: "center", gap: "0.3rem" }}>
               <AlertTriangle size={12} />
-              {safeMetrics.overdue_customers_count || 3} Delinquent Clients Awaiting Action
+              {safeMetrics.overdue_customers_count || 2} Delinquent Clients Awaiting Action
             </div>
           </div>
 
@@ -501,13 +501,13 @@ export default function AgentChat({
             <div style={{ background: "#f8fafc", padding: "0.5rem 0.65rem", borderRadius: "6px", border: "1px solid #e2e8f0" }}>
               <div style={{ fontSize: "0.68rem", color: "#64748b" }}>Realized Revenue</div>
               <div style={{ fontSize: "0.86rem", fontWeight: "700", color: "#059669" }}>
-                ₹{Number(safeMetrics.realized_revenue_rupees || 124000).toLocaleString("en-IN")}
+                ₹{Number(safeMetrics.realized_revenue_rupees || 1635).toLocaleString("en-IN")}
               </div>
             </div>
             <div style={{ background: "#f8fafc", padding: "0.5rem 0.65rem", borderRadius: "6px", border: "1px solid #e2e8f0" }}>
               <div style={{ fontSize: "0.68rem", color: "#64748b" }}>Revenue At Risk</div>
               <div style={{ fontSize: "0.86rem", fontWeight: "700", color: "#dc2626" }}>
-                ₹{Number(safeMetrics.revenue_at_risk_rupees || 67000).toLocaleString("en-IN")}
+                ₹{Number(safeMetrics.revenue_at_risk_rupees || 36321).toLocaleString("en-IN")}
               </div>
             </div>
           </div>

@@ -56,10 +56,10 @@ export default function RevenueHQ({
           </div>
           <div>
             <h3 style={{ fontSize: "1.05rem", fontWeight: "700", color: "var(--text-main)" }}>
-              Autonomous Revenue Operations Active
+              Khushi Threads Revenue Operations Active
             </h3>
             <p style={{ fontSize: "0.82rem", color: "var(--text-secondary)", marginTop: "2px" }}>
-              Continuous ledger monitoring on Razorpay rails. Identified <strong style={{ color: "var(--danger-text)" }}>₹75,500 overdue balance</strong> across 3 delinquent accounts.
+              Continuous ledger monitoring on Razorpay rails. Identified <strong style={{ color: "var(--danger-text)" }}>{formatINR(metrics?.total_outstanding)} overdue receivables</strong> across {metrics?.overdue_customers_count || 2} customer accounts.
             </p>
           </div>
         </div>
@@ -219,17 +219,17 @@ export default function RevenueHQ({
             padding: "0.95rem 1.15rem"
           }}>
             <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", color: "var(--danger-text)", fontWeight: "700", fontSize: "0.82rem", marginBottom: "0.3rem" }}>
-              <ShieldAlert size={14} /> High Risk Delinquency Alert
+              <ShieldAlert size={14} /> Highest Outstanding Balance Alert
             </div>
             <p style={{ fontSize: "0.8rem", color: "var(--text-secondary)", marginBottom: "0.75rem", lineHeight: "1.45" }}>
-              <strong style={{ color: "var(--text-main)" }}>ABC Enterprises Ltd</strong> has ₹42,000 overdue by 9 days with 2 previous failed payment attempts.
+              <strong style={{ color: "var(--text-main)" }}>Anshu Patel</strong> has ₹35,921.00 overdue across 49 pending textile invoices.
             </p>
             <button 
               className="btn btn-primary btn-sm"
               style={{ width: "100%" }}
-              onClick={() => onPromptAgent("Prepare reminders for ABC Ltd")}
+              onClick={() => onPromptAgent("Prepare reminders for Anshu Patel")}
             >
-              Draft Recovery for ABC Ltd <ChevronRight size={13} />
+              Draft Recovery for Anshu Patel <ChevronRight size={13} />
             </button>
           </div>
 
@@ -244,7 +244,7 @@ export default function RevenueHQ({
               ⚡ 1-Click Multi-Client Campaign
             </div>
             <p style={{ fontSize: "0.78rem", color: "var(--text-secondary)", marginBottom: "0.75rem", lineHeight: "1.45" }}>
-              Stage dynamic Razorpay payment links for all 3 overdue clients (₹75,500 total).
+              Stage dynamic Razorpay payment links for all overdue accounts ({formatINR(metrics?.total_outstanding)} total).
             </p>
             <button 
               className="btn btn-outline btn-sm"

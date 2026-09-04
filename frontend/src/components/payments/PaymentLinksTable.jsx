@@ -9,7 +9,8 @@ import {
   X, 
   Clock,
   CheckCircle2,
-  AlertCircle
+  AlertCircle,
+  FileText
 } from "lucide-react";
 import { createPaymentLink, syncPaymentLink } from "../../services/api";
 
@@ -152,7 +153,7 @@ export default function PaymentLinksTable({
                       <button 
                         className="btn btn-outline btn-sm"
                         onClick={() => copyToClipboard(l.short_url, l.id)}
-                        title="Copy payment link URL"
+                        title="Copy payment link or Bill PDF URL"
                       >
                         {copiedId === l.id ? <Check size={12} color="var(--success)" /> : <Copy size={12} />}
                         Copy
@@ -161,11 +162,12 @@ export default function PaymentLinksTable({
                         href={l.short_url} 
                         target="_blank" 
                         rel="noreferrer"
-                        className="btn btn-primary btn-sm"
-                        title="Open Razorpay checkout preview"
+                        className={`btn btn-sm ${l.short_url.includes(".pdf") ? "btn-outline" : "btn-primary"}`}
+                        title={l.short_url.includes(".pdf") ? "Open official Khushi Threads Bill PDF" : "Open Razorpay checkout preview"}
+                        style={l.short_url.includes(".pdf") ? { borderColor: "#cbd5e1", color: "#0f172a", fontWeight: "600" } : {}}
                       >
-                        <ExternalLink size={12} />
-                        Checkout
+                        {l.short_url.includes(".pdf") ? <FileText size={12} /> : <ExternalLink size={12} />}
+                        {l.short_url.includes(".pdf") ? "Bill PDF" : "Checkout"}
                       </a>
                     </div>
                   ) : (

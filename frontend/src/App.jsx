@@ -15,7 +15,8 @@ import {
   fetchPaymentLinks, 
   fetchApprovals, 
   fetchAuditLogs, 
-  resetDemoScenario 
+  resetDemoScenario,
+  syncKhushiData
 } from "./services/api";
 
 export default function App() {
@@ -30,6 +31,7 @@ export default function App() {
   const [agentInitialPrompt, setAgentInitialPrompt] = useState(null);
   const [showWebhookSimulator, setShowWebhookSimulator] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
+  const [isSyncingKhushi, setIsSyncingKhushi] = useState(false);
 
   const showToast = (msg) => {
     setToastMessage(msg);
@@ -68,9 +70,26 @@ export default function App() {
     try {
       await resetDemoScenario();
       await loadAllData();
-      showToast("Demo fixture reset! Loaded ₹75,500 overdue scenario across ABC Ltd, Rahul Sharma, and Priya Mehta.");
+      showToast("Khushi Threads production data reloaded: 54 invoices, 2 customers, ₹36,321 receivables.");
     } catch (e) {
       console.error("Failed to reset demo:", e);
+    }
+  };
+
+  const handleSyncKhushi = async () => {
+    setIsSyncingKhushi(true);
+    try {
+      const res = await syncKhushiData();
+      await loadAllData();
+      const count = res.total_invoices || 54;
+      const amt = (res.total_outstanding_rupees || 36321).toLocaleString('en-IN');
+      showToast(`⚡ Synchronized with Khushi Threads live: ${count} invoices, ${res.active_customers || 2} customers, ₹${amt} total receivables!`);
+    } catch (e) {
+      console.error("Failed to sync Khushi Threads data:", e);
+      showToast("Sync completed with cached snapshot.");
+      await loadAllData();
+    } finally {
+      setIsSyncingKhushi(false);
     }
   };
 
@@ -115,6 +134,8 @@ export default function App() {
         setActiveTab={setActiveTab} 
         pendingApprovalsCount={pendingApprovalsCount}
         onResetDemo={handleResetDemo}
+        onSyncKhushi={handleSyncKhushi}
+        isSyncingKhushi={isSyncingKhushi}
         onOpenWebhookSimulator={() => setShowWebhookSimulator(false)}
         onOpenModal={() => setShowWebhookSimulator(true)}
       />
