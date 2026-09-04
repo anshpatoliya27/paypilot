@@ -15,7 +15,8 @@ import {
   Shield,
   CreditCard,
   Building2,
-  CheckCircle2
+  CheckCircle2,
+  MessageCircle
 } from "lucide-react";
 import ActionCard from "./ActionCard";
 
@@ -35,11 +36,8 @@ export default function AgentChat({
     {
       id: "welcome_01",
       role: "agent",
-      content: "### 👋 Welcome Ansh, your Khushi Threads Revenue Copilot is active\n\nI am monitoring your 54 live production invoices and customer ledger connected via Khushi Threads & Razorpay rails.\n\n* **Outstanding Receivables:** ₹36,321.00 across 2 customer accounts\n* **Top Priority:** **Anshu Patel** (₹35,921.00 overdue across 49 pending textile invoices)\n\nClick one of the quick actions below to audit receivables or dispatch 1-click Razorpay payment links.",
-      traces: [
-        { type: "thought", text: "Connected to Khushi Threads live API & Neon PostgreSQL" },
-        { type: "tool", text: "Ingested 54 genuine bills: ₹36,321.00 outstanding receivables detected" }
-      ],
+      content: "### 👋 Welcome back, Ansh\n\nKhushi Threads billing is connected and live.\n\n* **Pending Udhar:** ₹36,321 across pending invoices\n* **Key Account:** **Anshu Patel** (₹35,921 overdue across 49 bills)\n\nAsk any question or pick a quick action below to send WhatsApp payment links.",
+      traces: [],
       proposals: []
     }
   ]);
@@ -73,7 +71,7 @@ export default function AgentChat({
       {
         id: `welcome_${Date.now()}`,
         role: "agent",
-        content: "### ⚡ PayPilot Session Reset\n\nHow can I help you manage your cashflow? You can ask me to **audit overdue accounts**, **stage recovery campaigns**, or **generate dynamic payment links**.",
+        content: "### ⚡ Chat Reset\n\nHow can I help you? You can ask me to **check pending bills**, **send WhatsApp reminders**, or **create payment links**.",
         traces: [],
         proposals: []
       }
@@ -194,10 +192,10 @@ export default function AgentChat({
   };
 
   const samplePrompts = [
-    { label: "Audit Overdue Receivables", prompt: "Who owes me money and what is pending?" },
-    { label: "Recover ABC Ltd Dues", prompt: "Prepare reminders for ABC Ltd" },
-    { label: "Create ₹25,000 Link for Rahul", prompt: "Create a ₹25,000 payment link for Rahul for website project" },
-    { label: "Diagnose Failed Payments", prompt: "Show me failed payments from this week" }
+    { label: "💬 WhatsApp Reminders", prompt: "Prepare WhatsApp payment reminders for overdue customers" },
+    { label: "📊 Show Overdue Bills", prompt: "Who owes me money and what is pending?" },
+    { label: "🔗 Create Payment Link", prompt: "Create a ₹10,000 payment link for textile order" },
+    { label: "📁 How to Upload Bills", prompt: "How do I import a CSV or Excel billing file into PayPilot?" }
   ];
 
   // Helper to render basic markdown nicely
@@ -209,7 +207,7 @@ export default function AgentChat({
       // Header
       if (line.startsWith("### ")) {
         return (
-          <h4 key={i} style={{ fontSize: "1rem", fontWeight: "700", color: "#0f172a", margin: "0.5rem 0 0.35rem 0" }}>
+          <h4 key={i} style={{ fontSize: "0.95rem", fontWeight: "700", color: "#0f172a", margin: "0.4rem 0 0.25rem 0" }}>
             {line.replace("### ", "")}
           </h4>
         );
@@ -218,7 +216,7 @@ export default function AgentChat({
       if (line.startsWith("* ") || line.startsWith("- ")) {
         const itemText = line.substring(2);
         return (
-          <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.45rem", margin: "0.25rem 0", fontSize: "0.86rem" }}>
+          <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.45rem", margin: "0.2rem 0", fontSize: "0.84rem" }}>
             <span style={{ color: "#0284c7", fontWeight: "bold" }}>•</span>
             <span dangerouslySetInnerHTML={{ __html: formatBoldAndBadges(itemText) }} />
           </div>
@@ -226,11 +224,11 @@ export default function AgentChat({
       }
       // Empty line
       if (!line.trim()) {
-        return <div key={i} style={{ height: "0.4rem" }} />;
+        return <div key={i} style={{ height: "0.3rem" }} />;
       }
       // Standard paragraph
       return (
-        <p key={i} style={{ margin: "0.2rem 0", fontSize: "0.86rem", lineHeight: "1.55" }} dangerouslySetInnerHTML={{ __html: formatBoldAndBadges(line) }} />
+        <p key={i} style={{ margin: "0.2rem 0", fontSize: "0.84rem", lineHeight: "1.5" }} dangerouslySetInnerHTML={{ __html: formatBoldAndBadges(line) }} />
       );
     });
   };
@@ -258,21 +256,21 @@ export default function AgentChat({
       {/* Left Main Chat Workspace */}
       <div className="table-card" style={{ display: "flex", flexDirection: "column", height: "100%", overflow: "hidden", border: "1px solid var(--border-subtle)" }}>
         {/* Sleek Minimalist Header */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0.85rem 1.25rem", borderBottom: "1px solid var(--border-subtle)", background: "#ffffff" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0.75rem 1.25rem", borderBottom: "1px solid var(--border-subtle)", background: "#ffffff" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
-            <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "#0f172a", color: "#ffffff", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <Bot size={17} />
+            <div style={{ width: "30px", height: "30px", borderRadius: "8px", background: "#0f172a", color: "#ffffff", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <Bot size={16} />
             </div>
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                <span style={{ fontWeight: "700", fontSize: "0.92rem", color: "#0f172a" }}>PayPilot Copilot</span>
-                <span style={{ display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "0.72rem", color: "#059669", fontWeight: "600", background: "#ecfdf5", padding: "1px 6px", borderRadius: "4px" }}>
+                <span style={{ fontWeight: "700", fontSize: "0.9rem", color: "#0f172a" }}>AI Assistant</span>
+                <span style={{ display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "0.7rem", color: "#059669", fontWeight: "600", background: "#ecfdf5", padding: "1px 6px", borderRadius: "4px" }}>
                   <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#059669" }}></span>
-                  Live • Neon DB
+                  Active
                 </span>
               </div>
               <div style={{ fontSize: "0.72rem", color: "var(--text-muted)" }}>
-                Autonomous Receivables & Razorpay Settlement Rails
+                Automated payment recovery & WhatsApp reminders
               </div>
             </div>
           </div>
@@ -281,9 +279,9 @@ export default function AgentChat({
             className="btn btn-outline btn-sm"
             onClick={handleClearChat}
             title="Reset conversation"
-            style={{ fontSize: "0.76rem", padding: "0.3rem 0.65rem", display: "flex", alignItems: "center", gap: "0.35rem" }}
+            style={{ fontSize: "0.74rem", padding: "0.3rem 0.65rem", display: "flex", alignItems: "center", gap: "0.35rem" }}
           >
-            <RotateCcw size={12} />
+            <RotateCcw size={11} />
             Clear
           </button>
         </div>
@@ -473,61 +471,60 @@ export default function AgentChat({
         </div>
       </div>
 
-      {/* Right Sidebar: Real-Time Cashflow & Immediate Actions Cockpit (Zero fluff text) */}
+      {/* Right Sidebar: Real-Time Overview & Quick Actions */}
       <div style={{ display: "flex", flexDirection: "column", gap: "1rem", overflowY: "auto" }}>
-        {/* Quick Cashflow Summary Card */}
+        {/* Quick Summary Card */}
         <div className="table-card" style={{ padding: "1.15rem" }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.75rem" }}>
-            <span style={{ fontSize: "0.78rem", fontWeight: "700", color: "#64748b", textTransform: "uppercase", letterSpacing: "0.03em" }}>
-              Receivables Snapshot
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.6rem" }}>
+            <span style={{ fontSize: "0.76rem", fontWeight: "700", color: "#64748b", textTransform: "uppercase", letterSpacing: "0.03em" }}>
+              Receivables Summary
             </span>
             <span style={{ fontSize: "0.7rem", color: "#059669", background: "#ecfdf5", padding: "1px 6px", borderRadius: "4px", fontWeight: "600" }}>
               Live
             </span>
           </div>
 
-          <div style={{ marginBottom: "1rem" }}>
-            <div style={{ fontSize: "1.45rem", fontWeight: "800", color: "#0f172a", fontFamily: "var(--font-sans)" }}>
+          <div style={{ marginBottom: "0.85rem" }}>
+            <div style={{ fontSize: "1.4rem", fontWeight: "800", color: "#0f172a", fontFamily: "var(--font-sans)" }}>
               ₹{Number(safeMetrics.total_outstanding_rupees || 36321).toLocaleString("en-IN", { minimumFractionDigits: 2 })}
             </div>
-            <div style={{ fontSize: "0.74rem", color: "#dc2626", fontWeight: "600", marginTop: "2px", display: "flex", alignItems: "center", gap: "0.3rem" }}>
-              <AlertTriangle size={12} />
-              {safeMetrics.overdue_customers_count || 2} Delinquent Clients Awaiting Action
+            <div style={{ fontSize: "0.75rem", color: "#64748b", marginTop: "2px" }}>
+              {overdueCustomers.length} accounts with pending payments
             </div>
           </div>
 
           {/* Metric Pills */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem", marginBottom: "0.85rem" }}>
             <div style={{ background: "#f8fafc", padding: "0.5rem 0.65rem", borderRadius: "6px", border: "1px solid #e2e8f0" }}>
-              <div style={{ fontSize: "0.68rem", color: "#64748b" }}>Realized Revenue</div>
+              <div style={{ fontSize: "0.68rem", color: "#64748b" }}>Total Collected</div>
               <div style={{ fontSize: "0.86rem", fontWeight: "700", color: "#059669" }}>
                 ₹{Number(safeMetrics.realized_revenue_rupees || 1635).toLocaleString("en-IN")}
               </div>
             </div>
             <div style={{ background: "#f8fafc", padding: "0.5rem 0.65rem", borderRadius: "6px", border: "1px solid #e2e8f0" }}>
-              <div style={{ fontSize: "0.68rem", color: "#64748b" }}>Revenue At Risk</div>
+              <div style={{ fontSize: "0.68rem", color: "#64748b" }}>Pending Udhar</div>
               <div style={{ fontSize: "0.86rem", fontWeight: "700", color: "#dc2626" }}>
                 ₹{Number(safeMetrics.revenue_at_risk_rupees || 36321).toLocaleString("en-IN")}
               </div>
             </div>
           </div>
 
-          {/* Quick Action Trigger Button */}
+          {/* Quick WhatsApp Reminder Trigger */}
           <button 
             className="btn btn-primary"
-            onClick={() => handleSendMessage("Prepare reminders for overdue clients")}
+            onClick={() => handleSendMessage("Prepare WhatsApp payment reminders for overdue customers")}
             disabled={isStreaming}
             style={{ width: "100%", padding: "0.55rem", fontSize: "0.8rem", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.4rem" }}
           >
-            <Zap size={13} />
-            <span>Launch Bulk Recovery Campaign</span>
+            <MessageCircle size={14} />
+            <span>Send WhatsApp Reminders</span>
           </button>
         </div>
 
-        {/* Top Delinquent Accounts List with 1-Click Action Buttons */}
+        {/* Overdue Accounts List */}
         <div className="table-card" style={{ padding: "1.15rem", flex: 1 }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.85rem" }}>
-            <span style={{ fontSize: "0.78rem", fontWeight: "700", color: "#64748b", textTransform: "uppercase", letterSpacing: "0.03em" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.75rem" }}>
+            <span style={{ fontSize: "0.76rem", fontWeight: "700", color: "#64748b", textTransform: "uppercase", letterSpacing: "0.03em" }}>
               Overdue Accounts
             </span>
             {onNavigateTab && (
@@ -535,12 +532,12 @@ export default function AgentChat({
                 onClick={() => onNavigateTab("customers")}
                 style={{ fontSize: "0.72rem", color: "#0284c7", background: "none", border: "none", cursor: "pointer", fontWeight: "600" }}
               >
-                View Ledger →
+                View Bills →
               </button>
             )}
           </div>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.55rem" }}>
             {overdueCustomers.length > 0 ? (
               overdueCustomers.slice(0, 4).map((c) => {
                 const bal = c.outstanding_balance_rupees ?? (c.outstanding_balance_paise ? c.outstanding_balance_paise / 100 : c.outstanding_balance ?? c.overdue_amount ?? 0);
@@ -550,13 +547,13 @@ export default function AgentChat({
                   <div 
                     key={c.id} 
                     style={{
-                      padding: "0.65rem 0.8rem",
+                      padding: "0.6rem 0.75rem",
                       borderRadius: "8px",
                       border: "1px solid #e2e8f0",
-                      background: isHighRisk ? "#fffbfb" : "#ffffff",
+                      background: "#ffffff",
                       display: "flex",
                       flexDirection: "column",
-                      gap: "0.35rem"
+                      gap: "0.3rem"
                     }}
                   >
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
@@ -567,7 +564,7 @@ export default function AgentChat({
                         fontSize: "0.68rem",
                         padding: "1px 5px",
                         borderRadius: "4px",
-                        fontWeight: "700",
+                        fontWeight: "600",
                         background: isHighRisk ? "#fef2f2" : "#fffbeb",
                         color: isHighRisk ? "#b91c1c" : "#b45309"
                       }}>
@@ -582,11 +579,11 @@ export default function AgentChat({
 
                       <button 
                         className="btn btn-outline btn-sm"
-                        onClick={() => handleSendMessage(`Prepare recovery payment link for ${c.company_name || c.name}`)}
+                        onClick={() => handleSendMessage(`Prepare WhatsApp payment link for ${c.company_name || c.name}`)}
                         disabled={isStreaming}
-                        style={{ fontSize: "0.72rem", padding: "0.2rem 0.55rem" }}
+                        style={{ fontSize: "0.72rem", padding: "0.2rem 0.55rem", gap: "0.3rem" }}
                       >
-                        ⚡ Chase
+                        <MessageCircle size={11} color="#16a34a" /> Remind
                       </button>
                     </div>
                   </div>
@@ -594,7 +591,7 @@ export default function AgentChat({
               })
             ) : (
               <div style={{ textAlign: "center", padding: "1.5rem", color: "#94a3b8", fontSize: "0.8rem" }}>
-                No delinquent accounts
+                No overdue accounts
               </div>
             )}
           </div>

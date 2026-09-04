@@ -58,15 +58,15 @@ export default function CustomerLedger({
         <div className="table-header-box">
           <div className="table-title">
             <Users size={18} color="var(--primary)" />
-            Customer Receivables & Risk Intelligence
+            Customers & Invoices
           </div>
 
           <div style={{ display: "flex", alignItems: "center", gap: "0.65rem" }}>
             <div style={{ position: "relative" }}>
               <Search size={14} style={{ position: "absolute", left: "10px", top: "10px", color: "var(--text-muted)" }} />
               <input 
-                type="text"
-                placeholder="Search customer, company, email..."
+                type="text" 
+                placeholder="Search customer, company, phone..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 style={{
@@ -96,10 +96,10 @@ export default function CustomerLedger({
                 cursor: "pointer"
               }}
             >
-              <option value="ALL">All Risk Profiles</option>
-              <option value="HIGH">High Risk</option>
-              <option value="MEDIUM">Medium Risk</option>
-              <option value="LOW">Low Risk</option>
+              <option value="ALL">All Accounts</option>
+              <option value="HIGH">High Overdue</option>
+              <option value="MEDIUM">Medium Overdue</option>
+              <option value="LOW">Settled / Low</option>
             </select>
           </div>
         </div>
@@ -109,11 +109,11 @@ export default function CustomerLedger({
           <thead>
             <tr>
               <th>Customer & Company</th>
-              <th>Contact Details</th>
-              <th>Outstanding Balance</th>
-              <th>Aging Status</th>
-              <th>Risk Profile</th>
-              <th>Lifetime Value</th>
+              <th>Contact</th>
+              <th>Pending Amount</th>
+              <th>Status</th>
+              <th>Risk</th>
+              <th>Total Billed</th>
               <th style={{ textAlign: "right" }}>Actions</th>
             </tr>
           </thead>
@@ -213,9 +213,10 @@ export default function CustomerLedger({
                         <button 
                           className="btn btn-primary btn-sm"
                           onClick={() => onPromptAgent(`Prepare reminders for ${c.name}`)}
+                          title="Ask AI to audit and draft reminder"
                         >
                           <Bot size={13} />
-                          Recover
+                          AI Assist
                         </button>
                       </>
                     )}

@@ -42,77 +42,87 @@ export default function Navbar({
 
   return (
     <header className="navbar">
-      {/* Brand & Workspace Status */}
+      {/* Brand */}
       <div className="brand-section">
-        <div className="logo-badge">
-          <Zap size={20} />
+        <div className="logo-badge" style={{ width: "32px", height: "32px", borderRadius: "8px" }}>
+          <Zap size={17} />
         </div>
-        <div>
-          <div className="brand-title" style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-            <span>PayPilot</span>
-            <span style={{ color: "var(--text-muted)", fontSize: "0.82rem", fontWeight: "400" }}>×</span>
-            <a 
-              href="https://khushi-threads.vercel.app/" 
-              target="_blank" 
-              rel="noreferrer"
-              style={{ color: "#0f172a", textDecoration: "none", fontWeight: "700", display: "inline-flex", alignItems: "center", gap: "3px" }}
-              title="Open Khushi Threads Live Site"
-            >
-              Khushi Threads
-              <ExternalLink size={10} style={{ color: "var(--text-muted)" }} />
-            </a>
-            <span className="brand-tag">Real Data Active</span>
-          </div>
-          <div style={{ fontSize: "0.72rem", color: "var(--text-muted)", marginTop: "-2px", display: "flex", alignItems: "center", gap: "6px" }}>
-            <span style={{ fontWeight: "600", color: "#1e293b" }}>Textile Billing OS</span>
-            <span style={{ width: "4px", height: "4px", borderRadius: "50%", background: "#059669" }}></span>
-            <span style={{ color: "#059669", fontWeight: "600", display: "flex", alignItems: "center", gap: "3px" }}>
-              <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#10b981", display: "inline-block" }}></span>
-              Live Sync: 54 Bills
-            </span>
-          </div>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <span style={{ fontWeight: "800", fontSize: "1.05rem", color: "#0f172a", letterSpacing: "-0.02em" }}>
+            PayPilot
+          </span>
+          <a 
+            href="https://khushi-threads.vercel.app/" 
+            target="_blank" 
+            rel="noreferrer"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "5px",
+              background: "#f1f5f9",
+              border: "1px solid #e2e8f0",
+              padding: "2px 8px",
+              borderRadius: "9999px",
+              fontSize: "0.72rem",
+              fontWeight: "600",
+              color: "#334155",
+              textDecoration: "none"
+            }}
+            title="Khushi Threads Live Store"
+          >
+            <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#10b981", display: "inline-block" }} />
+            Khushi Threads
+          </a>
         </div>
       </div>
 
-      {/* Main Tab Switcher */}
+      {/* Navigation Tabs - Simple & Understandable */}
       <nav className="nav-links">
-        <button 
-          className={`nav-tab ${activeTab === "agent" ? "active" : ""}`}
-          onClick={() => setActiveTab("agent")}
-        >
-          <Bot size={15} />
-          Agent Copilot
-        </button>
-
         <button 
           className={`nav-tab ${activeTab === "revenue" ? "active" : ""}`}
           onClick={() => setActiveTab("revenue")}
         >
-          <LayoutDashboard size={15} />
-          Revenue HQ
+          <LayoutDashboard size={14} />
+          Dashboard
+        </button>
+
+        <button 
+          className={`nav-tab ${activeTab === "agent" ? "active" : ""}`}
+          onClick={() => setActiveTab("agent")}
+        >
+          <Bot size={14} />
+          AI Assistant
         </button>
 
         <button 
           className={`nav-tab ${activeTab === "customers" ? "active" : ""}`}
           onClick={() => setActiveTab("customers")}
         >
-          <Users size={15} />
-          Receivables & Bills
+          <Users size={14} />
+          Customers & Bills
         </button>
 
         <button 
           className={`nav-tab ${activeTab === "links" ? "active" : ""}`}
           onClick={() => setActiveTab("links")}
         >
-          <LinkIcon size={15} />
+          <LinkIcon size={14} />
           Payment Links
+        </button>
+
+        <button 
+          className={`nav-tab ${activeTab === "integrations" ? "active" : ""}`}
+          onClick={() => setActiveTab("integrations")}
+        >
+          <FileSpreadsheet size={14} />
+          Import & API
         </button>
 
         <button 
           className={`nav-tab ${activeTab === "approvals" ? "active" : ""}`}
           onClick={() => setActiveTab("approvals")}
         >
-          <ShieldCheck size={15} />
+          <ShieldCheck size={14} />
           Approvals
           {pendingApprovalsCount > 0 && (
             <span className="nav-badge">
@@ -122,69 +132,54 @@ export default function Navbar({
         </button>
 
         <button 
-          className={`nav-tab ${activeTab === "integrations" ? "active" : ""}`}
-          onClick={() => setActiveTab("integrations")}
-        >
-          <FileSpreadsheet size={15} />
-          Integrations & Ingestion
-        </button>
-
-        <button 
           className={`nav-tab ${activeTab === "audit" ? "active" : ""}`}
           onClick={() => setActiveTab("audit")}
         >
-          <History size={15} />
-          Audit Trail
+          <History size={14} />
+          Audit
         </button>
       </nav>
 
-      {/* Top Header Actions */}
+      {/* Header Actions */}
       <div className="nav-actions">
-        {/* Khushi Live Sync Button */}
         <button 
           className="btn btn-outline btn-sm"
           onClick={onSyncKhushi}
           disabled={isSyncingKhushi}
-          title="Pull live bills, customers, and payments directly from Khushi Threads backend"
-          style={{ 
-            borderColor: "#cbd5e1", 
-            background: isSyncingKhushi ? "#f1f5f9" : "#ffffff",
-            fontWeight: "600",
-            color: "#0f172a"
-          }}
+          title="Pull live bills and payments from Khushi Threads"
+          style={{ fontSize: "0.78rem", padding: "0.4rem 0.75rem" }}
         >
-          <RefreshCw size={13} style={{ animation: isSyncingKhushi ? "spin 1s linear infinite" : "none" }} />
-          {isSyncingKhushi ? "Syncing..." : "Sync Khushi Data"}
+          <RefreshCw size={12} style={{ animation: isSyncingKhushi ? "spin 1s linear infinite" : "none" }} />
+          {isSyncingKhushi ? "Syncing..." : "Sync Data"}
         </button>
 
         <button 
           className="btn btn-primary btn-sm"
           onClick={handleOpenWebhook}
-          title="Simulate incoming Razorpay payment webhook capture"
+          title="Simulate customer payment received"
+          style={{ fontSize: "0.78rem", padding: "0.4rem 0.75rem" }}
         >
-          <Zap size={13} />
-          Simulate Webhook
+          <Zap size={12} />
+          Simulate Payment
         </button>
 
-        {/* Merchant Avatar Pill */}
-        <div style={{ display: "flex", alignItems: "center", gap: "0.45rem", paddingLeft: "0.5rem", borderLeft: "1px solid var(--border-subtle)" }}>
-          <div 
-            style={{ 
-              width: "32px", 
-              height: "32px", 
-              borderRadius: "50%", 
-              background: "linear-gradient(135deg, #0f172a, #334155)", 
-              color: "#ffffff", 
-              display: "flex", 
-              alignItems: "center", 
-              justifyContent: "center", 
-              fontSize: "0.75rem", 
-              fontWeight: "700" 
-            }}
-            title="Khushi Threads (Ansh Patoliya)"
-          >
-            KT
-          </div>
+        {/* Merchant Avatar */}
+        <div 
+          style={{ 
+            width: "30px", 
+            height: "30px", 
+            borderRadius: "50%", 
+            background: "#0f172a", 
+            color: "#ffffff", 
+            display: "flex", 
+            alignItems: "center", 
+            justifyContent: "center", 
+            fontSize: "0.72rem", 
+            fontWeight: "700" 
+          }}
+          title="Khushi Threads (Ansh Patoliya)"
+        >
+          KT
         </div>
       </div>
     </header>

@@ -9,7 +9,8 @@ import {
   ShieldAlert, 
   Zap, 
   ChevronRight,
-  Activity
+  Activity,
+  MessageCircle
 } from "lucide-react";
 
 export default function RevenueHQ({ 
@@ -28,13 +29,13 @@ export default function RevenueHQ({
 
   return (
     <div>
-      {/* Top Banner with Quick Context */}
+      {/* Top Banner with Clean Context */}
       <div style={{
-        background: "linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)",
-        border: "1px solid var(--border-default)",
+        background: "#ffffff",
+        border: "1px solid var(--border-subtle)",
         borderRadius: "var(--radius-lg)",
-        padding: "1.25rem 1.75rem",
-        marginBottom: "1.75rem",
+        padding: "1.15rem 1.5rem",
+        marginBottom: "1.5rem",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
@@ -42,41 +43,43 @@ export default function RevenueHQ({
         gap: "1rem",
         boxShadow: "var(--shadow-xs)"
       }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.85rem" }}>
           <div style={{
             background: "var(--primary)",
             color: "#ffffff",
             borderRadius: "var(--radius-md)",
-            padding: "0.65rem",
+            padding: "0.55rem",
             display: "flex",
             alignItems: "center",
             justifyContent: "center"
           }}>
-            <Zap size={22} />
+            <Zap size={20} />
           </div>
           <div>
-            <h3 style={{ fontSize: "1.05rem", fontWeight: "700", color: "var(--text-main)" }}>
-              Khushi Threads Revenue Operations Active
+            <h3 style={{ fontSize: "1rem", fontWeight: "700", color: "var(--text-main)" }}>
+              Khushi Threads — Business Overview
             </h3>
             <p style={{ fontSize: "0.82rem", color: "var(--text-secondary)", marginTop: "2px" }}>
-              Continuous ledger monitoring on Razorpay rails. Identified <strong style={{ color: "var(--danger-text)" }}>{formatINR(metrics?.total_outstanding)} overdue receivables</strong> across {metrics?.overdue_customers_count || 2} customer accounts.
+              Total pending udhar is <strong style={{ color: "var(--danger-text)" }}>{formatINR(metrics?.total_outstanding)}</strong> across {metrics?.overdue_customers_count || 2} customer accounts.
             </p>
           </div>
         </div>
 
         <button 
           className="btn btn-primary btn-sm"
-          onClick={() => onPromptAgent("Who owes me money and what is pending?")}
+          onClick={() => onPromptAgent("Prepare WhatsApp payment reminders for overdue customers")}
+          style={{ gap: "0.4rem" }}
         >
-          Run Full Receivables Audit <ArrowRight size={13} />
+          <MessageCircle size={13} />
+          Send WhatsApp Reminders
         </button>
       </div>
 
-      {/* KPI Cards Grid */}
+      {/* KPI Cards Grid - Simple & Understandable */}
       <div className="kpi-grid">
         <div className="kpi-card">
           <div className="kpi-header">
-            <span className="kpi-label">Realized Revenue</span>
+            <span className="kpi-label">Collected Amount</span>
             <div className="kpi-icon" style={{ background: "var(--success-bg)", color: "var(--success)" }}>
               <IndianRupee size={18} />
             </div>
@@ -86,13 +89,13 @@ export default function RevenueHQ({
           </div>
           <div className="kpi-subtext">
             <CheckCircle2 size={13} color="var(--success)" />
-            <span>{metrics?.paid_transactions_count || 0} reconciled payments settled</span>
+            <span>{metrics?.paid_transactions_count || 0} bills settled</span>
           </div>
         </div>
 
         <div className="kpi-card">
           <div className="kpi-header">
-            <span className="kpi-label">Total Outstanding</span>
+            <span className="kpi-label">Pending Udhar</span>
             <div className="kpi-icon" style={{ background: "var(--warning-bg)", color: "var(--warning)" }}>
               <Clock size={18} />
             </div>
@@ -102,13 +105,13 @@ export default function RevenueHQ({
           </div>
           <div className="kpi-subtext">
             <AlertTriangle size={13} color="var(--warning)" />
-            <span>{metrics?.overdue_customers_count || 0} clients with active overdue dues</span>
+            <span>{metrics?.overdue_customers_count || 0} accounts with pending dues</span>
           </div>
         </div>
 
         <div className="kpi-card">
           <div className="kpi-header">
-            <span className="kpi-label">Revenue At Risk</span>
+            <span className="kpi-label">Overdue &gt;7 Days</span>
             <div className="kpi-icon" style={{ background: "var(--danger-bg)", color: "var(--danger)" }}>
               <ShieldAlert size={18} />
             </div>
@@ -117,13 +120,13 @@ export default function RevenueHQ({
             {formatINR(metrics?.revenue_at_risk)}
           </div>
           <div className="kpi-subtext">
-            <span>High delinquency (&gt;7 days or failed payment)</span>
+            <span>Needs immediate reminder</span>
           </div>
         </div>
 
         <div className="kpi-card">
           <div className="kpi-header">
-            <span className="kpi-label">Collection Velocity</span>
+            <span className="kpi-label">Collection Rate</span>
             <div className="kpi-icon" style={{ background: "var(--info-bg)", color: "var(--info)" }}>
               <TrendingUp size={18} />
             </div>
@@ -132,7 +135,7 @@ export default function RevenueHQ({
             {metrics?.collection_rate_percent || 0}%
           </div>
           <div className="kpi-subtext">
-            <span>{metrics?.failed_payments_count || 0} failed attempt(s) diagnosed</span>
+            <span>Overall recovery rate</span>
           </div>
         </div>
       </div>
@@ -206,74 +209,75 @@ export default function RevenueHQ({
 
         {/* Autonomous Recommendations & Quick Actions */}
         <div className="table-card" style={{ padding: "1.5rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
-          <h4 style={{ fontSize: "0.98rem", fontWeight: "700", display: "flex", alignItems: "center", gap: "0.45rem", color: "var(--text-main)" }}>
+          <h4 style={{ fontSize: "0.95rem", fontWeight: "700", display: "flex", alignItems: "center", gap: "0.45rem", color: "var(--text-main)" }}>
             <Activity size={16} color="var(--primary-brand)" />
-            Agent Recommendations
+            Recommended Actions
           </h4>
 
-          {/* Alert 1 */}
+          {/* Action 1: Top debtor */}
           <div style={{
-            background: "var(--danger-bg)",
-            border: "1px solid var(--danger-border)",
+            background: "#fef2f2",
+            border: "1px solid #fecaca",
             borderRadius: "var(--radius-md)",
-            padding: "0.95rem 1.15rem"
+            padding: "0.9rem 1.1rem"
           }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", color: "var(--danger-text)", fontWeight: "700", fontSize: "0.82rem", marginBottom: "0.3rem" }}>
-              <ShieldAlert size={14} /> Highest Outstanding Balance Alert
+            <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", color: "#991b1b", fontWeight: "700", fontSize: "0.82rem", marginBottom: "0.25rem" }}>
+              <ShieldAlert size={14} /> Highest Pending Account
             </div>
-            <p style={{ fontSize: "0.8rem", color: "var(--text-secondary)", marginBottom: "0.75rem", lineHeight: "1.45" }}>
-              <strong style={{ color: "var(--text-main)" }}>Anshu Patel</strong> has ₹35,921.00 overdue across 49 pending textile invoices.
+            <p style={{ fontSize: "0.8rem", color: "#475569", marginBottom: "0.65rem", lineHeight: "1.4" }}>
+              <strong style={{ color: "#0f172a" }}>Anshu Patel</strong> has ₹35,921.00 pending across 49 bills.
             </p>
             <button 
               className="btn btn-primary btn-sm"
-              style={{ width: "100%" }}
-              onClick={() => onPromptAgent("Prepare reminders for Anshu Patel")}
+              style={{ width: "100%", gap: "0.35rem" }}
+              onClick={() => onPromptAgent("Prepare WhatsApp payment reminders for Anshu Patel")}
             >
-              Draft Recovery for Anshu Patel <ChevronRight size={13} />
+              <MessageCircle size={13} />
+              Send WhatsApp to Anshu Patel
             </button>
           </div>
 
-          {/* Recommendation 2 */}
+          {/* Action 2: Multi-client */}
           <div style={{
-            background: "var(--bg-surface-subtle)",
+            background: "#f8fafc",
             border: "1px solid var(--border-subtle)",
             borderRadius: "var(--radius-md)",
-            padding: "0.95rem 1.15rem"
+            padding: "0.9rem 1.1rem"
           }}>
-            <div style={{ fontWeight: "700", fontSize: "0.82rem", color: "var(--text-main)", marginBottom: "0.3rem" }}>
-              ⚡ 1-Click Multi-Client Campaign
+            <div style={{ fontWeight: "700", fontSize: "0.82rem", color: "var(--text-main)", marginBottom: "0.25rem", display: "flex", alignItems: "center", gap: "0.35rem" }}>
+              <MessageCircle size={14} color="#16a34a" /> Remind All Overdue Accounts
             </div>
-            <p style={{ fontSize: "0.78rem", color: "var(--text-secondary)", marginBottom: "0.75rem", lineHeight: "1.45" }}>
-              Stage dynamic Razorpay payment links for all overdue accounts ({formatINR(metrics?.total_outstanding)} total).
+            <p style={{ fontSize: "0.78rem", color: "var(--text-secondary)", marginBottom: "0.65rem", lineHeight: "1.4" }}>
+              Generate 1-click UPI links for all {metrics?.overdue_customers_count || 2} accounts with pending balance.
             </p>
             <button 
               className="btn btn-outline btn-sm"
               style={{ width: "100%" }}
-              onClick={() => onPromptAgent("Prepare reminders for everyone overdue")}
+              onClick={() => onPromptAgent("Prepare WhatsApp payment reminders for overdue customers")}
             >
-              Prepare Bulk Recovery Campaign
+              Send Reminders to Everyone
             </button>
           </div>
 
-          {/* Recommendation 3 */}
+          {/* Action 3: Importer shortcut */}
           <div style={{
-            background: "var(--bg-surface-subtle)",
+            background: "#f8fafc",
             border: "1px solid var(--border-subtle)",
             borderRadius: "var(--radius-md)",
-            padding: "0.95rem 1.15rem"
+            padding: "0.9rem 1.1rem"
           }}>
-            <div style={{ fontWeight: "700", fontSize: "0.82rem", color: "var(--text-main)", marginBottom: "0.3rem" }}>
-              🔍 Failed Payment Diagnostics
+            <div style={{ fontWeight: "700", fontSize: "0.82rem", color: "var(--text-main)", marginBottom: "0.25rem" }}>
+              📁 Import New Invoices
             </div>
-            <p style={{ fontSize: "0.78rem", color: "var(--text-secondary)", marginBottom: "0.75rem", lineHeight: "1.45" }}>
-              Inspect bank timeout error codes and prepare re-engagement links.
+            <p style={{ fontSize: "0.78rem", color: "var(--text-secondary)", marginBottom: "0.65rem", lineHeight: "1.4" }}>
+              Upload any CSV, Excel spreadsheet, or PDF from your billing software.
             </p>
             <button 
               className="btn btn-outline btn-sm"
               style={{ width: "100%" }}
-              onClick={() => onPromptAgent("Show me failed payments from this week")}
+              onClick={() => onNavigateTab("integrations")}
             >
-              Diagnose Failed Payments
+              Open File Importer
             </button>
           </div>
         </div>

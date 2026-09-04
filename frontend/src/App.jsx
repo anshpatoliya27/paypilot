@@ -21,7 +21,7 @@ import {
 } from "./services/api";
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState("agent");
+  const [activeTab, setActiveTab] = useState("revenue");
   const [metrics, setMetrics] = useState(null);
   const [agingData, setAgingData] = useState(null);
   const [customers, setCustomers] = useState([]);

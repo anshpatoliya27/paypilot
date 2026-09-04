@@ -138,111 +138,102 @@ export default function IntegrationsHub({ onRefreshData, customers = [] }) {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
       {/* Top Banner */}
       <div style={{
-        background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)",
-        color: "#ffffff",
+        background: "#ffffff",
+        border: "1px solid var(--border-subtle)",
         borderRadius: "var(--radius-lg)",
-        padding: "1.5rem 2rem",
+        padding: "1.25rem 1.75rem",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        boxShadow: "var(--shadow-md)"
+        boxShadow: "var(--shadow-xs)",
+        flexWrap: "wrap",
+        gap: "1rem"
       }}>
         <div>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.25rem" }}>
-            <span style={{
-              background: "#3b82f6",
-              color: "#ffffff",
-              fontSize: "0.72rem",
-              fontWeight: "700",
-              padding: "0.2rem 0.5rem",
-              borderRadius: "4px",
-              textTransform: "uppercase"
-            }}>
-              Universal Ingestion & Connectivity
-            </span>
-            <span style={{ color: "#94a3b8", fontSize: "0.8rem" }}>v2.4 Live</span>
-          </div>
-          <h2 style={{ margin: "0.25rem 0", fontSize: "1.4rem", fontWeight: "700" }}>
-            Integrations & Billing Importer Hub
+          <h2 style={{ margin: "0 0 0.25rem 0", fontSize: "1.2rem", fontWeight: "700", color: "#0f172a" }}>
+            Import Bills & Software Connections
           </h2>
-          <p style={{ margin: 0, color: "#cbd5e1", fontSize: "0.86rem", maxWidth: "600px" }}>
-            Connect any billing software (Tally, Vyapar, Marg, Zoho) via live API keys, 
-            or drag-and-drop any CSV / Excel / PDF invoice file to ingest pending dues and trigger 1-click WhatsApp payments.
+          <p style={{ margin: 0, color: "#64748b", fontSize: "0.84rem" }}>
+            Upload billing files (CSV, Excel, PDF) or connect external billing software via API key.
           </p>
         </div>
 
         {/* Sub-Tabs Switcher */}
         <div style={{
-          background: "rgba(255, 255, 255, 0.1)",
+          background: "var(--bg-surface-muted)",
           borderRadius: "var(--radius-md)",
-          padding: "0.3rem",
+          padding: "0.25rem",
           display: "flex",
-          gap: "0.3rem"
+          gap: "0.25rem",
+          border: "1px solid var(--border-subtle)"
         }}>
           <button
             onClick={() => setActiveSubTab("importer")}
             style={{
               background: activeSubTab === "importer" ? "#ffffff" : "transparent",
-              color: activeSubTab === "importer" ? "#0f172a" : "#cbd5e1",
+              color: activeSubTab === "importer" ? "#0f172a" : "#64748b",
               border: "none",
               borderRadius: "var(--radius-sm)",
-              padding: "0.5rem 0.85rem",
-              fontSize: "0.82rem",
+              padding: "0.45rem 0.85rem",
+              fontSize: "0.8rem",
               fontWeight: "600",
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
-              gap: "0.4rem",
-              transition: "all 0.2s"
+              gap: "0.35rem",
+              boxShadow: activeSubTab === "importer" ? "var(--shadow-xs)" : "none",
+              transition: "all 0.15s"
             }}
           >
-            <FileSpreadsheet size={15} />
-            Smart File Importer
+            <FileSpreadsheet size={14} />
+            File Importer
           </button>
 
           <button
             onClick={() => setActiveSubTab("api")}
             style={{
               background: activeSubTab === "api" ? "#ffffff" : "transparent",
-              color: activeSubTab === "api" ? "#0f172a" : "#cbd5e1",
+              color: activeSubTab === "api" ? "#0f172a" : "#64748b",
               border: "none",
               borderRadius: "var(--radius-sm)",
-              padding: "0.5rem 0.85rem",
-              fontSize: "0.82rem",
+              padding: "0.45rem 0.85rem",
+              fontSize: "0.8rem",
               fontWeight: "600",
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
-              gap: "0.4rem",
-              transition: "all 0.2s"
+              gap: "0.35rem",
+              boxShadow: activeSubTab === "api" ? "var(--shadow-xs)" : "none",
+              transition: "all 0.15s"
             }}
           >
-            <Key size={15} />
-            API Keys & Webhooks
+            <Key size={14} />
+            API & Webhooks
           </button>
 
           <button
             onClick={() => setActiveSubTab("whatsapp")}
             style={{
               background: activeSubTab === "whatsapp" ? "#ffffff" : "transparent",
-              color: activeSubTab === "whatsapp" ? "#0f172a" : "#cbd5e1",
+              color: activeSubTab === "whatsapp" ? "#0f172a" : "#64748b",
               border: "none",
               borderRadius: "var(--radius-sm)",
-              padding: "0.5rem 0.85rem",
-              fontSize: "0.82rem",
+              padding: "0.45rem 0.85rem",
+              fontSize: "0.8rem",
               fontWeight: "600",
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
-              gap: "0.4rem",
-              transition: "all 0.2s"
+              gap: "0.35rem",
+              boxShadow: activeSubTab === "whatsapp" ? "var(--shadow-xs)" : "none",
+              transition: "all 0.15s"
             }}
           >
-            <MessageCircle size={15} />
-            WhatsApp UPI Hub
+            <MessageCircle size={14} />
+            WhatsApp Hub
           </button>
         </div>
       </div>
