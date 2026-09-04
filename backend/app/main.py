@@ -19,21 +19,23 @@ logger = logging.getLogger("paypilot")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    logger.info("Initializing PayPilot backend services...")
-    # Initialize database tables on startup
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-    
-    # Auto-seed initial demo fixture if empty
-    async with AsyncSessionLocal() as session:
-        from sqlalchemy import select
-        from app.models.merchant import Merchant
-        res = await session.execute(select(Merchant).filter_by(id="merchant_demo_apex_01"))
-        if not res.scalar_one_or_none():
-            logger.info("Seeding default demo business data...")
-            await SeedService.reset_and_seed_demo_data(session)
-        else:
-            logger.info("Demo business data already present in database.")
+    try:
+        # Initialize database tables on startup
+        async with engine.begin() as conn:
+            await conn.run_sync(Base.metadata.create_all)
+        
+        # Auto-seed initial demo fixture if empty
+        async with AsyncSessionLocal() as session:
+            from sqlalchemy import select
+            from app.models.merchant import Merchant
+            res = await session.execute(select(Merchant).filter_by(id="merchant_demo_apex_01"))
+            if not res.scalar_one_or_none():
+                logger.info("Seeding production data from Khushi Threads...")
+                await SeedService.reset_and_seed_demo_data(session)
+            else:
+                logger.info("Khushi Threads business data active in database.")
+    except Exception as e:
+        logger.warning(f"Startup DB check warning (non-fatal): {e}")
     
     yield
     
