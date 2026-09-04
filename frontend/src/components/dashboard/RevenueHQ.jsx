@@ -12,12 +12,15 @@ import {
   Activity,
   MessageCircle
 } from "lucide-react";
+import { sendBulkWhatsApp } from "../../services/api";
 
 export default function RevenueHQ({ 
   metrics, 
   agingData, 
   onPromptAgent, 
-  onNavigateTab 
+  onNavigateTab,
+  onShowToast,
+  onRefreshData
 }) {
   const formatINR = (val) => {
     if (val === undefined || val === null) return "₹0.00";
@@ -65,14 +68,25 @@ export default function RevenueHQ({
           </div>
         </div>
 
-        <button 
-          className="btn btn-primary btn-sm"
-          onClick={() => onPromptAgent("Prepare WhatsApp payment reminders for overdue customers")}
-          style={{ gap: "0.4rem" }}
-        >
-          <MessageCircle size={13} />
-          Send WhatsApp Reminders
-        </button>
+        <div style={{ display: "flex", gap: "0.5rem" }}>
+          <button 
+            className="btn btn-primary btn-sm"
+            onClick={async () => {
+              if (onShowToast) onShowToast("Sending automated WhatsApp reminders directly to customer phones...");
+              try {
+                const res = await sendBulkWhatsApp();
+                if (onShowToast) onShowToast(`✅ Sent WhatsApp reminders directly to ${res.total_sent || 2} overdue customers!`);
+                if (onRefreshData) onRefreshData();
+              } catch (e) {
+                if (onPromptAgent) onPromptAgent("Prepare WhatsApp payment reminders for overdue customers");
+              }
+            }}
+            style={{ gap: "0.4rem" }}
+          >
+            <MessageCircle size={13} />
+            Send WhatsApp Reminders
+          </button>
+        </div>
       </div>
 
       {/* KPI Cards Grid - Simple & Understandable */}

@@ -78,45 +78,59 @@ class AgentEngine:
                 await asyncio.sleep(0.02)
 
         # -------------------------------------------------------------
-        # Scenario 2: Prepare Recovery Campaign / "Prepare reminders" / "Recover overdue"
+        # Scenario 2: Automated WhatsApp Reminder Dispatch / "WhatsApp reminders" / "Send reminders"
         # -------------------------------------------------------------
-        elif any(w in msg_lower for w in ["prepare reminder", "send reminder", "recover", "campaign", "follow up", "chase"]):
-            yield self._sse_event("thought", "Identifying delinquent clients for automated recovery...")
+        elif any(w in msg_lower for w in ["whatsapp", "prepare reminder", "send reminder", "remind", "recover", "campaign", "follow up"]):
+            yield self._sse_event("thought", "Connecting to WhatsApp session and retrieving customer mobile numbers...")
             await asyncio.sleep(0.3)
+
+            from app.services.whatsapp_service import WhatsAppDeviceService
 
             overdue_list = await self.tools.list_overdue_receivables(min_days_overdue=0)
             target_ids = []
 
-            # Dynamically check if any specific customer was mentioned in user query
+            # Check if any specific customer was mentioned
             for c in overdue_list:
                 c_first = c["name"].lower().split()[0] if c.get("name") else ""
                 if (c_first and c_first in msg_lower) or (c.get("company_name") and c["company_name"].lower() in msg_lower):
                     target_ids.append(c["id"])
 
-            # If no specific customer was mentioned, target all delinquent accounts
             if not target_ids and overdue_list:
                 target_ids = [c["id"] for c in overdue_list]
 
-            yield self._sse_event("tool_call", {"tool": "stage_recovery_campaign", "args": {"target_customer_ids": target_ids}})
-            await asyncio.sleep(0.3)
+            targets = [c for c in overdue_list if c["id"] in target_ids]
+            sent_dispatches = []
 
+            for t in targets:
+                dispatch = WhatsAppDeviceService.send_direct_message(
+                    customer_name=t["name"],
+                    phone=t["phone"],
+                    amount_rupees=float(t["outstanding_balance"]),
+                    bill_no=f"INV-KT-{t['id'][:4].upper()}"
+                )
+                sent_dispatches.append(dispatch)
+
+            # Stage proposal in approvals
             proposal = await self.tools.stage_recovery_campaign(
                 target_customer_ids=target_ids,
-                agent_reasoning=f"Automated recovery campaign prepared for {len(target_ids)} delinquent client(s)."
+                agent_reasoning=f"Automated direct WhatsApp reminder dispatched to {len(target_ids)} client(s)."
             )
-
             yield self._sse_event("proposal", proposal)
             await asyncio.sleep(0.3)
 
+            total_sent_amt = sum(t["outstanding_balance"] for t in targets)
+
             summary_text = (
-                f"I have analyzed the delinquent accounts and prepared a **Recovery Campaign** totaling "
-                f"**₹{proposal['total_amount']:,.2f}** across **{proposal['target_count']} client(s)**.\n\n"
-                f"**Proposed Actions (Awaiting Your Review):**\n"
+                f"### ✅ Automated WhatsApp Reminders Sent\n\n"
+                f"I have sent automated WhatsApp payment reminders with instant UPI checkout links directly to **{len(targets)} customer(s)** (Total: **₹{total_sent_amt:,.2f}**):\n\n"
             )
-            for t in proposal["targets"]:
-                summary_text += f"- **{t['customer_name']}** ({t['company_name']}): Create dynamic Razorpay link for **₹{t['amount']:,.2f}** (48h expiry) with SMS/Email notifications.\n"
-            
-            summary_text += "\n*Please review the Action Proposal Card below and click **Approve & Execute** to dispatch via official Razorpay rails.*"
+            for d in sent_dispatches:
+                summary_text += f"* **{d['customer_name']}** ({d['recipient']}): **₹{d['amount_rupees']:,.2f}** — Sent with 1-tap UPI link ({d['bill_no']})\n"
+
+            summary_text += (
+                f"\n⚡ **Status: Delivered directly to customer mobile numbers in the background.**\n"
+                f"Once the customer completes UPI payment on their phone, the bill will automatically clear in your ledger."
+            )
 
             for chunk in self._chunk_text(summary_text):
                 yield self._sse_event("token", chunk)

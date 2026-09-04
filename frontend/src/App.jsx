@@ -8,6 +8,7 @@ import ApprovalsQueue from "./components/approvals/ApprovalsQueue";
 import AuditTrail from "./components/audit/AuditTrail";
 import IntegrationsHub from "./components/integrations/IntegrationsHub";
 import WebhookSimulatorModal from "./components/common/WebhookSimulatorModal";
+import WhatsAppConnectModal from "./components/common/WhatsAppConnectModal";
 
 import { 
   fetchOverviewMetrics, 
@@ -31,6 +32,7 @@ export default function App() {
   
   const [agentInitialPrompt, setAgentInitialPrompt] = useState(null);
   const [showWebhookSimulator, setShowWebhookSimulator] = useState(false);
+  const [showWhatsAppConnect, setShowWhatsAppConnect] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
   const [isSyncingKhushi, setIsSyncingKhushi] = useState(false);
 
@@ -139,6 +141,7 @@ export default function App() {
         isSyncingKhushi={isSyncingKhushi}
         onOpenWebhookSimulator={() => setShowWebhookSimulator(false)}
         onOpenModal={() => setShowWebhookSimulator(true)}
+        onOpenWhatsAppConnect={() => setShowWhatsAppConnect(true)}
       />
 
       {/* Main Content Area */}
@@ -147,9 +150,6 @@ export default function App() {
           <AgentChat 
             onRefreshData={loadAllData}
             initialPrompt={agentInitialPrompt}
-            metrics={metrics}
-            customers={customers}
-            onNavigateTab={(tab) => setActiveTab(tab)}
           />
         )}
 
@@ -159,6 +159,8 @@ export default function App() {
             agingData={agingData}
             onPromptAgent={handlePromptAgent}
             onNavigateTab={(tab) => setActiveTab(tab)}
+            onShowToast={showToast}
+            onRefreshData={loadAllData}
           />
         )}
 
@@ -167,6 +169,7 @@ export default function App() {
             customers={customers}
             onPromptAgent={handlePromptAgent}
             onRefreshData={loadAllData}
+            onShowToast={showToast}
           />
         )}
 
@@ -207,6 +210,17 @@ export default function App() {
           onSuccess={(res) => {
             loadAllData();
             showToast(res.message);
+          }}
+        />
+      )}
+
+      {/* WhatsApp QR Device Pairing Modal */}
+      {showWhatsAppConnect && (
+        <WhatsAppConnectModal 
+          onClose={() => setShowWhatsAppConnect(false)}
+          onStatusChange={() => {
+            loadAllData();
+            showToast("WhatsApp device session updated.");
           }}
         />
       )}

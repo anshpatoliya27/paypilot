@@ -9,11 +9,11 @@ import {
   RotateCcw, 
   Zap,
   RefreshCw,
-  CheckCircle2,
-  ExternalLink,
-  FileSpreadsheet
+  MessageCircle,
+  FileSpreadsheet,
+  QrCode
 } from "lucide-react";
-import { fetchKhushiStatus } from "../../services/api";
+import { fetchKhushiStatus, fetchWhatsAppStatus } from "../../services/api";
 
 export default function Navbar({ 
   activeTab, 
@@ -23,14 +23,22 @@ export default function Navbar({
   onSyncKhushi,
   isSyncingKhushi = false,
   onOpenModal,
-  onOpenWebhookSimulator 
+  onOpenWebhookSimulator,
+  onOpenWhatsAppConnect
 }) {
   const [khushiStatus, setKhushiStatus] = useState({ online: true, active_customers: 2, total_orders: 54 });
+  const [waStatus, setWaStatus] = useState({ connected: true, phone: "+91 90169 29244" });
 
   useEffect(() => {
     fetchKhushiStatus()
       .then(data => {
         if (data) setKhushiStatus(data);
+      })
+      .catch(() => {});
+
+    fetchWhatsAppStatus()
+      .then(data => {
+        if (data) setWaStatus(data);
       })
       .catch(() => {});
   }, []);
@@ -58,7 +66,7 @@ export default function Navbar({
             style={{
               display: "inline-flex",
               alignItems: "center",
-              gap: "5px",
+              gap: "4px",
               background: "#f1f5f9",
               border: "1px solid #e2e8f0",
               padding: "2px 8px",
@@ -70,7 +78,6 @@ export default function Navbar({
             }}
             title="Khushi Threads Live Store"
           >
-            <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#10b981", display: "inline-block" }} />
             Khushi Threads
           </a>
         </div>
@@ -142,6 +149,23 @@ export default function Navbar({
 
       {/* Header Actions */}
       <div className="nav-actions">
+        {/* WhatsApp Mobile Connection QR Trigger */}
+        <button 
+          className="btn btn-outline btn-sm"
+          onClick={onOpenWhatsAppConnect}
+          title="Scan QR to connect mobile WhatsApp for automated background reminders"
+          style={{ 
+            fontSize: "0.78rem", 
+            padding: "0.4rem 0.75rem",
+            color: waStatus.connected ? "#15803d" : "#475569",
+            borderColor: waStatus.connected ? "#bbf7d0" : "#e2e8f0",
+            background: waStatus.connected ? "#f0fdf4" : "#ffffff"
+          }}
+        >
+          <MessageCircle size={13} color={waStatus.connected ? "#16a34a" : "#64748b"} />
+          <span>{waStatus.connected ? "WhatsApp Linked" : "Connect WhatsApp"}</span>
+        </button>
+
         <button 
           className="btn btn-outline btn-sm"
           onClick={onSyncKhushi}
@@ -179,7 +203,7 @@ export default function Navbar({
           }}
           title="Khushi Threads (Ansh Patoliya)"
         >
-          KT
+          AP
         </div>
       </div>
     </header>

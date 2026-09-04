@@ -475,7 +475,7 @@ export default function IntegrationsHub({ onRefreshData, customers = [] }) {
                 <span style={{ fontSize: "0.75rem", fontWeight: "700", color: "#475569", textTransform: "uppercase" }}>
                   Live Secret API Key
                 </span>
-                <span className="badge badge-low">Active Production Key</span>
+                <span className="badge badge-low">Production Key</span>
               </div>
               
               <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>

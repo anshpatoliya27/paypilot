@@ -274,3 +274,72 @@ async def simulate_instant_payment(
         "customer_name": customer.name if customer else "Customer",
         "reconciliation": reconciliation
     }
+
+# -------------------------------------------------------------
+# Direct WhatsApp Automated Background Dispatching
+# -------------------------------------------------------------
+from app.services.whatsapp_service import WhatsAppDeviceService
+
+@router.get("/whatsapp/status")
+async def get_whatsapp_status():
+    """
+    Returns the active mobile WhatsApp pairing status (Connected / Disconnected).
+    """
+    return WhatsAppDeviceService.get_status()
+
+@router.post("/whatsapp/connect")
+async def connect_whatsapp_device(payload: Dict[str, Any] = None):
+    """
+    Pairs mobile WhatsApp session via QR code scan simulation.
+    """
+    phone = payload.get("phone", "+91 90169 29244") if payload else "+91 90169 29244"
+    return WhatsAppDeviceService.connect_device(phone=phone)
+
+@router.post("/whatsapp/disconnect")
+async def disconnect_whatsapp_device():
+    """
+    Disconnects the active WhatsApp device.
+    """
+    return WhatsAppDeviceService.disconnect()
+
+@router.post("/whatsapp/send-direct")
+async def send_direct_whatsapp_reminder(payload: WhatsAppLinkRequest):
+    """
+    Sends WhatsApp payment reminder directly in the background.
+    Does NOT require opening wa.me or WhatsApp web interface.
+    """
+    res = WhatsAppDeviceService.send_direct_message(
+        customer_name=payload.customer_name,
+        phone=payload.phone,
+        amount_rupees=payload.amount_rupees,
+        bill_no=payload.bill_no or "INV-PENDING",
+        payment_url=payload.payment_url
+    )
+    return res
+
+@router.post("/whatsapp/send-bulk")
+async def send_bulk_whatsapp_reminders(db: AsyncSession = Depends(get_db)):
+    """
+    Directly sends WhatsApp payment reminders to all customers with pending balances in the background.
+    """
+    stmt = select(Customer).where(Customer.outstanding_balance_paise > 0)
+    res = await db.execute(stmt)
+    overdue_customers = res.scalars().all()
+
+    results = []
+    for c in overdue_customers:
+        bal_rupees = float(c.outstanding_balance_rupees)
+        dispatched = WhatsAppDeviceService.send_direct_message(
+            customer_name=c.name,
+            phone=c.phone,
+            amount_rupees=bal_rupees,
+            bill_no=f"INV-KT-{c.id[:4].upper()}"
+        )
+        results.append(dispatched)
+
+    return {
+        "status": "COMPLETED",
+        "total_sent": len(results),
+        "dispatches": results,
+        "message": f"Successfully sent {len(results)} automated WhatsApp reminders directly to customer phones."
+    }

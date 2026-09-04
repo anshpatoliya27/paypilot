@@ -17,7 +17,8 @@ import WhatsAppModal from "../common/WhatsAppModal";
 export default function CustomerLedger({ 
   customers, 
   onPromptAgent,
-  onRefreshData
+  onRefreshData,
+  onShowToast
 }) {
   const [search, setSearch] = useState("");
   const [riskFilter, setRiskFilter] = useState("ALL");
@@ -326,6 +327,10 @@ export default function CustomerLedger({
           billNo={`INV-KT-${Math.floor(1000 + Math.random() * 9000)}`}
           amountRupees={whatsAppCustomer.outstanding_balance}
           onClose={() => setWhatsAppCustomer(null)}
+          onSentDirect={(res) => {
+            if (onShowToast) onShowToast(`Sent WhatsApp reminder directly to ${res.recipient || whatsAppCustomer.phone}!`);
+            if (onRefreshData) onRefreshData();
+          }}
           onPaymentSuccess={() => {
             if (onRefreshData) onRefreshData();
           }}

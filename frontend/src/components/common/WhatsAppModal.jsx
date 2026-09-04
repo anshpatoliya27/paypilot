@@ -4,14 +4,14 @@ import {
   MessageCircle, 
   Copy, 
   Check, 
-  ExternalLink, 
   Zap, 
   CheckCircle2, 
   AlertCircle,
   Phone,
-  Receipt
+  Receipt,
+  Send
 } from "lucide-react";
-import { generateWhatsAppLink, simulateInstantPayment } from "../../services/api";
+import { generateWhatsAppLink, simulateInstantPayment, sendDirectWhatsApp } from "../../services/api";
 
 export default function WhatsAppModal({ 
   customer, 
@@ -19,11 +19,16 @@ export default function WhatsAppModal({
   amountRupees = 0, 
   paymentUrl = null, 
   onClose, 
-  onPaymentSuccess 
+  onPaymentSuccess,
+  onSentDirect
 }) {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
   const [copied, setCopied] = useState(false);
+  const [sendingDirect, setSendingDirect] = useState(false);
+  const [directSent, setDirectSent] = useState(false);
+  const [directResult, setDirectResult] = useState(null);
+
   const [simulating, setSimulating] = useState(false);
   const [simSuccess, setSimSuccess] = useState(false);
   const [simMessage, setSimMessage] = useState("");
@@ -57,9 +62,24 @@ export default function WhatsAppModal({
     }
   };
 
-  const handleOpenWhatsApp = () => {
-    if (data?.whatsapp_url) {
-      window.open(data.whatsapp_url, "_blank", "noopener,noreferrer");
+  // Direct automated WhatsApp send in background (No WhatsApp interface opened)
+  const handleSendDirect = async () => {
+    setSendingDirect(true);
+    try {
+      const res = await sendDirectWhatsApp({
+        customer_name: customer?.name || "Client",
+        phone: customer?.phone || "+919876543210",
+        amount_rupees: amountRupees || customer?.outstanding_balance || 0,
+        bill_no: billNo || "INV-BILL",
+        payment_url: data?.payment_url || paymentUrl
+      });
+      setDirectResult(res);
+      setDirectSent(true);
+      if (onSentDirect) onSentDirect(res);
+    } catch (err) {
+      alert("Failed to send direct WhatsApp: " + err.message);
+    } finally {
+      setSendingDirect(false);
     }
   };
 
@@ -100,12 +120,11 @@ export default function WhatsAppModal({
         width: "100%",
         maxWidth: "520px",
         boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
-        overflow: "hidden",
-        animation: "slideIn 0.2s ease-out"
+        overflow: "hidden"
       }}>
         {/* Header */}
         <div style={{
-          background: "linear-gradient(135deg, #128C7E, #075E54)",
+          background: "#075E54",
           padding: "1.25rem 1.5rem",
           color: "#ffffff",
           display: "flex",
@@ -123,10 +142,10 @@ export default function WhatsAppModal({
             </div>
             <div>
               <h3 style={{ margin: 0, fontSize: "1.05rem", fontWeight: "700" }}>
-                1-Click WhatsApp Payment Link
+                Send WhatsApp Payment Reminder
               </h3>
               <p style={{ margin: "2px 0 0", fontSize: "0.76rem", opacity: 0.85 }}>
-                Direct WhatsApp UPI Dispatch with Razorpay Reconcile
+                Dispatched directly to mobile without opening WhatsApp
               </p>
             </div>
           </div>
@@ -139,8 +158,7 @@ export default function WhatsAppModal({
               cursor: "pointer",
               padding: "0.3rem",
               borderRadius: "6px",
-              opacity: 0.8,
-              transition: "opacity 0.2s"
+              opacity: 0.8
             }}
           >
             <X size={20} />
@@ -149,7 +167,63 @@ export default function WhatsAppModal({
 
         {/* Body Content */}
         <div style={{ padding: "1.5rem" }}>
-          {simSuccess ? (
+          {/* Direct Send Success Confirmation */}
+          {directSent ? (
+            <div style={{ textAlign: "center", padding: "1.5rem 1rem" }}>
+              <div style={{
+                width: "56px",
+                height: "56px",
+                borderRadius: "50%",
+                background: "#dcfce7",
+                color: "#15803d",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                margin: "0 auto 1rem"
+              }}>
+                <CheckCircle2 size={32} />
+              </div>
+              <h4 style={{ margin: "0 0 0.5rem", color: "#0f172a", fontSize: "1.1rem", fontWeight: "700" }}>
+                WhatsApp Reminder Sent!
+              </h4>
+              <p style={{ margin: 0, color: "#475569", fontSize: "0.86rem", lineHeight: "1.5" }}>
+                Message delivered directly to <strong>{customer?.phone || "+91 98251 00000"}</strong> from your linked WhatsApp device.
+              </p>
+              <div style={{
+                marginTop: "1.25rem",
+                padding: "0.85rem",
+                background: "#f8fafc",
+                borderRadius: "var(--radius-md)",
+                border: "1px solid #e2e8f0",
+                fontSize: "0.8rem",
+                color: "#64748b",
+                textAlign: "left"
+              }}>
+                ✅ Message ID: <code style={{ fontSize: "0.75rem" }}>{directResult?.message_id || "wamid_demo"}</code><br />
+                ✅ Status: Delivered to recipient's phone<br />
+                ✅ Payment Link: Included Razorpay UPI link
+              </div>
+
+              <div style={{ display: "flex", gap: "0.75rem", marginTop: "1.5rem" }}>
+                <button
+                  className="btn btn-outline"
+                  onClick={handleSimulatePayment}
+                  disabled={simulating}
+                  style={{ flex: 1, fontSize: "0.82rem", gap: "0.35rem" }}
+                >
+                  <Zap size={13} color="#f59e0b" />
+                  {simulating ? "Reconciling..." : "Test Instant Paid"}
+                </button>
+                <button
+                  className="btn btn-primary"
+                  onClick={onClose}
+                  style={{ flex: 1, fontSize: "0.82rem" }}
+                >
+                  Done
+                </button>
+              </div>
+            </div>
+          ) : simSuccess ? (
             <div style={{
               textAlign: "center",
               padding: "1.5rem 1rem"
@@ -168,7 +242,7 @@ export default function WhatsAppModal({
                 <CheckCircle2 size={32} />
               </div>
               <h4 style={{ margin: "0 0 0.5rem", color: "#0f172a", fontSize: "1.1rem", fontWeight: "700" }}>
-                Payment Received & Reconciled! 🟢
+                Payment Received & Reconciled!
               </h4>
               <p style={{ margin: 0, color: "#475569", fontSize: "0.85rem", lineHeight: "1.5" }}>
                 {simMessage}
@@ -244,7 +318,7 @@ export default function WhatsAppModal({
                   marginBottom: "0.4rem"
                 }}>
                   <label style={{ fontSize: "0.78rem", fontWeight: "600", color: "#475569" }}>
-                    WhatsApp Message Preview
+                    Message to be Dispatched
                   </label>
                   <button 
                     onClick={handleCopy}
@@ -266,27 +340,27 @@ export default function WhatsAppModal({
                 </div>
 
                 <div style={{
-                  background: "#e7f5e8",
-                  border: "1px solid #c6e7c8",
+                  background: "#f0fdf4",
+                  border: "1px solid #bbf7d0",
                   borderRadius: "var(--radius-md)",
                   padding: "0.9rem",
-                  color: "#1e3a1f",
+                  color: "#166534",
                   fontSize: "0.82rem",
                   lineHeight: "1.5",
                   whiteSpace: "pre-line",
                   fontFamily: "system-ui, -apple-system, sans-serif"
                 }}>
-                  {loading ? "Generating UPI payment link..." : (data?.message || "")}
+                  {loading ? "Preparing message with UPI link..." : (data?.message || "")}
                 </div>
               </div>
 
-              {/* Primary Actions */}
+              {/* Primary Actions: Direct background dispatch */}
               <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
                 <button
-                  onClick={handleOpenWhatsApp}
-                  disabled={loading}
+                  onClick={handleSendDirect}
+                  disabled={loading || sendingDirect}
                   style={{
-                    background: "#25D366",
+                    background: "#075E54",
                     color: "#ffffff",
                     border: "none",
                     borderRadius: "var(--radius-md)",
@@ -298,13 +372,12 @@ export default function WhatsAppModal({
                     alignItems: "center",
                     justifyContent: "center",
                     gap: "0.5rem",
-                    boxShadow: "0 4px 12px rgba(37, 211, 102, 0.35)",
+                    boxShadow: "0 4px 12px rgba(7, 94, 84, 0.25)",
                     transition: "all 0.2s"
                   }}
                 >
-                  <MessageCircle size={18} />
-                  Open in WhatsApp (Direct Click-to-Chat)
-                  <ExternalLink size={14} />
+                  <Send size={16} />
+                  {sendingDirect ? "Sending directly to phone..." : "Send Reminder Directly to Mobile"}
                 </button>
 
                 <div style={{
@@ -315,7 +388,7 @@ export default function WhatsAppModal({
                 }}>
                   <div style={{ height: "1px", background: "#e2e8f0", flex: 1 }}></div>
                   <span style={{ fontSize: "0.72rem", color: "#94a3b8", fontWeight: "600", textTransform: "uppercase" }}>
-                    Demonstration & Testing
+                    Payment Simulation
                   </span>
                   <div style={{ height: "1px", background: "#e2e8f0", flex: 1 }}></div>
                 </div>
@@ -324,7 +397,7 @@ export default function WhatsAppModal({
                   onClick={handleSimulatePayment}
                   disabled={simulating}
                   style={{
-                    background: "#f1f5f9",
+                    background: "#f8fafc",
                     color: "#0f172a",
                     border: "1px solid #cbd5e1",
                     borderRadius: "var(--radius-md)",

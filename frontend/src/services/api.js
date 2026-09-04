@@ -148,3 +148,48 @@ export async function simulateInstantPayment(payload) {
   }
   return res.json();
 }
+
+export async function fetchWhatsAppStatus() {
+  const res = await fetch(`${API_BASE}/connect/whatsapp/status`);
+  return res.json();
+}
+
+export async function connectWhatsAppDevice(phone = "+91 90169 29244") {
+  const res = await fetch(`${API_BASE}/connect/whatsapp/connect`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ phone })
+  });
+  return res.json();
+}
+
+export async function disconnectWhatsAppDevice() {
+  const res = await fetch(`${API_BASE}/connect/whatsapp/disconnect`, {
+    method: "POST"
+  });
+  return res.json();
+}
+
+export async function sendDirectWhatsApp(payload) {
+  const res = await fetch(`${API_BASE}/connect/whatsapp/send-direct`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail || "Failed to send direct WhatsApp message");
+  }
+  return res.json();
+}
+
+export async function sendBulkWhatsApp() {
+  const res = await fetch(`${API_BASE}/connect/whatsapp/send-bulk`, {
+    method: "POST"
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail || "Failed to send bulk WhatsApp messages");
+  }
+  return res.json();
+}
